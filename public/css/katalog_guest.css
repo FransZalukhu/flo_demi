@@ -1,0 +1,731 @@
+/* ================= FONT ================= */ 
+* { 
+    font-family: "Manrope", sans-serif; 
+} 
+ 
+/* ================= WARNA UTAMA ================= */
+.text-purple {
+    color: #9F66AF;
+}
+
+.btn-purple {
+    background-color: #9F66AF;
+    color: #ffffff;
+    padding: 10px 28px;
+    font-weight: 600;
+    border: none;
+}
+
+.btn-purple:hover {
+    background-color: #8e5ca0; /* sedikit lebih gelap saat hover */
+    color: #ffffff;
+}
+
+.btn-outline-purple {
+    background-color: #f3f3f3; /* abu muda seperti gambar */
+    border: 2px solid #9F66AF;
+    color: #000000; /* teks hitam */
+    padding: 10px 28px;
+    font-weight: 600;
+}
+
+.btn-outline-purple:hover {
+    background-color: #9F66AF;
+    color: #ffffff;
+}
+
+.btn-purple,
+.btn-outline-purple {
+    padding: 5px 24px;   /* atas-bawah diperkecil */
+}
+
+
+.checkout-divider {
+    width: 100vw;
+    height: 2px;
+    background-color: #9F66AF;
+    margin: 20px 0 90px; /* jarak ke card DIBESARKAN */
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+/* ================= NAVBAR ================= */
+/* ================= NAVBAR ================= */
+.navbar img {
+    height: 70px;              /* LOGO DIBESARKAN LEBIH BESAR */
+    object-fit: contain;
+}
+
+/* Responsive logo size for mobile */
+@media (max-width: 991px) {
+    .navbar img {
+        height: 50px;
+    }
+}
+
+/* SEARCH BOX */
+.search-box {
+    position: relative;
+}
+
+/* ICON */
+.search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: #000000;
+    pointer-events: none;
+}
+
+/* INPUT */
+.search-box input {
+    padding-left: 45px;
+    height: 45px;
+    font-size: 14px;
+}
+.search-box input {
+    border: 1px solid #000000;
+}
+.search-box input:focus {
+    border-color: #9F66AF;
+    box-shadow: none;
+}
+
+/* ================= NAVBAR ACTIVE FIX ================= */
+
+/* Warna default link */
+.navbar .nav-link {
+    color: #9F66AF !important;
+    font-weight: 500;
+    position: relative;
+}
+
+/* Hover tetap ungu */
+.navbar .nav-link:hover {
+    color: #9F66AF !important;
+}
+
+/* Saat ACTIVE tetap ungu */
+.navbar .nav-link.active {
+    color: #9F66AF !important;
+}
+
+/* Garis bawah active */
+.navbar .nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 2px;
+    background-color: #9F66AF;
+}
+
+/* ================= MOBILE NAVBAR ================= */
+
+.mobile-search {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Perkecil tombol di mobile */
+@media (max-width: 991px) {
+    .btn-purple,
+    .btn-outline-purple {
+        padding: 4px 14px;
+        font-size: 13px;
+    }
+
+    .navbar-brand {
+        font-size: 20px;
+    }
+}
+
+/* ================= SPACING SEARCH HERO ================= */
+
+.search-hero-wrapper {
+    margin-top: 50px;     /* JARAK dari HERO (diperbesar) */
+    margin-bottom: 2px;  /* JARAK ke bawah (diperkecil) */
+}
+/* ================= HERO ================= */
+.hero-section {
+    background-color: #9F66AF;
+    padding: 60px 0;   /* TETAP */
+}
+
+/* JUDUL HERO (DIBESARKAN TANPA NGE-DORONG SECTION) */
+.hero-section h1 {
+    font-size: 44px;      /* DARI 36px */
+    line-height: 1.15;
+    margin-bottom: 12px; /* DIRAPIKAN */
+}
+
+/* TEKS HERO */
+.hero-section p {
+    font-size: 17px;      /* DARI 15px */
+    line-height: 1.6;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* BUTTON HERO */
+.hero-section .btn {
+    font-size: 15px;
+    padding: 10px 20px;
+}
+
+/* GAMBAR HERO */
+.hero-section img {
+    max-width: 300px;     /* SEDIKIT DIKECILKAN */
+    width: 100%;
+    height: auto;
+}
+
+/* ================= SEARCH BAWAH HERO ================= */
+
+.search-hero {
+    width: 220px;
+    height: 36px;          /* sedikit lebih balance */
+    font-size: 13px;
+    border: 2px solid #9F66AF;
+    border-radius: 50px;
+    padding-left: 45px;    /* ruang icon diperbesar */
+    background-color: #ffffff;
+}
+
+.search-hero:focus {
+    border-color: #9F66AF;
+    box-shadow: none;
+}
+
+/* ================= SEARCH HERO ICON FIX ================= */
+
+.search-hero-wrapper form {
+    position: relative;
+}
+
+.search-hero-icon {
+    position: absolute;
+    left: 20px;              /* lebih masuk & pas */
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;         /* lebih proporsional */
+    color: #000000 !important; /* PAKSA HITAM */
+    pointer-events: none;
+}
+
+/* ================= KATEGORI ================= */
+.category-card {
+    border: 1px solid #9F66AF;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.category-card:hover {
+    background-color: #f6ecfa;
+}
+
+/* ICON KATEGORI */
+.category-card img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+/* ================= TOOLS POPULER ================= */
+.tool-card {
+    border: 1px solid #9F66AF;
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: #ffffff;
+}
+
+.tool-card:hover {
+    background-color: #f6ecfa;
+}
+
+/* ICON TOOLS */
+.tool-card img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+/* TEXT TOOLS */
+.tool-card h6 {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.tool-card small {
+    font-size: 12px;
+    color: #666;
+}
+
+/* ================= COURSE ================= */
+.course-card {
+    border: 1px solid #9F66AF;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: 0.3s;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+}
+
+/* GAMBAR COURSE */
+.course-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+/* BODY COURSE */
+.course-body {
+    padding: 15px;
+}
+
+.course-body h6 {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+/* ================= RATING ================= */
+.course-rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* BINTANG CUSTOM (BUKAN EMOJI) */
+.stars {
+    display: flex;
+    gap: 2px;
+}
+
+.stars i {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background: linear-gradient(180deg, #f4f2ed, #ffbb00);
+    clip-path: polygon(
+        50% 0%,
+        61% 35%,
+        98% 35%,
+        68% 57%,
+        79% 91%,
+        50% 70%,
+        21% 91%,
+        32% 57%,
+        2% 35%,
+        39% 35%
+    );
+    box-shadow: 0 0 3px rgba(245, 179, 1, 0.6);
+}
+
+/* JUMLAH RATING */
+.rating-count {
+    font-size: 12px;
+    color: #555;
+}
+
+/* ================= PRICE ================= */
+.course-price {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.price-now {
+    color: #9F66AF;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+/* HARGA LAMA */
+.price-old {
+    font-size: 14px;          /* TIDAK KEKECILAN */
+    color: #000;              /* TETAP HITAM */
+    position: relative;
+}
+
+/* GARIS CORET MIRING MERAH (TIPIS) */
+.price-old::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -4%;
+    width: 108%;
+    height: 1px;              /* DIPERKECIL */
+    background-color: #e74c3c;
+    transform: rotate(-10deg);
+}
+
+/* SEE MORE */
+.see-more {
+    color: #9F66AF;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.see-more:hover {
+    text-decoration: underline;
+}
+/* ================= FOOTER ================= */
+.footer-section {
+    background-color: #9F66AF;
+    padding: 40px 0 20px;
+}
+
+.footer-section h6 {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.footer-section p {
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.footer-icon,
+.footer-icon-sm {
+    aspect-ratio: 1 / 1;   /* Paksa tetap kotak */
+    object-fit: contain;
+}
+
+/* GARIS */
+.footer-line {
+    border-color: rgba(255, 255, 255, 0.4);
+    margin: 30px 0 15px;
+}
+
+/* SEARCH INPUT */
+.search-input {
+    border: 2px solid #9F66AF; /* Ungu */
+    padding-left: 40px;        /* Ruang untuk icon */
+}
+
+.search-input:focus {
+    border-color: #9F66AF;
+    box-shadow: 0 0 0 0.2rem rgba(142, 68, 173, 0.25);
+}
+
+/* ICON */
+.search-icon {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9F66AF;
+}
+
+/* ================= DETAIL KURSUS PAGE ================= */
+
+/* Header */
+.kelas-header {
+    background-color: #9F66AF;
+    padding: 40px 0 30px;
+    color: white;
+    margin-bottom: 0;
+}
+.kelas-small {
+    font-size: 13px;
+    opacity: 0.8;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.kelas-judul {
+    font-weight: 700;
+    font-size: 28px;
+    margin-bottom: 0;
+}
+
+/* Info Bar */
+.info-bar {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 15px 0;
+    background-color: #fff;
+}
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    color: #555;
+}
+.info-row .harga {
+    color: #9F66AF;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+/* Benefit */
+.benefit-wrap {
+    padding: 40px 0;
+}
+.benefit-title {
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 18px;
+}
+.benefit-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background: #fff;
+    transition: 0.3s;
+    height: 100%;
+}
+.benefit-box:hover {
+    border-color: #9F66AF;
+    box-shadow: 0 4px 12px rgba(159, 102, 175, 0.1);
+}
+.benefit-box .check {
+    background-color: #9F66AF;
+    color: white;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+.benefit-box p {
+    margin: 0;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.4;
+}
+
+/* Main Content */
+.kelas-main {
+    padding-bottom: 40px;
+}
+.kelas-image img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border: 1px solid #eee;
+}
+
+/* Modul Card */
+.modul-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    background: #fff;
+    height: 100%;
+    display: flex;
+    flex-direction: column; /* Agar tombol selalu di bawah */
+}
+.modul-top {
+    margin-bottom: 15px;
+    border-bottom: 2px solid #9F66AF;
+    padding-bottom: 10px;
+}
+.modul-count {
+    font-weight: 700;
+    font-size: 16px;
+    color: #333;
+}
+.modul-list {
+    flex-grow: 1;
+    max-height: 300px; /* Membatasi tinggi list agar bisa di-scroll */
+    overflow-y: auto;
+    padding-right: 5px;
+}
+/* Custom Scrollbar untuk list modul */
+.modul-list::-webkit-scrollbar {
+    width: 6px;
+}
+.modul-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+.modul-list::-webkit-scrollbar-thumb {
+    background: #d4d4d4;
+    border-radius: 10px;
+}
+.modul-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f5f5f5;
+}
+.modul-item:last-child {
+    border-bottom: none;
+}
+.modul-item h6 {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    color: #444;
+    flex-grow: 1;
+    padding-right: 10px;
+}
+.file-box {
+    background-color: #f3f3f3;
+    color: #666;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Deskripsi */
+.kelas-deskripsi {
+    padding: 40px 0 60px;
+    border-top: 1px solid #e0e0e0;
+}
+.kelas-deskripsi h5 {
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #333;
+}
+.kelas-deskripsi p {
+    color: #555;
+    line-height: 1.8;
+    font-size: 15px;
+    text-align: justify;
+}
+/* DROPDOWN PROFILE STYLE */
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #9F66AF;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    border: none;
+    padding: 0;
+}
+
+.user-avatar::after {
+    display: none; /* Hilangkan panah default bootstrap */
+}
+
+.online-dot {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    background-color: #28a745;
+    border: 2px solid #fff;
+    border-radius: 50%;
+}
+
+.profile-dropdown {
+    width: 260px;
+    border-radius: 12px !important;
+    overflow: hidden;
+    margin-top: 10px !important;
+    border: none !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+}
+
+.profile-header {
+    background-color: #fff;
+    padding: 15px;
+}
+/* ===== USER AVATAR (navbar) ===== */
+.user-avatar {
+  background-color: #9F66AF;
+  color: white;
+  font-weight: 600;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  position: relative;
+  cursor: pointer;
+}
+/* Online dot */
+.online-dot {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 10px;
+  height: 10px;
+  background-color: #44cc88;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+/* Sembunyikan caret default Bootstrap */
+.user-avatar.dropdown-toggle::after {
+  display: none !important;
+}
+
+.avatar-circle {
+    width: 45px;
+    height: 45px;
+    background-color: #9F66AF;
+    color: white;
+    font-weight: 600;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.profile-dropdown .dropdown-item {
+    font-size: 14px;
+    padding: 10px 20px;
+    color: #444;
+    transition: 0.2s;
+}
+
+.profile-dropdown .dropdown-item:hover {
+    background-color: #f8f4fb;
+    color: #9F66AF;
+}
+
+.profile-dropdown .dropdown-item i {
+    font-size: 16px;
+    vertical-align: middle;
+}

@@ -1,0 +1,592 @@
+/* ================= FONT ================= */ 
+* { 
+    font-family: "Manrope", sans-serif; 
+} 
+
+/* ================= RESET ================= */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: #f5f5f5;
+}
+/* ================= NAVBAR ================= */
+.navbar {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.navbar img {
+    height: 50px;
+    object-fit: contain;
+}
+
+/* SEARCH BOX */
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    width: 100%;
+    padding-left: 45px;
+    height: 42px;
+    font-size: 14px;
+    border: 2px solid #9F66AF;
+    border-radius: 50px;
+    outline: none;
+}
+
+.search-box input:focus {
+    border-color: #9F66AF;
+    box-shadow: none;
+}
+
+/* ICON FOOTER — perbesar agar konsisten */
+.footer-icon {
+    width: 40px !important;
+    height: 40px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+}
+
+.footer-icon-sm {
+    width: 28px !important;
+    height: 28px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+/* ================= LAYOUT ================= */
+.page-wrapper {
+    display: flex;
+    flex: 1;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+    width: 210px;
+    min-height: 100%;
+    background: #9F66AF;
+    color: #ffffff;
+    padding: 16px 0;
+    flex-shrink: 0;
+}
+
+/* Menu sidebar */
+.sidebar-menu { padding: 0 8px; }
+
+.sidebar-menu .menu-group-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.sidebar-menu .menu-group-title:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+.sidebar-menu .sub-menu { padding-left: 8px; }
+
+.sidebar-menu .sub-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.sidebar-menu .sub-title:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+.sidebar-menu .modul-list { padding-left: 8px; }
+
+.sidebar-menu .modul-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 10px;
+    font-size: 12px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+
+.sidebar-menu .modul-item:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+.sidebar-menu .modul-item.active {
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar-menu .modul-item .modul-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sidebar-menu .modul-item .check-icon {
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.sidebar-menu .modul-item .check-icon i {
+    font-size: 11px;
+    color: #9F66AF;
+}
+
+.btn-buka {
+    font-size: 11px;
+    padding: 2px 10px;
+    background: #9F66AF;
+    color: #fff;
+    border: 1.5px solid #fff;
+    border-radius: 6px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.btn-buka:hover {
+    background: #7e3fa1;
+    color: #fff;
+}
+
+/* ================= KONTEN UTAMA ================= */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    background: #f5f5f5;
+}
+
+.greeting {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.course-title-bar {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.course-title-bar h5 {
+    color: #9F66AF;
+    font-weight: 700;
+}
+
+.course-title-bar p {
+    color: #9F66AF;
+    font-size: 13px;
+    margin: 0;
+}
+
+/* PDF Viewer */
+.pdf-viewer {
+    flex: 1;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #ffffff;
+    min-height: 500px;
+}
+
+.pdf-viewer iframe {
+    width: 100%;
+    height: 540px;
+    border: none;
+}
+
+/* Tombol aksi */
+.action-bar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.btn-download {
+    padding: 8px 24px;
+    border: 1.5px solid #cccccc;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #333333;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn-download:hover {
+    background: #f5f5f5;
+}
+
+.btn-selesai {
+    padding: 8px 24px;
+    border: none;
+    border-radius: 8px;
+    background: #9F66AF;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn-selesai:hover { background: #7e3fa1; }
+
+/* ================= FOOTER ================= */
+.footer-section {
+    background-color: #9F66AF;
+    padding: 30px 0 16px;
+    margin: 0 !important;
+    flex-shrink: 0;
+}
+
+.footer-section h6 {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.footer-section p {
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.footer-line {
+    border-color: rgba(255,255,255,0.4);
+    margin: 20px 0 12px;
+}
+
+/* ================= DROPDOWN PROFILE ================= */
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #9F66AF;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    border: none;
+    padding: 0;
+}
+
+.user-avatar::after {
+    display: none; /* Hilangkan panah default bootstrap */
+}
+
+.online-dot {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    background-color: #28a745;
+    border: 2px solid #fff;
+    border-radius: 50%;
+}
+
+.profile-dropdown {
+    width: 260px;
+    border-radius: 12px !important;
+    overflow: hidden;
+    margin-top: 10px !important;
+    border: none !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+    background-color: #ffffff !important;
+}
+
+.profile-header {
+    background-color: #ffffff;
+    padding: 15px;
+}
+
+.avatar-circle {
+    width: 45px;
+    height: 45px;
+    background-color: #9F66AF;
+    color: white;
+    font-weight: 600;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.profile-dropdown .dropdown-item {
+    font-size: 14px;
+    padding: 10px 20px;
+    color: #333333;
+    transition: 0.2s;
+}
+
+.profile-dropdown .dropdown-item:hover {
+    background-color: rgba(159, 102, 175, 0.12);
+    color: #9F66AF;
+}
+
+.profile-dropdown .dropdown-item i {
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+.greeting {
+    color: #9F66AF;
+    font-weight: 600;
+}
+  /* ── Progress bar sidebar ── */
+      .progress-sidebar {
+        padding: 10px 14px 4px;
+      }
+      .progress-sidebar .label-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        color: #666666;
+        margin-bottom: 4px;
+      }
+      .progress-sidebar .progress {
+        height: 6px;
+        border-radius: 10px;
+        background: #dddddd;
+      }
+      .progress-sidebar .progress-bar {
+        background: #9F66AF;
+        border-radius: 10px;
+        transition: width .4s ease;
+      }
+
+      /* ── Modul item ── */
+      .modul-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 7px 14px;
+        border-radius: 8px;
+        margin-bottom: 4px;
+        transition: background .2s;
+      }
+      .modul-item.active {
+        background: rgba(159, 102, 175, 0.12);
+      }
+      .modul-item:hover {
+        background: rgba(159, 102, 175, 0.12);
+      }
+      .modul-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+        min-width: 0;
+      }
+      .modul-left span {
+        font-size: 12.5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* ── Check icon ── */
+      .check-icon {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #dddddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        color: #666666;
+        flex-shrink: 0;
+      }
+      .check-icon.done {
+        background: #28a745;
+        color: #fff;
+      }
+      .check-icon.active-dot {
+        background: #9F66AF;
+        color: #fff;
+      }
+
+
+   .badge-kursus-selesai {
+  display: inline-flex;        /* inline agar tidak memenuhi lebar penuh */
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: #fff;
+  border-radius: 8px;
+  padding: 5px 10px;           /* padding lebih kecil */
+  font-size: 11px;             /* font sedikit lebih kecil */
+  font-weight: 600;
+  margin: 6px 14px;
+  max-width: calc(100% - 28px); /* batas maksimal lebar */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+      /* ── Tombol selesai ── */
+      .btn-selesai-done {
+        background: #28a745 !important;
+        opacity: 0.85;
+        cursor: not-allowed;
+      }
+
+      /* ── Toast ── */
+      .toast-container-custom {
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        z-index: 9999;
+      }
+
+.pdf-viewer .bi-file-earmark-pdf {
+    font-size: 48px;
+    color: #9F66AF;
+}
+
+.sidebar i.bi-chevron-down {
+    font-size: 11px;
+}
+
+/* ================= USER AVATAR & ONLINE DOT ================= */
+.user-avatar {
+    background-color: #9F66AF !important;
+    color: white !important;
+    font-weight: 600 !important;
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 13px !important;
+    position: relative !important;
+    cursor: pointer !important;
+}
+
+/* Hilangkan caret Bootstrap */
+.user-avatar.dropdown-toggle::after {
+    display: none !important;
+}
+
+/* Titik hijau online */
+.online-dot {
+    position: absolute !important;
+    bottom: 1px !important;
+    right: 1px !important;
+    width: 10px !important;
+    height: 10px !important;
+    background-color: #44cc88 !important;
+    border-radius: 50% !important;
+    border: 2px solid white !important;
+}
+
+/* =========================================
+   RESPONSIVE FIX (WAJIB)
+========================================= */
+
+/* Tablet & HP */
+@media (max-width: 991px) {
+
+    .page-wrapper {
+        flex-direction: column;
+    }
+
+    /* Sidebar jadi horizontal */
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+        padding: 10px;
+    }
+
+    /* Scroll horizontal modul */
+    .modul-list {
+        display: flex;
+        overflow-x: auto;
+        gap: 8px;
+        padding-bottom: 6px;
+    }
+
+    .modul-item {
+        min-width: 200px;
+        flex-shrink: 0;
+    }
+
+    /* Konten */
+    .main-content {
+        padding: 16px;
+    }
+
+    /* PDF lebih kecil */
+    .pdf-viewer {
+        min-height: 300px;
+    }
+
+    .pdf-viewer iframe {
+        height: 350px;
+    }
+
+    /* Tombol jadi stack */
+    .action-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-download,
+    .btn-selesai {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* HP kecil */
+@media (max-width: 576px) {
+
+    .course-title-bar h5 {
+        font-size: 16px;
+    }
+
+    .course-title-bar p {
+        font-size: 12px;
+    }
+
+    .modul-item {
+        min-width: 170px;
+    }
+
+    .pdf-viewer iframe {
+        height: 280px;
+    }
+
+    .greeting {
+        font-size: 13px;
+    }
+}

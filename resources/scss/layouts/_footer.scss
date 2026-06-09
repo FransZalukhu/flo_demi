@@ -1,0 +1,38 @@
+// Footer Styles
+.footer {
+  background-color: #fff;
+  padding: 20px 30px;
+  position: relative;
+  width: 100%;
+  border-top: 1px solid $gray-200;
+  font-size: 0.875rem;
+  color: $gray-600;
+  clear: both;
+  box-sizing: border-box;
+  overflow-x: hidden;
+
+  @include media-breakpoint-down(md) {
+    padding: 15px 20px;
+  }
+
+  a {
+    color: $primary;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .footer-links {
+    a {
+      margin: 0 10px;
+      color: $gray-600;
+      white-space: nowrap;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+}

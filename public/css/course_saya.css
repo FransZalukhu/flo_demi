@@ -1,0 +1,349 @@
+/* ================= FONT ================= */ 
+* { 
+    font-family: "Manrope", sans-serif; 
+} 
+
+/* ================= WARNA UTAMA ================= */
+.text-purple {
+    color: #9F66AF;
+}
+
+/* BUTTON PRIMARY */
+.btn-purple {
+    background-color: #9F66AF;
+    color: #ffffff;
+    padding: 6px 24px;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+}
+
+.btn-purple:hover {
+    background-color: #8e5ca0;
+    color: #ffffff;
+}
+
+/* BUTTON OUTLINE */
+.btn-outline-purple {
+    background-color: #f3f3f3;
+    border: 2px solid #9F66AF;
+    color: #000000;
+    padding: 6px 24px;
+    font-weight: 600;
+    border-radius: 50px;
+}
+
+.btn-outline-purple:hover {
+    background-color: #9F66AF;
+    color: #ffffff;
+}
+
+/* ================= WRAPPER ================= */
+.course-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+    width: 260px;
+    background: #9F66AF;
+    color: #fff;
+    padding: 30px 20px;
+}
+
+/* PROFILE */
+.sidebar-profile {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.avatar {
+    width: 64px;
+    height: 64px;
+    background: #fff;
+    color: #9F66AF;
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+}
+
+.name {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* MENU */
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.25s;
+}
+
+.sidebar-menu li:hover,
+.sidebar-menu li.active {
+    background: rgba(255,255,255,0.2);
+}
+
+/* ================= CONTENT ================= */
+.course-content {
+    flex: 1;
+    padding: 40px;
+}
+
+/* TITLE */
+.content-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #9F66AF;
+}
+
+.content-subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+/* ================= CARD COURSE ================= */
+.card {
+    border: 1px solid #9F66AF20;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: 0.3s;
+    background: #fff;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(159, 102, 175, 0.15);
+}
+
+/* IMAGE */
+.card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+/* BODY */
+.card-body {
+    padding: 15px;
+}
+
+/* TITLE COURSE */
+.card-body h6 {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+/* TEXT */
+.card-body p {
+    font-size: 13px;
+}
+
+/* BADGE */
+.badge {
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 6px;
+}
+
+/* BUTTON DALAM CARD */
+.card .btn {
+    border-radius: 8px;
+    font-size: 14px;
+    padding: 8px;
+}
+
+/* ================= EMPTY STATE ================= */
+.empty-course {
+    text-align: center;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.empty-course img {
+    width: 240px;
+    margin-bottom: 20px;
+}
+
+.empty-text {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* ================= FOOTER ================= */
+.footer-section {
+    background-color: #9F66AF;
+    padding: 40px 0 20px;
+}
+
+.footer-section h6 {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.footer-section p {
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.footer-section img {
+    object-fit: contain;
+}
+
+.footer-line {
+    border-color: rgba(255, 255, 255, 0.4);
+    margin: 30px 0 15px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 991px) {
+    .sidebar {
+        display: none;
+    }
+
+    .course-content {
+        padding: 20px;
+    }
+
+    .content-title {
+        font-size: 22px;
+    }
+}
+/* ================= TOAST THEME UNGU ================= */
+
+/* Base toast */
+.toast {
+    border-radius: 16px !important;
+    overflow: hidden;
+    min-width: 300px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 20px rgba(159, 102, 175, 0.25);
+}
+
+/* SUCCESS (ungu utama) */
+.toast.bg-success,
+.toast .bg-success {
+    background: linear-gradient(135deg, #9F66AF, #b57ac5) !important;
+}
+
+/* INFO (tetap ungu tapi lebih soft) */
+.toast.bg-info,
+.toast .bg-info {
+    background: linear-gradient(135deg, #9F66AF, #d1a6dd) !important;
+}
+
+/* Body */
+.toast-body {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px 16px;
+    color: #fff;
+}
+
+/* Container dalam toast */
+.toast .d-flex {
+    border-radius: 16px;
+    padding: 6px;
+}
+
+/* Icon biar kontras */
+.toast i {
+    font-size: 16px;
+}
+
+/* Close button */
+.toast .btn-close {
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+}
+
+.toast .btn-close:hover {
+    opacity: 1;
+}
+
+/* Animasi masuk */
+.toast.show {
+    animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* ================= EMPTY STATE ================= */
+.empty-course {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 48px 20px;
+    max-width: 440px;
+    margin: 0 auto;
+}
+
+.empty-course img {
+    width: 220px;
+    margin-bottom: 24px;
+    opacity: 0.92;
+}
+
+.empty-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2d2d2d;
+    margin-bottom: 10px;
+}
+
+.empty-text {
+    font-size: 14px;
+    color: #888;
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+.btn-empty-cta {
+    background: #9F66AF;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 11px 30px;
+    border-radius: 50px;
+    border: none;
+    text-decoration: none;
+    transition: 0.3s;
+    box-shadow: 0 4px 14px rgba(159, 102, 175, 0.3);
+}
+
+.btn-empty-cta:hover {
+    background: #8e5ca0;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(159, 102, 175, 0.4);
+}

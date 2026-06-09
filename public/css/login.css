@@ -1,0 +1,161 @@
+/* GLOBAL */
+* {
+    font-family: "Manrope", sans-serif;
+}
+
+body {
+    background: #fff;
+}
+
+/* LEFT FIXED */
+.bg-login {
+    background: url("../assets/login.png") no-repeat center;
+    background-size: cover;
+}
+
+.left-fixed {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.left-content {
+    color: #fff;
+}
+
+.left-title {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.left-subtitle {
+    font-size: 15px;
+    opacity: 0.9;
+}
+
+/* FORM WRAPPER */
+.form-wrapper {
+    max-width: 380px;
+    margin-top: 160px;
+    position: relative;
+}
+
+/* LOGO */
+.logo-box {
+    position: absolute;
+    top: -130px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    padding: 14px;
+    border-radius: 50%;
+}
+
+.logo-box img {
+    width: 100px;
+}
+
+/* CARD */
+.login-card {
+    border-radius: 18px;
+    border: 1.5px solid #9f66af;
+}
+
+/* FORM INNER (INI KUNCI UTAMA) */
+.form-inner {
+    width: 88%;
+    margin: 0 auto;
+}
+
+/* LABEL */
+.form-label {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+/* INPUT PENDEK (TINGGI) */
+.form-control {
+    height: 36px;
+    padding: 6px 12px;
+    font-size: 13px;
+    background: #e5e5e5;
+    border: 1px solid #c9c9c9;
+    border-radius: 8px;
+}
+
+.form-control::placeholder {
+    font-size: 12px;
+    color: #7a7a7a;
+}
+
+.form-control:focus {
+    border-color: #9f66af;
+    box-shadow: none;
+}
+
+/* PASSWORD ICON (UI SAJA) */
+.password-wrapper {
+    position: relative;
+}
+
+.password-input {
+    padding-right: 38px;
+}
+
+/* .password-icon {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    color: #6f6f6f;
+    font-size: 16px;
+    pointer-events: none;
+} */
+.password-icon {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    color: #6f6f6f;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 10; /* ← tambahkan ini */
+    user-select: none;
+}
+
+/* CHECKBOX */
+.form-check-label {
+    font-size: 12px;
+}
+
+/* BUTTON PENDEK & CENTER */
+.btn-purple {
+    width: 100%;
+    height: 38px;
+    background: #9f66af;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 14px;
+    border: none;
+}
+
+.btn-purple:hover {
+    background: #8a57a0;
+}
+
+/* LINK */
+.text-purple {
+    color: #9f66af;
+    text-decoration: none;
+}
+
+.text-purple:hover {
+    text-decoration: underline;
+}

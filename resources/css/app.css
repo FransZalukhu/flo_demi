@@ -1,0 +1,29 @@
+@import 'tailwindcss';
+
+@variant dark (&:where(.dark, .dark *));
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-manrope: 'Manrope', sans-serif;
+    
+    --color-brand-purple: #9F66AF;
+    --color-brand-purple-dark: #7B4A8A;
+    --color-brand-purple-light: #f3e8ff;
+    --color-brand-purple-soft: #f8f4fb;
+    
+    --animate-pulse-soft: menteePulse 2s infinite;
+}
+
+@keyframes menteePulse {
+    0%   { box-shadow: 0 0 0 0 rgba(159, 102, 175, 0.7); }
+    70%  { box-shadow: 0 0 0 7px rgba(159, 102, 175, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(159, 102, 175, 0); }
+}
+
+body {
+    font-family: var(--font-manrope);
+}
