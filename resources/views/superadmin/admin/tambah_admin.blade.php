@@ -2,556 +2,183 @@
 <html lang="en">
 
 <head>
-    @include('layouts.superadmin.partials.head', ['pageTitle' => 'Admin Dashboard - Tambah Admin'])
-
-    <style>
-        /* ══════════ PAGE HERO ══════════ */
-        .page-hero {
-            padding: 32px 32px 0;
-        }
-
-        .page-hero-greeting {
-            font-size: 26px;
-            font-weight: 800;
-            color: var(--text-primary);
-            letter-spacing: -0.5px;
-            margin-bottom: 4px;
-        }
-
-        .page-hero-greeting span {
-            background: linear-gradient(135deg, var(--brand-purple), #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .page-hero-sub {
-            font-size: 14px;
-            color: var(--text-secondary);
-            font-weight: 500;
-            margin-bottom: 20px;
-        }
-
-        .breadcrumb-modern {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .breadcrumb-modern a {
-            color: var(--brand-purple);
-            text-decoration: none;
-        }
-
-        .breadcrumb-modern a:hover { text-decoration: underline; }
-
-        .breadcrumb-modern .separator { color: var(--text-muted); }
-
-        .breadcrumb-modern .current { color: var(--text-muted); }
-
-        /* ══════════ CONTENT CARD ══════════ */
-        .content-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-        }
-
-        .content-card-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .content-card-title {
-            font-size: 16px;
-            font-weight: 800;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .content-card-title i { color: var(--brand-purple); }
-
-        .content-card-body {
-            padding: 28px;
-        }
-
-        /* ══════════ FORM STYLES ══════════ */
-        .form-modern .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-modern .form-label {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--text-muted);
-            display: block;
-            margin-bottom: 8px;
-            transition: color 0.35s ease;
-        }
-
-        .form-modern .form-control,
-        .form-modern .form-select {
-            padding: 10px 14px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-primary);
-            background: var(--input-bg);
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s, background 0.35s ease, color 0.35s ease;
-        }
-
-        .form-modern .form-control:focus,
-        .form-modern .form-select:focus {
-            border-color: var(--brand-purple);
-            box-shadow: 0 0 0 3px rgba(159,102,175,0.10);
-            background: var(--input-focus-bg);
-        }
-
-        .form-modern .form-control::placeholder {
-            color: var(--text-muted);
-        }
-
-        .form-modern .form-select {
-            cursor: pointer;
-        }
-
-        [data-theme="dark"] .form-modern .form-select option {
-            background: #1a1926;
-            color: #f0eef5;
-        }
-
-        .form-modern .form-select option:checked {
-            background-color: var(--brand-purple) !important;
-            color: #ffffff !important;
-        }
-
-        .form-modern .form-text {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 6px;
-            transition: color 0.35s ease;
-        }
-
-        /* ══════════ CHECKBOX ══════════ */
-        .form-modern .form-check {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 16px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            background: var(--input-bg);
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .form-modern .form-check:hover {
-            border-color: rgba(159,102,175,0.4);
-            background: var(--brand-purple-light);
-        }
-
-        .form-modern .form-check-input {
-            width: 18px;
-            height: 18px;
-            border-radius: 6px;
-            border: 2px solid var(--border-color);
-            background-color: var(--input-bg);
-            cursor: pointer;
-            transition: all 0.2s;
-            flex-shrink: 0;
-            margin-top: 0;
-        }
-
-        .form-modern .form-check-input:checked {
-            background-color: var(--brand-purple);
-            border-color: var(--brand-purple);
-        }
-
-        .form-modern .form-check-input:focus {
-            border-color: var(--brand-purple);
-            box-shadow: 0 0 0 3px rgba(159,102,175,0.10);
-        }
-
-        .form-modern .form-check-label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-primary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.35s ease;
-        }
-
-        .form-modern .form-check-label i {
-            font-size: 16px;
-            color: var(--brand-purple);
-        }
-
-        .form-modern .form-check:has(.form-check-input:checked) {
-            border-color: rgba(159,102,175,0.4);
-            background: var(--brand-purple-light);
-        }
-
-        /* ══════════ PERMISSION GROUP ══════════ */
-        .permission-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 8px;
-        }
-
-        /* ══════════ BUTTONS ══════════ */
-        .btn-brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 9px 18px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-
-        .btn-brand-primary {
-            background: var(--brand-purple);
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(159,102,175,0.25);
-        }
-
-        .btn-brand-primary:hover {
-            background: var(--brand-purple-dark);
-            color: #fff;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(159,102,175,0.35);
-        }
-
-        .btn-brand-muted {
-            background: var(--border-color);
-            color: var(--text-secondary);
-        }
-
-        .btn-brand-muted:hover {
-            background: var(--text-muted);
-            color: #fff;
-        }
-
-        /* ══════════ ALERT ══════════ */
-        .alert-modern {
-            padding: 14px 20px;
-            border-radius: 14px;
-            font-size: 13px;
-            font-weight: 500;
-            border: 1px solid;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            transition: background 0.35s ease, border-color 0.35s ease, color 0.35s ease;
-        }
-
-        .alert-modern i {
-            font-size: 18px;
-            flex-shrink: 0;
-            margin-top: 1px;
-        }
-
-        .alert-modern.alert-error {
-            background: var(--danger-light);
-            border-color: rgba(239,68,68,0.25);
-            color: var(--danger);
-        }
-
-        [data-theme="dark"] .alert-modern.alert-error {
-            background: rgba(239,68,68,0.1);
-            border-color: rgba(248,113,113,0.2);
-        }
-
-        .alert-modern.alert-success {
-            background: var(--success-light);
-            border-color: rgba(16,185,129,0.25);
-            color: var(--success);
-        }
-
-        [data-theme="dark"] .alert-modern.alert-success {
-            background: rgba(16,185,129,0.1);
-            border-color: rgba(52,211,153,0.2);
-        }
-
-        .alert-modern ul {
-            margin: 4px 0 0 0;
-            padding-left: 18px;
-            font-size: 12px;
-        }
-
-        .alert-modern ul li {
-            margin-bottom: 2px;
-        }
-
-        /* ══════════ FORM GRID ══════════ */
-        .form-row-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 767.98px) {
-            .form-row-2 {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* ══════════ DIVIDER ══════════ */
-        .form-divider {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 24px 0;
-            color: var(--text-muted);
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-        }
-
-        .form-divider::before,
-        .form-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border-color);
-        }
-
-        .form-divider i {
-            font-size: 14px;
-            color: var(--brand-purple);
-        }
-
-        /* ══════════ ANIMATIONS ══════════ */
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-slide-up { animation: slideUp 0.5s ease-out forwards; }
-
-        .delay-1 { animation-delay: 0.1s; opacity: 0; }
-        .delay-2 { animation-delay: 0.2s; opacity: 0; }
-
-        /* ══════════ RESPONSIVE ══════════ */
-        @media (max-width: 767.98px) {
-            .page-hero { padding: 20px 16px 0; }
-            .page-hero-greeting { font-size: 20px; }
-            .content-card-body { padding: 20px; }
-            .permission-group { grid-template-columns: 1fr; }
-        }
-    </style>
+    @include('layouts.superadmin.partials.head', ['pageTitle' => 'Tambah Admin — Flodemi'])
 </head>
 
-<body>
-    <div class="main-wrapper">
+<body class="bg-slate-50 dark:bg-[#0f0e17] font-manrope transition-colors duration-300">
+    <div class="flex">
+        {{-- Sidebar --}}
         @include('layouts.superadmin.partials.sidebar', ['activeMenu' => 'manajemen-admin', 'activePage' => 'manajemen-admin-tambah'])
 
-        <div style="flex:1;display:flex;flex-direction:column;">
+        {{-- Main Content --}}
+        <div class="main-wrapper w-full flex flex-col min-h-screen" id="mainWrapper">
             @include('layouts.superadmin.partials.header')
 
-            <main style="flex:1;padding:0;">
-
-                {{-- ══════════ PAGE HEADER ══════════ --}}
-                <div class="page-hero animate-slide-up">
-                    <div class="page-hero-greeting">
-                        <span>Tambah Admin Baru</span> 
-                    </div>
-                    <p class="page-hero-sub">
-                        Lengkapi formulir berikut untuk menambahkan admin baru ke dalam sistem.
-                    </p>
-                    <div class="breadcrumb-modern">
-                        <a href="{{ route('superadmin.dashboard.index') }}">Dashboard</a>
-                        <span class="separator"><i class="ri-arrow-right-s-line"></i></span>
-                        <a href="{{ route('superadmin.admin.list') }}">Manajemen Admin</a>
-                        <span class="separator"><i class="ri-arrow-right-s-line"></i></span>
-                        <span class="current">Tambah Admin</span>
-                    </div>
+            <main class="flex-1 p-6 md:p-8">
+                {{-- Page Header --}}
+                <div class="mb-8">
+                    <h2 class="text-xl md:text-2xl font-extrabold text-slate-800 dark:text-white tracking-tight">Tambah Admin Baru</h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Lengkapi formulir berikut untuk menambahkan admin baru ke dalam sistem.</p>
+                    
+                    {{-- Breadcrumbs --}}
+                    <nav class="flex items-center gap-2 text-[10px] font-bold text-slate-400 mt-3 uppercase tracking-wider">
+                        <a href="{{ route('superadmin.dashboard.index') }}" class="hover:text-brand-purple transition-colors">Dashboard</a>
+                        <span class="text-slate-300">/</span>
+                        <a href="{{ route('superadmin.admin.list') }}" class="hover:text-brand-purple transition-colors">Manajemen Admin</a>
+                        <span class="text-slate-300">/</span>
+                        <span class="text-slate-500 dark:text-slate-300">Tambah Admin</span>
+                    </nav>
                 </div>
 
-                {{-- ══════════ FORM SECTION ══════════ --}}
-                <div style="padding:24px 32px 32px;">
-                    <div class="row justify-content-center">
-                        <div class="col-xl-8 col-lg-9 col-md-10">
-
-                            {{-- Alert Error --}}
-                            @if($errors->any())
-                            <div class="alert-modern alert-error animate-slide-up" style="margin-bottom:20px;">
-                                <i class="ri-error-warning-line"></i>
-                                <div>
-                                    <strong>Terjadi kesalahan!</strong>
-                                    <ul>
-                                        @foreach($errors->all() as $error)
+                {{-- Form Section --}}
+                <div class="w-full max-w-3xl mx-auto">
+                    {{-- Alert Error --}}
+                    @if($errors->any())
+                        <div class="mb-6 p-4 rounded-xl bg-red-50 border border-red-100 text-red-700 text-xs flex items-start gap-2.5 animate-pulse-soft">
+                            <i class="ri-error-warning-line text-lg mt-0.5"></i>
+                            <div>
+                                <strong class="font-bold">Terjadi kesalahan!</strong>
+                                <ul class="list-disc list-inside mt-1 space-y-1">
+                                    @foreach($errors->all() as $error)
                                         <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
+                                    @endforeach
+                                </ul>
                             </div>
-                            @endif
+                        </div>
+                    @endif
 
-                            {{-- Alert Success --}}
-                            @if(session('success'))
-                            <div class="alert-modern alert-success animate-slide-up" style="margin-bottom:20px;">
-                                <i class="ri-check-double-line"></i>
+                    {{-- Alert Success --}}
+                    @if(session('success'))
+                        <div class="mb-6 p-4 rounded-xl bg-green-50 border border-green-100 text-green-700 text-xs flex items-start gap-2.5">
+                            <i class="ri-checkbox-circle-line text-lg mt-0.5"></i>
+                            <div>
+                                <strong class="font-bold">Berhasil!</strong> {{ session('success') }}
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="bg-white dark:bg-[#13111c] border border-slate-100 dark:border-slate-800 rounded-3xl shadow-xl overflow-hidden">
+                        <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-900 flex items-center gap-2">
+                            <i class="ri-user-add-line text-lg text-brand-purple"></i>
+                            <h3 class="text-sm font-extrabold text-slate-800 dark:text-white">Formulir Admin Baru</h3>
+                        </div>
+
+                        <div class="p-6 md:p-8">
+                            <form action="{{ route('superadmin.admin.store') }}" method="POST" class="space-y-6">
+                                @csrf
+
+                                {{-- Informasi Akun --}}
                                 <div>
-                                    <strong>Berhasil!</strong> {{ session('success') }}
-                                </div>
-                            </div>
-                            @endif
-
-                            <div class="content-card animate-slide-up delay-1">
-                                <div class="content-card-header">
-                                    <div class="content-card-title">
-                                        <i class="ri-user-add-line"></i>
-                                        Formulir Admin Baru
+                                    <div class="flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-900 text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
+                                        <i class="ri-shield-user-line"></i>
+                                        Informasi Akun
                                     </div>
-                                </div>
 
-                                <div class="content-card-body">
-                                    <form action="{{ route('superadmin.admin.store') }}" method="POST" class="form-modern">
-                                        @csrf
-
-                                        {{-- Informasi Akun --}}
-                                        <div class="form-divider">
-                                            <i class="ri-shield-user-line"></i>
-                                            Informasi Akun
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label class="form-label">Nama Lengkap</label>
-                                            <input type="text" name="username" class="form-control"
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Nama Lengkap</label>
+                                            <input type="text" name="username" class="form-input-modern"
                                                 placeholder="Masukkan nama lengkap..." value="{{ old('username') }}" required>
                                         </div>
 
-                                        <div class="form-row-2">
-                                            <div class="mb-3">
-                                                <label class="form-label">Email</label>
-                                                <input type="email" name="email" class="form-control"
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Email Address</label>
+                                                <input type="email" name="email" class="form-input-modern"
                                                     placeholder="contoh@email.com" value="{{ old('email') }}" required>
                                             </div>
 
-                                            <div class="mb-3">
-                                                <label class="form-label">Nomor Handphone</label>
-                                                <input type="tel" name="nomor_hp" class="form-control"
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Nomor Handphone</label>
+                                                <input type="tel" name="nomor_hp" class="form-input-modern"
                                                     placeholder="08xxxxxxxxxx" value="{{ old('nomor_hp') }}"
                                                     inputmode="numeric" pattern="[0-9]*" maxlength="13"
                                                     oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                             </div>
                                         </div>
 
-                                        <div class="form-row-2">
-                                            <div class="mb-3">
-                                                <label class="form-label">Password</label>
-                                                <input type="password" name="password" class="form-control"
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Password</label>
+                                                <input type="password" name="password" class="form-input-modern"
                                                     placeholder="Minimal 8 karakter" required>
-                                                <div class="form-text">
-                                                    <i class="ri-lock-line" style="font-size:12px;"></i>
-                                                    Harus memiliki minimal 8 karakter
-                                                </div>
+                                                <span class="block text-[9px] text-slate-400 mt-1.5 flex items-center gap-1">
+                                                    <i class="ri-lock-line"></i> Harus memiliki minimal 8 karakter
+                                                </span>
                                             </div>
 
-                                            <div class="mb-3">
-                                                <label class="form-label">Status</label>
-                                                <select name="status" class="form-select" required>
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Status Akun</label>
+                                                <select name="status" class="form-input-modern" required>
                                                     <option value="">Pilih status...</option>
                                                     <option value="aktif" {{ old('status') == 'aktif' ? 'selected' : '' }}>Aktif</option>
                                                     <option value="nonaktif" {{ old('status') == 'nonaktif' ? 'selected' : '' }}>Nonaktif</option>
                                                 </select>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
 
-                                        {{-- Role & Hak Akses --}}
-                                        <div class="form-divider">
-                                            <i class="ri-key-2-line"></i>
-                                            Role & Hak Akses
-                                        </div>
+                                {{-- Role & Hak Akses --}}
+                                <div class="pt-2">
+                                    <div class="flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-900 text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
+                                        <i class="ri-key-2-line"></i>
+                                        Role & Hak Akses
+                                    </div>
 
-                                        <div class="form-row-2">
-                                            <div class="mb-3">
-                                                <label class="form-label">Role</label>
-                                                <select name="role" class="form-select" required>
+                                    <div class="space-y-4">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Role</label>
+                                                <select name="role" class="form-input-modern" required>
                                                     <option value="">Pilih role...</option>
                                                     <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                                                 </select>
                                             </div>
                                         </div>
 
-                                        <div class="mb-3">
-                                            <label class="form-label">Hak Akses</label>
-                                            <div class="permission-group">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox"
+                                        <div>
+                                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-3">Hak Akses</label>
+                                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 bg-slate-50/50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-800/80 rounded-2xl">
+                                                <label class="flex items-center gap-2.5 cursor-pointer text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-brand-purple transition-colors">
+                                                    <input class="w-4 h-4 rounded border-slate-300 dark:border-slate-800 text-brand-purple focus:ring-brand-purple/20" type="checkbox"
                                                         name="permissions[]" value="kelola_mentor"
-                                                        id="permission_mentor"
                                                         {{ in_array('kelola_mentor', old('permissions', [])) ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="permission_mentor">
-                                                        <i class="ri-user-star-line"></i>
-                                                        Kelola Mentor
-                                                    </label>
-                                                </div>
+                                                    <span><i class="ri-user-star-line mr-1"></i> Kelola Mentor</span>
+                                                </label>
 
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox"
+                                                <label class="flex items-center gap-2.5 cursor-pointer text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-brand-purple transition-colors">
+                                                    <input class="w-4 h-4 rounded border-slate-300 dark:border-slate-800 text-brand-purple focus:ring-brand-purple/20" type="checkbox"
                                                         name="permissions[]" value="kelola_mentee"
-                                                        id="permission_mentee"
                                                         {{ in_array('kelola_mentee', old('permissions', [])) ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="permission_mentee">
-                                                        <i class="ri-team-line"></i>
-                                                        Kelola Mentee
-                                                    </label>
-                                                </div>
+                                                    <span><i class="ri-team-line mr-1"></i> Kelola Mentee</span>
+                                                </label>
 
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox"
+                                                <label class="flex items-center gap-2.5 cursor-pointer text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-brand-purple transition-colors">
+                                                    <input class="w-4 h-4 rounded border-slate-300 dark:border-slate-800 text-brand-purple focus:ring-brand-purple/20" type="checkbox"
                                                         name="permissions[]" value="kelola_course"
-                                                        id="permission_course"
                                                         {{ in_array('kelola_course', old('permissions', [])) ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="permission_course">
-                                                        <i class="ri-book-open-line"></i>
-                                                        Kelola Course
-                                                    </label>
-                                                </div>
+                                                    <span><i class="ri-book-open-line mr-1"></i> Kelola Course</span>
+                                                </label>
                                             </div>
                                         </div>
-
-                                        {{-- Action Buttons --}}
-                                        <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:28px;padding-top:20px;border-top:1px solid var(--border-color);">
-                                            <a href="{{ route('superadmin.admin.list') }}" class="btn-brand btn-brand-muted">
-                                                <i class="ri-arrow-left-line"></i> Batal
-                                            </a>
-                                            <button type="submit" class="btn-brand btn-brand-primary">
-                                                <i class="ri-save-line"></i> Simpan Admin
-                                            </button>
-                                        </div>
-
-                                    </form>
+                                    </div>
                                 </div>
-                            </div>
 
+                                {{-- Action Buttons --}}
+                                <div class="mt-8 pt-5 border-t border-slate-100 dark:border-slate-900 flex justify-end gap-3">
+                                    <a href="{{ route('superadmin.admin.list') }}" 
+                                        class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5">
+                                        <i class="ri-arrow-left-line"></i> Batal
+                                    </a>
+                                    <button type="submit" class="btn-brand">
+                                        <i class="ri-save-line"></i> Simpan Admin
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-
             </main>
 
             @include('layouts.superadmin.partials.footer')
@@ -559,20 +186,6 @@
     </div>
 
     @include('layouts.superadmin.partials.scripts')
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Auto-hide alerts after 5 seconds
-        document.querySelectorAll('.alert-modern').forEach(alert => {
-            setTimeout(() => {
-                alert.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-                alert.style.opacity = '0';
-                alert.style.transform = 'translateY(-8px)';
-                setTimeout(() => alert.remove(), 400);
-            }, 5000);
-        });
-    });
-    </script>
 </body>
 
 </html>

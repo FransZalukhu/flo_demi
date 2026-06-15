@@ -3,861 +3,106 @@
 
 <head>
     @include('layouts.superadmin.partials.head', ['pageTitle' => 'Manajemen Kategori — Flodemi'])
-
-    <style>
-        /* ══════════ PAGE HERO ══════════ */
-        .page-hero {
-            padding: 32px 32px 0;
-        }
-
-        .page-hero-greeting {
-            font-size: 26px;
-            font-weight: 800;
-            color: #1f2937;
-            letter-spacing: -0.5px;
-            margin-bottom: 4px;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .page-hero-greeting {
-            color: #f3f4f6 !important;
-        }
-
-        .page-hero-greeting span {
-            background: linear-gradient(135deg, #9F66AF, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .page-hero-sub {
-            font-size: 14px;
-            color: #6b7280;
-            font-weight: 500;
-            margin-bottom: 20px;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .page-hero-sub {
-            color: #9ca3af !important;
-        }
-
-        .breadcrumb-modern {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .breadcrumb-modern a {
-            color: #9F66AF;
-            text-decoration: none;
-        }
-
-        .breadcrumb-modern a:hover {
-            text-decoration: underline;
-        }
-
-        .breadcrumb-modern .separator {
-            color: #9ca3af;
-        }
-
-        .breadcrumb-modern .current {
-            color: #6b7280;
-        }
-
-        [data-theme="dark"] .breadcrumb-modern .separator,
-        [data-theme="dark"] .breadcrumb-modern .current {
-            color: #9ca3af !important;
-        }
-
-        /* ══════════ CONTENT CARD ══════════ */
-        .content-card {
-            background: #ffffff;
-            border-radius: 20px;
-            border: 1px solid #e5e7eb;
-            overflow: hidden;
-            transition: background 0.35s ease, border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .content-card {
-            background: #13111c !important;
-            border-color: rgba(255, 255, 255, 0.08) !important;
-        }
-
-        .content-card-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #e5e7eb;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
-            transition: border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .content-card-header {
-            border-bottom-color: rgba(255, 255, 255, 0.08) !important;
-        }
-
-        .content-card-title {
-            font-size: 16px;
-            font-weight: 800;
-            color: #1f2937;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .content-card-title {
-            color: #f3f4f6 !important;
-        }
-
-        .content-card-title i {
-            color: #9F66AF;
-            font-size: 20px;
-        }
-
-        .content-card-toolbar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        /* ══════════ TOOLBAR SEARCH ══════════ */
-        .search-input-modern {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 14px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            background: #f9fafb;
-            transition: all 0.2s;
-        }
-
-        .search-input-modern:focus-within {
-            border-color: #9F66AF;
-            box-shadow: 0 0 0 3px rgba(159, 102, 175, 0.10);
-            background: #ffffff;
-        }
-
-        [data-theme="dark"] .search-input-modern {
-            background: #1a1825 !important;
-            border-color: rgba(255, 255, 255, 0.08) !important;
-        }
-
-        [data-theme="dark"] .search-input-modern:focus-within {
-            background: #1a1825 !important;
-            border-color: #9F66AF !important;
-        }
-
-        .search-input-modern i {
-            color: #6b7280;
-            font-size: 15px;
-        }
-
-        [data-theme="dark"] .search-input-modern i {
-            color: #9ca3af !important;
-        }
-
-        .search-input-modern input {
-            border: none;
-            background: transparent;
-            outline: none;
-            font-size: 13px;
-            font-weight: 500;
-            color: #1f2937;
-            width: 180px;
-        }
-
-        [data-theme="dark"] .search-input-modern input {
-            color: #f3f4f6 !important;
-        }
-
-        .search-input-modern input::placeholder {
-            color: #9ca3af;
-        }
-
-        /* ══════════ BUTTONS ══════════ */
-        .btn-brand {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 10px 18px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-
-        .btn-brand-primary {
-            background: #9F66AF;
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(159, 102, 175, 0.25);
-        }
-
-        .btn-brand-primary:hover {
-            background: #8b56a0;
-            color: #fff;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(159, 102, 175, 0.35);
-        }
-
-        .btn-brand-muted {
-            background: #e5e7eb;
-            color: #374151;
-        }
-
-        [data-theme="dark"] .btn-brand-muted {
-            background: rgba(255, 255, 255, 0.08) !important;
-            color: #9ca3af !important;
-        }
-
-        .btn-brand-muted:hover {
-            background: #9ca3af;
-            color: #fff;
-        }
-
-        .btn-brand-danger {
-            background: #ef4444;
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.25);
-        }
-
-        .btn-brand-danger:hover {
-            background: #dc2626;
-            color: #fff;
-        }
-
-        /* ══════════ TABLE ══════════ */
-        .table-modern {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-        }
-
-        .table-modern thead th {
-            padding: 12px 20px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #6b7280;
-            background: #f9fafb;
-            border-bottom: 1px solid #e5e7eb;
-            text-align: left;
-            white-space: nowrap;
-            transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .table-modern thead th {
-            background: #1a1825 !important;
-            color: #9ca3af !important;
-            border-bottom-color: rgba(255, 255, 255, 0.08) !important;
-        }
-
-        .table-modern tbody tr {
-            transition: background 0.2s ease;
-            background: #ffffff;
-        }
-
-        .table-modern tbody tr:hover {
-            background: #f3f0f7;
-        }
-
-        [data-theme="dark"] .table-modern tbody tr {
-            background: #13111c !important;
-        }
-
-        [data-theme="dark"] .table-modern tbody tr:hover {
-            background: rgba(159, 102, 175, 0.08) !important;
-        }
-
-        .table-modern tbody td {
-            padding: 14px 20px;
-            font-size: 13px;
-            font-weight: 500;
-            color: #1f2937;
-            border-bottom: 1px solid #f3f4f6;
-            vertical-align: middle;
-            background: inherit;
-            transition: color 0.35s ease, border-color 0.35s ease, background 0.2s ease;
-        }
-
-        [data-theme="dark"] .table-modern tbody td {
-            color: #e5e7eb !important;
-            border-bottom-color: rgba(255, 255, 255, 0.06) !important;
-            background: inherit !important;
-        }
-
-        .badge-role {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 700;
-            background: rgba(159, 102, 175, 0.1);
-            color: #9F66AF;
-            transition: background 0.35s ease, color 0.35s ease;
-        }
-
-        [data-theme="dark"] .badge-role {
-            background: rgba(159, 102, 175, 0.15) !important;
-            color: #c084fc !important;
-        }
-
-        .table-modern .category-title {
-            font-weight: 700;
-            color: #1f2937;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .table-modern .category-title {
-            color: #f3f4f6 !important;
-        }
-
-        /* ══════════ ACTION BTNS ══════════ */
-        .action-btns {
-            display: flex;
-            gap: 6px;
-            flex-wrap: nowrap;
-        }
-
-        .action-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 700;
-            border: 1px solid;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            background: transparent;
-            white-space: nowrap;
-        }
-
-        .action-btn.edit {
-            border-color: rgba(16, 185, 129, 0.3);
-            color: #10b981;
-        }
-
-        .action-btn.edit:hover {
-            background: rgba(16, 185, 129, 0.1);
-            border-color: #10b981;
-        }
-
-        [data-theme="dark"] .action-btn.edit {
-            border-color: rgba(52, 211, 153, 0.25) !important;
-            color: #34d399 !important;
-        }
-
-        [data-theme="dark"] .action-btn.edit:hover {
-            background: rgba(16, 185, 129, 0.15) !important;
-        }
-
-        .action-btn.delete {
-            border-color: rgba(239, 68, 68, 0.3);
-            color: #ef4444;
-        }
-
-        .action-btn.delete:hover {
-            background: rgba(239, 68, 68, 0.1);
-            border-color: #ef4444;
-        }
-
-        [data-theme="dark"] .action-btn.delete {
-            border-color: rgba(248, 113, 113, 0.25) !important;
-            color: #f87171 !important;
-        }
-
-        [data-theme="dark"] .action-btn.delete:hover {
-            background: rgba(239, 68, 68, 0.15) !important;
-        }
-
-        /* ══════════ ALERTS ══════════ */
-        .alert-modern {
-            padding: 14px 20px;
-            border-radius: 14px;
-            font-size: 13px;
-            font-weight: 500;
-            border: 1px solid;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 20px;
-            transition: background 0.35s ease, border-color 0.35s ease, color 0.35s ease;
-        }
-
-        .alert-modern i {
-            font-size: 18px;
-            flex-shrink: 0;
-            margin-top: 1px;
-        }
-
-        .alert-modern.alert-success {
-            background: rgba(16, 185, 129, 0.1);
-            border-color: rgba(16, 185, 129, 0.25);
-            color: #10b981;
-        }
-
-        [data-theme="dark"] .alert-modern.alert-success {
-            background: rgba(16, 185, 129, 0.1) !important;
-            border-color: rgba(52, 211, 153, 0.2) !important;
-            color: #34d399 !important;
-        }
-
-        .alert-modern.alert-danger {
-            background: rgba(239, 68, 68, 0.1);
-            border-color: rgba(239, 68, 68, 0.25);
-            color: #ef4444;
-        }
-
-        [data-theme="dark"] .alert-modern.alert-danger {
-            background: rgba(239, 68, 68, 0.1) !important;
-            border-color: rgba(248, 113, 113, 0.2) !important;
-            color: #f87171 !important;
-        }
-
-        /* ══════════ EMPTY STATE ══════════ */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-        }
-
-        .empty-state i {
-            font-size: 48px;
-            color: #9ca3af;
-            opacity: 0.3;
-        }
-
-        .empty-state p {
-            font-size: 14px;
-            color: #9ca3af;
-            margin-top: 12px;
-        }
-
-        /* ══════════ MODAL ══════════ */
-        .modal-modern .modal-content {
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
-            background: #ffffff;
-            transition: background 0.35s ease, border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .modal-content {
-            background: #1a1825 !important;
-            border-color: rgba(255, 255, 255, 0.08) !important;
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-modern .modal-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #e5e7eb;
-            background: #ffffff;
-            transition: background 0.35s ease, border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .modal-header {
-            background: #1a1825 !important;
-            border-bottom-color: rgba(255, 255, 255, 0.08) !important;
-        }
-
-        .modal-modern .modal-title {
-            font-weight: 800;
-            font-size: 16px;
-            color: #1f2937;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .modal-title {
-            color: #f3f4f6 !important;
-        }
-
-        .modal-modern .modal-body {
-            padding: 24px;
-            font-size: 14px;
-            color: #6b7280;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .modal-body {
-            color: #9ca3af !important;
-        }
-
-        .modal-modern .modal-body p.modal-desc {
-            font-size: 14px;
-            color: #6b7280;
-            margin-bottom: 8px;
-            line-height: 1.6;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .modal-body p.modal-desc {
-            color: #9ca3af !important;
-        }
-
-        .modal-modern .modal-footer {
-            padding: 16px 24px;
-            border-top: 1px solid #e5e7eb;
-            transition: border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .modal-footer {
-            border-top-color: rgba(255, 255, 255, 0.08) !important;
-        }
-
-        .modal-modern .btn-close {
-            filter: none;
-        }
-
-        [data-theme="dark"] .modal-modern .btn-close {
-            filter: invert(1) grayscale(100%) brightness(200%);
-        }
-
-        /* ══════════ FORM INSIDE MODAL ══════════ */
-        .modal-modern .form-label {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: #6b7280;
-            display: block;
-            margin-bottom: 8px;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .form-label {
-            color: #9ca3af !important;
-        }
-
-        .modal-modern .form-control {
-            width: 100%;
-            padding: 10px 14px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            font-size: 13px;
-            font-weight: 500;
-            color: #1f2937;
-            background: #f9fafb;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s, background 0.35s ease, color 0.35s ease;
-        }
-
-        .modal-modern .form-control:focus {
-            border-color: #9F66AF;
-            box-shadow: 0 0 0 3px rgba(159, 102, 175, 0.10);
-            background: #ffffff;
-        }
-
-        [data-theme="dark"] .modal-modern .form-control {
-            background: #13111c !important;
-            color: #f3f4f6 !important;
-            border-color: rgba(255, 255, 255, 0.08) !important;
-        }
-
-        [data-theme="dark"] .modal-modern .form-control:focus {
-            background: #13111c !important;
-            border-color: #9F66AF !important;
-            color: #f3f4f6 !important;
-        }
-
-        /* ══════════ ANIMATIONS ══════════ */
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(16px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-slide-up {
-            animation: slideUp 0.5s ease-out forwards;
-        }
-
-        .delay-1 {
-            animation-delay: 0.1s;
-            opacity: 0;
-        }
-
-        /* ══════════ RESPONSIVE & MOBILE-FRIENDLY OVERRIDES ══════════ */
-        @media (max-width: 767.98px) {
-            .page-hero {
-                padding: 24px 20px 0;
-            }
-
-            .page-hero-greeting {
-                font-size: 22px;
-            }
-
-            .content-card-header {
-                padding: 18px 20px;
-                flex-direction: column;
-                align-items: stretch !important;
-                gap: 14px;
-            }
-
-            .content-card-toolbar {
-                flex-direction: column;
-                align-items: stretch !important;
-                width: 100%;
-                gap: 10px;
-            }
-
-            .search-input-modern {
-                width: 100%;
-            }
-
-            .search-input-modern input {
-                width: 100% !important;
-            }
-
-            .btn-brand {
-                width: 100%;
-                justify-content: center;
-                padding: 12px 18px;
-            }
-
-            /* Card-based rendering for modern tables on mobile screens */
-            .table-modern, 
-            .table-modern thead, 
-            .table-modern tbody, 
-            .table-modern th, 
-            .table-modern td, 
-            .table-modern tr {
-                display: block;
-            }
-
-            .table-modern thead {
-                display: none;
-            }
-
-            .table-modern tbody tr {
-                margin: 16px;
-                border: 1px solid #e5e7eb;
-                border-radius: 16px;
-                padding: 12px 16px;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
-            }
-
-            [data-theme="dark"] .table-modern tbody tr {
-                border-color: rgba(255, 255, 255, 0.06) !important;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-            }
-
-            .table-modern tbody td {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 8px 0;
-                border: none !important;
-                font-size: 13px;
-                background: transparent !important;
-            }
-
-            .table-modern tbody td::before {
-                content: attr(data-label);
-                font-weight: 700;
-                color: #6b7280;
-                text-transform: uppercase;
-                font-size: 10px;
-                letter-spacing: 0.5px;
-            }
-
-            [data-theme="dark"] .table-modern tbody td::before {
-                color: #9ca3af !important;
-            }
-
-            /* Action Buttons full width on mobile card */
-            .table-modern tbody td:last-child {
-                border-top: 1px solid #f3f4f6 !important;
-                padding-top: 12px;
-                margin-top: 8px;
-            }
-
-            [data-theme="dark"] .table-modern tbody td:last-child {
-                border-top-color: rgba(255, 255, 255, 0.05) !important;
-            }
-
-            .action-btns {
-                width: 100%;
-                justify-content: flex-end;
-            }
-
-            /* Responsive modern modals as Bottom Sheets on mobile devices */
-            .modal-modern .modal-dialog {
-                margin: 0;
-                width: 100%;
-                max-width: 100%;
-                height: 100%;
-                display: flex;
-                align-items: flex-end;
-            }
-
-            .modal-modern .modal-content {
-                border-radius: 24px 24px 0 0;
-                border-left: none;
-                border-right: none;
-                border-bottom: none;
-                margin-top: auto;
-                width: 100%;
-                max-height: 85%;
-                overflow-y: auto;
-                transform: translateY(0);
-                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-
-            .modal-modern.fade .modal-content {
-                transform: translateY(100px);
-            }
-
-            .modal-modern.show .modal-content {
-                transform: translateY(0);
-            }
-
-            .modal-modern .modal-header {
-                padding: 16px 20px;
-            }
-
-            .modal-modern .modal-body {
-                padding: 20px;
-            }
-
-            .modal-modern .modal-footer {
-                padding: 16px 20px;
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .modal-modern .modal-footer .btn-brand {
-                width: 100%;
-            }
-
-            /* Stacking: Primary Action on Top, Cancel button on Bottom */
-            .modal-modern .modal-footer .btn-brand:first-child {
-                order: 2;
-            }
-
-            .modal-modern .modal-footer .btn-brand:last-child {
-                order: 1;
-            }
-        }
-    </style>
 </head>
 
-<body>
+<body class="bg-slate-50 dark:bg-[#0f0e17] font-manrope transition-colors duration-300">
     <div class="main-wrapper">
         @include('layouts.superadmin.partials.sidebar', ['activeMenu' => 'manajemen-course', 'activePage' => 'manajemen-course-kategori'])
 
-        <div style="flex:1;display:flex;flex-direction:column;">
+        <div class="flex-1 flex flex-col min-w-0">
             @include('layouts.superadmin.partials.header')
 
-            <main style="flex:1;padding:0;">
+            <main class="flex-1 p-0">
 
                 {{-- ══════════ PAGE HEADER ══════════ --}}
-                <div class="page-hero animate-slide-up">
-                    <div class="page-hero-greeting">
-                        <span>Manajemen Kategori</span>
+                <div class="pt-8 px-8 pb-0 md:pt-6 md:px-4 transition-all duration-300">
+                    <div class="text-2xl md:text-xl font-extrabold text-slate-800 dark:text-white tracking-tight mb-1">
+                        <span class="bg-gradient-to-r from-brand-purple to-purple-400 bg-clip-text text-transparent">Manajemen Kategori</span> 
                     </div>
-                    <p class="page-hero-sub">
+                    <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 font-medium mb-5">
                         Tambah, edit, dan hapus kategori pengelompokan course.
                     </p>
-                    <div class="breadcrumb-modern">
-                        <a href="{{ route('superadmin.dashboard.index') }}">Dashboard</a>
-                        <span class="separator"><i class="ri-arrow-right-s-line"></i></span>
-                        <span class="current">Kategori</span>
+                    <div class="flex items-center gap-2 text-[11px] font-semibold">
+                        <a href="{{ route('superadmin.dashboard.index') }}" class="text-brand-purple hover:underline">Dashboard</a>
+                        <span class="text-slate-400 dark:text-slate-600"><i class="ri-arrow-right-s-line"></i></span>
+                        <span class="text-slate-400 dark:text-slate-600">Kategori</span>
                     </div>
                 </div>
 
                 {{-- ══════════ CONTENT ══════════ --}}
-                <div style="padding:24px 32px 32px;">
+                <div class="p-6 md:p-4">
 
                     {{-- Alerts --}}
                     @if (session('success'))
-                        <div class="alert-modern alert-success animate-slide-up">
-                            <i class="ri-check-double-line"></i>
-                            <div>
-                                <strong>Berhasil!</strong> {{ session('success') }}
+                        <div class="mb-5 p-4 rounded-xl border border-emerald-200 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-start gap-3">
+                            <i class="ri-check-double-line text-lg flex-shrink-0"></i>
+                            <div class="text-xs font-semibold">
+                                <strong class="font-bold">Berhasil!</strong> {{ session('success') }}
                             </div>
                         </div>
                     @endif
 
                     @if (session('error'))
-                        <div class="alert-modern alert-danger animate-slide-up">
-                            <i class="ri-error-warning-line"></i>
-                            <div>
-                                <strong>Gagal!</strong> {{ session('error') }}
+                        <div class="mb-5 p-4 rounded-xl border border-red-200 dark:border-red-500/20 bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 flex items-start gap-3">
+                            <i class="ri-error-warning-line text-lg flex-shrink-0"></i>
+                            <div class="text-xs font-semibold">
+                                <strong class="font-bold">Gagal!</strong> {{ session('error') }}
                             </div>
                         </div>
                     @endif
 
-                    <div class="content-card animate-slide-up delay-1">
-                        <div class="content-card-header">
-                            <div class="content-card-title">
-                                <i class="ri-price-tag-3-line"></i>
+                    <div class="content-card">
+                        <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-900 flex items-center justify-between flex-wrap gap-3">
+                            <div class="text-base font-extrabold text-slate-800 dark:text-white flex items-center gap-2">
+                                <i class="ri-price-tag-3-line text-brand-purple"></i>
                                 Daftar Kategori
                             </div>
-                            <div class="content-card-toolbar">
-                                <div class="search-input-modern">
-                                    <i class="ri-search-line"></i>
-                                    <input type="text" id="searchKategori" placeholder="Cari kategori...">
+                            <div class="flex items-center gap-2.5 flex-wrap md:w-full">
+                                <div class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 focus-within:border-brand-purple focus-within:ring-4 focus-within:ring-brand-purple/10 focus-within:bg-white dark:focus-within:bg-[#13111c] transition-all md:flex-1">
+                                    <i class="ri-search-line text-slate-400 text-sm"></i>
+                                    <input type="text" id="searchKategori" class="border-none bg-transparent outline-none text-xs font-semibold text-slate-800 dark:text-slate-200 w-44 md:w-full placeholder-slate-400" placeholder="Cari kategori...">
                                 </div>
-                                <button class="btn-brand btn-brand-primary" data-bs-toggle="modal"
-                                    data-bs-target="#modalTambahKategori">
+                                <button class="btn-brand md:w-full md:justify-center cursor-pointer" onclick="bukaModal('modalTambahKategori')">
                                     <i class="ri-add-line"></i> Tambah Kategori
                                 </button>
                             </div>
                         </div>
 
-                        <div class="table-responsive" style="overflow-x: visible;">
+                        <div class="overflow-x-auto">
                             <table class="table-modern">
                                 <thead>
                                     <tr>
-                                        <th style="width:80px;">No</th>
+                                        <th class="w-20">No</th>
                                         <th>Nama Kategori</th>
-                                        <th style="width:200px;">Jumlah Course</th>
-                                        <th style="width:180px;">Aksi</th>
+                                        <th class="w-52">Jumlah Course</th>
+                                        <th class="w-44">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody id="kategoriTable">
                                     @forelse ($categories as $category)
-                                        <tr data-id="{{ $category->id }}">
-                                            <td style="font-weight:700;color:#6b7280;" class="index-cell" data-label="No">{{ $loop->iteration }}</td>
+                                        <tr class="hover:bg-slate-50/50 dark:hover:bg-brand-purple/5 transition-colors" data-id="{{ $category->id }}">
+                                            <td class="font-bold text-slate-500 dark:text-slate-400 index-cell" data-label="No">{{ $loop->iteration }}</td>
                                             <td data-label="Nama Kategori">
-                                                <span class="category-title">{{ $category->nama }}</span>
+                                                <span class="font-bold text-slate-800 dark:text-slate-100 category-title">{{ $category->nama }}</span>
                                             </td>
                                             <td data-label="Jumlah Course">
-                                                <span class="badge-role">
-                                                    <i class="ri-book-open-line" style="font-size:10px;"></i>
+                                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-brand-purple-light/40 dark:bg-brand-purple/10 text-brand-purple dark:text-purple-400">
+                                                    <i class="ri-book-open-line text-[10px]"></i>
                                                     {{ $category->kursus_count }} Course
                                                 </span>
                                             </td>
                                             <td data-label="Aksi">
-                                                <div class="action-btns">
-                                                    <button class="action-btn edit"
-                                                        onclick="bukaModalEdit({{ $category->id }}, '{{ addslashes($category->nama) }}')">
+                                                <div class="flex items-center gap-1.5 flex-nowrap">
+                                                    <button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10 transition-colors cursor-pointer"
+                                                        data-id="{{ $category->id }}"
+                                                        data-nama="{{ $category->nama }}"
+                                                        onclick="bukaModalEdit(this)">
                                                         <i class="ri-edit-line"></i> Edit
                                                     </button>
-                                                    <button class="action-btn delete"
-                                                        onclick="bukaModalHapus({{ $category->id }}, '{{ addslashes($category->nama) }}')">
+                                                    <button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold border border-red-500/20 text-red-600 dark:text-red-400 hover:bg-red-500/10 transition-colors cursor-pointer"
+                                                        data-id="{{ $category->id }}"
+                                                        data-nama="{{ $category->nama }}"
+                                                        onclick="bukaModalHapus(this)">
                                                         <i class="ri-delete-bin-line"></i> Hapus
                                                     </button>
                                                 </div>
@@ -866,9 +111,9 @@
                                     @empty
                                         <tr class="empty-row-placeholder">
                                             <td colspan="4">
-                                                <div class="empty-state">
-                                                    <i class="ri-inbox-line"></i>
-                                                    <p>Belum ada data kategori</p>
+                                                <div class="flex flex-col items-center justify-center py-12 text-slate-400 dark:text-slate-500">
+                                                    <i class="ri-inbox-line text-4xl opacity-30 mb-2"></i>
+                                                    <p class="text-xs font-semibold">Belum ada data kategori</p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -887,95 +132,98 @@
     {{-- ══════════ MODALS ══════════ --}}
 
     {{-- Modal Tambah --}}
-    <div class="modal fade modal-modern" id="modalTambahKategori" tabindex="-1" aria-labelledby="labelTambah"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="labelTambah">
-                        <i class="ri-price-tag-3-line" style="color:#9F66AF;margin-right:6px;"></i>
-                        Tambah Kategori
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <form action="{{ route('superadmin.course.kategori.store') }}" method="POST">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="nama" class="form-label">Nama Kategori</label>
-                            <input type="text" class="form-control" id="nama" name="nama" required
-                                placeholder="Contoh: Web Development" maxlength="255">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-brand btn-brand-muted" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn-brand btn-brand-primary">Simpan Kategori</button>
-                    </div>
-                </form>
+    <div id="modalTambahKategori" class="fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-slate-900/50 backdrop-blur-sm transition-opacity" style="display: none;">
+        <div class="bg-white dark:bg-[#13111c] border border-slate-100 dark:border-slate-900 rounded-2xl overflow-hidden shadow-2xl w-[90%] max-w-md transform transition-all scale-95 opacity-0 m-auto mt-20" id="modalTambahKategoriContent">
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-900 flex items-center justify-between">
+                <h5 class="font-extrabold text-base text-slate-800 dark:text-white flex items-center gap-2" id="labelTambah">
+                    <i class="ri-price-tag-3-line text-brand-purple text-lg"></i>
+                    Tambah Kategori
+                </h5>
+                <button type="button" class="text-slate-400 hover:text-slate-500" onclick="tutupModal('modalTambahKategori')">
+                    <i class="ri-close-line text-xl"></i>
+                </button>
             </div>
+            <form action="{{ route('superadmin.course.kategori.store') }}" method="POST">
+                @csrf
+                <div class="p-6 space-y-4">
+                    <div>
+                        <label for="nama" class="block text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Nama Kategori</label>
+                        <input type="text" class="form-input-modern" id="nama" name="nama" required
+                            placeholder="Contoh: Web Development" maxlength="255">
+                    </div>
+                </div>
+                <div class="px-6 py-4 border-t border-slate-100 dark:border-slate-900 flex justify-end gap-2.5">
+                    <button type="button" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer" onclick="tutupModal('modalTambahKategori')">Batal</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl text-xs font-bold bg-brand-purple text-white shadow-md shadow-brand-purple/15 hover:bg-brand-purple-dark hover:shadow-lg transition-all flex items-center gap-1 cursor-pointer">
+                        Simpan Kategori
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
     {{-- Modal Edit --}}
-    <div class="modal fade modal-modern" id="modalEditKategori" tabindex="-1" aria-labelledby="labelEdit"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="labelEdit">
-                        <i class="ri-edit-line" style="color:#9F66AF;margin-right:6px;"></i>
-                        Edit Kategori
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <form id="formEditKategori" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="edit_nama" class="form-label">Nama Kategori</label>
-                            <input type="text" class="form-control" id="edit_nama" name="nama" required
-                                placeholder="Contoh: Web Development" maxlength="255">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-brand btn-brand-muted" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn-brand btn-brand-primary">Simpan Perubahan</button>
-                    </div>
-                </form>
+    <div id="modalEditKategori" class="fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-slate-900/50 backdrop-blur-sm transition-opacity" style="display: none;">
+        <div class="bg-white dark:bg-[#13111c] border border-slate-100 dark:border-slate-900 rounded-2xl overflow-hidden shadow-2xl w-[90%] max-w-md transform transition-all scale-95 opacity-0 m-auto mt-20" id="modalEditKategoriContent">
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-900 flex items-center justify-between">
+                <h5 class="font-extrabold text-base text-slate-800 dark:text-white flex items-center gap-2" id="labelEdit">
+                    <i class="ri-edit-line text-brand-purple text-lg"></i>
+                    Edit Kategori
+                </h5>
+                <button type="button" class="text-slate-400 hover:text-slate-500" onclick="tutupModal('modalEditKategori')">
+                    <i class="ri-close-line text-xl"></i>
+                </button>
             </div>
+            <form id="formEditKategori" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="p-6 space-y-4">
+                    <div>
+                        <label for="edit_nama" class="block text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Nama Kategori</label>
+                        <input type="text" class="form-input-modern" id="edit_nama" name="nama" required
+                            placeholder="Contoh: Web Development" maxlength="255">
+                    </div>
+                </div>
+                <div class="px-6 py-4 border-t border-slate-100 dark:border-slate-900 flex justify-end gap-2.5">
+                    <button type="button" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer" onclick="tutupModal('modalEditKategori')">Batal</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl text-xs font-bold bg-brand-purple text-white shadow-md shadow-brand-purple/15 hover:bg-brand-purple-dark hover:shadow-lg transition-all flex items-center gap-1 cursor-pointer">
+                        Simpan Perubahan
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
     {{-- Modal Hapus --}}
-    <div class="modal fade modal-modern" id="modalHapusKategori" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <i class="ri-delete-bin-line" style="color:#ef4444;margin-right:6px;"></i>
-                        Hapus Kategori
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <form id="formHapusKategori" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <div class="modal-body">
-                        <p class="modal-desc">
-                            Apakah Anda yakin ingin menghapus kategori <strong id="hapus_nama"></strong>?
-                        </p>
-                        <p class="text-danger small mb-0">
-                            <i class="ri-error-warning-line"></i> Tindakan ini tidak dapat dibatalkan. Kategori hanya
-                            bisa dihapus jika tidak digunakan oleh course apa pun.
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-brand btn-brand-muted" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn-brand btn-brand-danger">Hapus Kategori</button>
-                    </div>
-                </form>
+    <div id="modalHapusKategori" class="fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-slate-900/50 backdrop-blur-sm transition-opacity" style="display: none;">
+        <div class="bg-white dark:bg-[#13111c] border border-slate-100 dark:border-slate-900 rounded-2xl overflow-hidden shadow-2xl w-[90%] max-w-md transform transition-all scale-95 opacity-0 m-auto mt-20" id="modalHapusKategoriContent">
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-900 flex items-center justify-between">
+                <h5 class="font-extrabold text-base text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="ri-delete-bin-line text-red-500 text-lg"></i>
+                    Hapus Kategori
+                </h5>
+                <button type="button" class="text-slate-400 hover:text-slate-500" onclick="tutupModal('modalHapusKategori')">
+                    <i class="ri-close-line text-xl"></i>
+                </button>
             </div>
+            <form id="formHapusKategori" method="POST">
+                @csrf
+                @method('DELETE')
+                <div class="p-6 text-sm text-slate-500 dark:text-slate-400 space-y-3">
+                    <p class="text-xs leading-relaxed">
+                        Apakah Anda yakin ingin menghapus kategori <strong id="hapus_nama" class="text-slate-800 dark:text-white font-bold"></strong>?
+                    </p>
+                    <p class="text-red-500 text-xs font-semibold flex items-center gap-1">
+                        <i class="ri-error-warning-line"></i> Tindakan ini tidak dapat dibatalkan. Kategori hanya bisa dihapus jika tidak digunakan oleh course apa pun.
+                    </p>
+                </div>
+                <div class="px-6 py-4 border-t border-slate-100 dark:border-slate-900 flex justify-end gap-2.5">
+                    <button type="button" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer" onclick="tutupModal('modalHapusKategori')">Batal</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl text-xs font-bold bg-red-500 text-white shadow-md shadow-red-500/15 hover:bg-red-600 hover:shadow-lg transition-all flex items-center gap-1 cursor-pointer">
+                        Hapus Kategori
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -996,9 +244,9 @@
             emptySearchRow.style.display = 'none';
             emptySearchRow.innerHTML = `
                 <td colspan="4">
-                    <div class="empty-state">
-                        <i class="ri-search-2-line"></i>
-                        <p>Kategori tidak ditemukan</p>
+                    <div class="flex flex-col items-center justify-center py-12 text-slate-400 dark:text-slate-500">
+                        <i class="ri-search-2-line text-4xl opacity-30 mb-2"></i>
+                        <p class="text-xs font-semibold">Kategori tidak ditemukan</p>
                     </div>
                 </td>
             `;
@@ -1030,24 +278,57 @@
             }
         });
 
-        // ── Modals Logic ──
-        function bukaModalEdit(id, nama) {
+        // ── Modals Logic Tailwind ──
+        function bukaModal(id) {
+            const modal = document.getElementById(id);
+            const content = document.getElementById(id + 'Content');
+            if(!modal) return;
+            modal.style.display = 'flex';
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function tutupModal(id) {
+            const modal = document.getElementById(id);
+            const content = document.getElementById(id + 'Content');
+            if(!modal) return;
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+            }, 200);
+        }
+
+        function bukaModalEdit(btn) {
+            const id = btn.getAttribute('data-id');
+            const nama = btn.getAttribute('data-nama');
             const form = document.getElementById('formEditKategori');
             form.action = routeUpdatePattern.replace(':id', id);
             document.getElementById('edit_nama').value = nama;
 
-            const modal = new bootstrap.Modal(document.getElementById('modalEditKategori'));
-            modal.show();
+            bukaModal('modalEditKategori');
         }
 
-        function bukaModalHapus(id, nama) {
+        function bukaModalHapus(btn) {
+            const id = btn.getAttribute('data-id');
+            const nama = btn.getAttribute('data-nama');
             const form = document.getElementById('formHapusKategori');
             form.action = routeDeletePattern.replace(':id', id);
             document.getElementById('hapus_nama').textContent = nama;
 
-            const modal = new bootstrap.Modal(document.getElementById('modalHapusKategori'));
-            modal.show();
+            bukaModal('modalHapusKategori');
         }
+
+        // Close on outside click
+        window.addEventListener('click', function(e) {
+            if (e.target.id === 'modalTambahKategori') tutupModal('modalTambahKategori');
+            if (e.target.id === 'modalEditKategori') tutupModal('modalEditKategori');
+            if (e.target.id === 'modalHapusKategori') tutupModal('modalHapusKategori');
+        });
     </script>
 </body>
 

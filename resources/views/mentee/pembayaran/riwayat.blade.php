@@ -78,7 +78,10 @@
                                         <i class="ri-close-circle-line text-xs"></i> EXPIRED
                                     </span>
                                 @elseif($payment->status === 'waiting')
-                                    <span class="text-[10px] font-bold text-blue-500 uppercase tracking-tighter italic">Verifikasi...</span>
+                                    <a href="{{ route('mentee.pembayaran.invoice', $payment->id) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-500 text-white text-[10px] font-black rounded-lg hover:scale-105 transition-all shadow-lg shadow-blue-100 dark:shadow-none whitespace-nowrap">
+                                        <i class="ri-time-line"></i>
+                                        CEK INVOICE
+                                    </a>
                                 @else
                                     <span class="text-[10px] font-bold text-emerald-500 uppercase tracking-tighter">
                                         <i class="ri-checkbox-circle-line text-xs"></i> SELESAI
@@ -156,9 +159,11 @@
                             <i class="ri-close-circle-line"></i> EXPIRED
                         </span>
                     @elseif($payment->status === 'waiting')
-                        <span class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 text-[10px] font-black rounded-lg italic">
-                            VERIFIKASI...
-                        </span>
+                        <a href="{{ route('mentee.pembayaran.invoice', $payment->id) }}" 
+                           class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-blue-500 text-white text-[10px] font-black rounded-lg hover:bg-blue-600 transition-colors">
+                            <i class="ri-time-line"></i>
+                            INVOICE
+                        </a>
                     @else
                         <span class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-black rounded-lg">
                             <i class="ri-checkbox-circle-line"></i> SELESAI

@@ -39,6 +39,7 @@ class MenteeController extends Controller
         $user = auth()->user();
         $course = $user->kursus()
             ->with(['mentor', 'modul' => fn($q) => $q->orderBy('urutan')])
+            ->wherePivotIn('status', ['aktif', 'selesai'])
             ->where('kursus.id', $id)
             ->firstOrFail();
 
@@ -48,7 +49,6 @@ class MenteeController extends Controller
             ->get()
             ->keyBy('modul_id');
 
-        // Pindahkan pengambilan otherCourses ke sini agar selalu tersedia
         $otherCourses = $user->kursus()
             ->where('kursus.id', '!=', $id)
             ->withCount('modul')
@@ -126,6 +126,14 @@ class MenteeController extends Controller
         $courseId = $request->kursus_id;
         $modulId = $request->modul_id;
 
+        $enrollment = $user->pendaftaran()
+            ->where('kursus_id', $courseId)
+            ->first();
+
+        if (!$enrollment || !in_array($enrollment->status, ['aktif', 'selesai'])) {
+            return back()->with('error', 'Akses ditolak. Anda tidak memiliki pendaftaran aktif di kursus ini.');
+        }
+
         $modules = Modul::where('kursus_id', $courseId)->orderBy('urutan')->get();
         $current = $modules->firstWhere('id', $modulId);
 
@@ -133,7 +141,6 @@ class MenteeController extends Controller
             return back()->with('error', 'Modul tidak ditemukan.');
         }
 
-        // Sequence Check: Pastikan modul sebelumnya sudah selesai sebelum menandai yang ini
         $prev = $modules->where('urutan', '<', $current->urutan)->last();
         if ($prev) {
             $prevDone = UserModulProgress::where('user_id', $user->id)

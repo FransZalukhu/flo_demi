@@ -8,119 +8,104 @@
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
     <style>
-        /* ── Base ── */
-        .form-card-purple {
-            border: 2px solid #9F66AF;
-            border-radius: 14px;
-            box-shadow: 0 4px 10px rgba(159,102,175,0.08);
+        /* Quill Editor Dark Mode Styling Overrides */
+        [data-theme="dark"] .ql-toolbar.ql-snow {
+            border-color: rgba(255, 255, 255, 0.08) !important;
+            background: #1a1825 !important;
         }
-        .form-card-purple .form-label { font-weight: 600; color: #4b2c57; }
-        .form-card-purple .form-control:focus,
-        .form-card-purple .form-select:focus {
-            border-color: #9F66AF;
-            box-shadow: 0 0 0 0.2rem rgba(159,102,175,0.25);
+        [data-theme="dark"] .ql-toolbar.ql-snow .ql-stroke {
+            stroke: #9ca3af !important;
         }
-        .btn-purple {
-            background-color: #9F66AF !important;
-            color: #ffffff !important;
-            font-weight: 600;
-            border-radius: 6px;
-            border: none;
+        [data-theme="dark"] .ql-toolbar.ql-snow .ql-fill {
+            fill: #9ca3af !important;
         }
-        .btn-purple:hover { background-color: #8b55a0 !important; }
-
-        /* ── Quill Custom Style ── */
-        .quill-editor-wrapper {
-            border: 1.5px solid #9F66AF;
-            border-radius: 8px;
-            overflow: hidden;
-            background: #fff;
+        [data-theme="dark"] .ql-toolbar.ql-snow button:hover .ql-stroke { stroke: #c084fc !important; }
+        [data-theme="dark"] .ql-toolbar.ql-snow button:hover .ql-fill { fill: #c084fc !important; }
+        [data-theme="dark"] .ql-toolbar.ql-snow .ql-picker-label {
+            color: #9ca3af !important;
         }
-        .ql-toolbar.ql-snow {
+        [data-theme="dark"] .ql-toolbar.ql-snow .ql-picker-options {
+            background: #13111c !important;
+            border-color: rgba(255, 255, 255, 0.08) !important;
+        }
+        [data-theme="dark"] .ql-toolbar.ql-snow .ql-picker-item {
+            color: #e5e7eb !important;
+        }
+        [data-theme="dark"] .ql-container.ql-snow {
+            background: #13111c !important;
             border: none !important;
-            border-bottom: 1px solid #f3e9f9 !important;
-            background: #fdf8ff;
         }
-        .ql-container.ql-snow {
-            border: none !important;
-            min-height: 250px;
-            font-family: inherit;
-            font-size: 14px;
+        [data-theme="dark"] .ql-editor {
+            color: #e5e7eb !important;
         }
-        .ql-editor.ql-blank::before {
-            color: #aaa;
-            font-style: italic;
-        }
-        /* Focus state */
-        .quill-editor-wrapper:focus-within {
-            border-color: #9F66AF;
-            box-shadow: 0 0 0 0.2rem rgba(159,102,175,0.25);
-        }
-
-        .current-thumb {
-            max-width: 200px;
-            border-radius: 10px;
-            border: 2px solid #9F66AF;
-            margin-top: 10px;
+        [data-theme="dark"] .ql-editor.ql-blank::before {
+            color: #6b7280 !important;
         }
     </style>
 </head>
 
 <body>
-    <div class="dashboard-main-wrapper">
-        @include('layouts.superadmin.partials.header')
+    <div class="main-wrapper">
         @include('layouts.superadmin.partials.sidebar', ['activeMenu' => 'manajemen-course', 'activePage' => 'manajemen-course-list'])
 
-        <div class="dashboard-wrapper">
-            <div class="container-fluid dashboard-content">
-                <!-- Page Header -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="page-header">
-                            <h2 class="pageheader-title">Edit Course</h2>
-                            <p class="pageheader-text">Perbarui informasi kursus <strong>{{ $course->judul }}</strong></p>
-                            <div class="page-breadcrumb">
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard.index') }}" class="breadcrumb-link">Dashboard</a></li>
-                                        <li class="breadcrumb-item"><a href="{{ route('superadmin.course.list') }}" class="breadcrumb-link">Manajemen Course</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Edit Course</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
+        <div class="flex-1 flex flex-col min-w-0 min-h-screen">
+            @include('layouts.superadmin.partials.header')
+
+            <main class="flex-1 p-0">
+                
+                {{-- ══════════ PAGE HEADER ══════════ --}}
+                <div class="pt-8 px-8 pb-0 md:pt-6 md:px-4 transition-all duration-300">
+                    <div class="text-2xl md:text-xl font-extrabold text-slate-800 dark:text-white tracking-tight mb-1">
+                        <span class="bg-gradient-to-r from-brand-purple to-purple-400 bg-clip-text text-transparent">Edit Course</span> 
+                    </div>
+                    <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 font-medium mb-5">
+                        Perbarui informasi kursus <strong>{{ $course->judul }}</strong>
+                    </p>
+                    <div class="flex items-center gap-2 text-[11px] font-semibold">
+                        <a href="{{ route('superadmin.dashboard.index') }}" class="text-brand-purple hover:underline">Dashboard</a>
+                        <span class="text-slate-400 dark:text-slate-600"><i class="ri-arrow-right-s-line"></i></span>
+                        <a href="{{ route('superadmin.course.list') }}" class="text-brand-purple hover:underline">Manajemen Course</a>
+                        <span class="text-slate-400 dark:text-slate-600"><i class="ri-arrow-right-s-line"></i></span>
+                        <span class="text-slate-400 dark:text-slate-600">Edit Course</span>
                     </div>
                 </div>
 
-                <div class="row mt-4">
-                    <div class="col-xl-8 col-lg-10 col-md-12 mx-auto">
-                        <div class="card form-card-purple">
-                            <div class="card-body p-4">
+                {{-- ══════════ FORM CARD ══════════ --}}
+                <div class="p-6 md:p-4">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="content-card">
+                            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-900 flex items-center justify-between">
+                                <div class="text-base font-extrabold text-slate-800 dark:text-white flex items-center gap-2">
+                                    <i class="ri-edit-box-line text-brand-purple text-lg"></i>
+                                    Informasi Kursus
+                                </div>
+                            </div>
 
-                                <form id="courseForm" action="{{ route('superadmin.course.update', $course->id) }}" method="POST" enctype="multipart/form-data">
+                            <div class="p-8 md:p-5">
+                                <form id="courseForm" action="{{ route('superadmin.course.update', $course->id) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                                     @csrf
                                     @method('POST')
 
                                     <!-- Judul -->
-                                    <div class="mb-3">
-                                        <label class="form-label">Judul Course <span class="text-danger">*</span></label>
-                                        <input type="text" name="judul" class="form-control" placeholder="Contoh: Bootcamp UI/UX Design" required value="{{ old('judul', $course->judul) }}">
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Judul Course <span class="text-red-500">*</span></label>
+                                        <input type="text" name="judul" class="form-input-modern" placeholder="Contoh: Bootcamp UI/UX Design" required value="{{ old('judul', $course->judul) }}">
                                     </div>
 
                                     <!-- Deskripsi -->
-                                    <div class="mb-3">
-                                        <label class="form-label">Deskripsi <span class="text-danger">*</span></label>
-                                        <div class="quill-editor-wrapper">
-                                            <div id="editor-container"></div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Deskripsi <span class="text-red-500">*</span></label>
+                                        <div class="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden focus-within:border-brand-purple focus-within:ring-4 focus-within:ring-brand-purple/10 transition-all bg-white dark:bg-[#13111c]">
+                                            <div id="editor-container" class="min-h-[250px] text-slate-800 dark:text-slate-200"></div>
                                         </div>
                                         <input type="hidden" name="deskripsi" id="deskripsiInput" value="{{ old('deskripsi', $course->deskripsi) }}">
                                     </div>
 
-                                    <div class="row">
+                                    <div class="grid grid-cols-2 gap-6 md:grid-cols-1 md:gap-4">
                                         <!-- Kategori -->
-                                        <div class="col-md-6 mb-3">
-                                            <label class="form-label">Kategori <span class="text-danger">*</span></label>
-                                            <select name="kategori_id" class="form-select" required>
+                                        <div>
+                                            <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Kategori <span class="text-red-500">*</span></label>
+                                            <select name="kategori_id" class="form-input-modern cursor-pointer" required>
                                                 <option value="">-- Pilih Kategori --</option>
                                                 @foreach ($categories as $cat)
                                                     <option value="{{ $cat->id }}" {{ old('kategori_id', $course->kategori_id) == $cat->id ? 'selected' : '' }}>{{ $cat->nama }}</option>
@@ -129,67 +114,62 @@
                                         </div>
 
                                         <!-- Status -->
-                                        <div class="col-md-6 mb-3">
-                                            <label class="form-label">Status <span class="text-danger">*</span></label>
-                                            <select name="status" class="form-select" required>
+                                        <div>
+                                            <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Status <span class="text-red-500">*</span></label>
+                                            <select name="status" class="form-input-modern cursor-pointer" required>
                                                 <option value="publish" {{ old('status', $course->status) == 'publish' ? 'selected' : '' }}>Publish</option>
                                                 <option value="draft" {{ old('status', $course->status) == 'draft' ? 'selected' : '' }}>Draft</option>
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="grid grid-cols-2 gap-6 md:grid-cols-1 md:gap-4">
                                         <!-- Harga -->
-                                        <div class="col-md-6 mb-3">
-                                            <label class="form-label">Harga Jual <span class="text-danger">*</span></label>
-                                            <div class="input-group">
-                                                <span class="input-group-text">Rp</span>
-                                                <input type="text" 
-                                                       id="hargaDisplay" 
-                                                       class="form-control" 
-                                                       value="{{ number_format($course->harga, 0, ',', '.') }}"
-                                                       placeholder="0 untuk gratis">
+                                        <div>
+                                            <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Harga Jual <span class="text-red-500">*</span></label>
+                                            <div class="relative flex items-center">
+                                                <span class="absolute left-4 text-xs font-bold text-slate-400 dark:text-slate-500">Rp</span>
+                                                <input type="text" id="hargaDisplay" class="form-input-modern pl-10" value="{{ number_format($course->harga, 0, ',', '.') }}" placeholder="0 untuk gratis">
                                                 <input type="hidden" name="harga" id="hargaHidden" value="{{ (int) $course->harga }}">
                                             </div>
                                         </div>
 
                                         <!-- Kuota -->
-                                        <div class="col-md-6 mb-3">
-                                            <label class="form-label">Kuota <span class="text-danger">*</span></label>
-                                            <input type="number" name="kuota" class="form-control" value="{{ old('kuota', $course->kuota) }}" placeholder="0 untuk Unlimited">
+                                        <div>
+                                            <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Kuota <span class="text-red-500">*</span></label>
+                                            <input type="number" name="kuota" class="form-input-modern" value="{{ old('kuota', $course->kuota) }}" placeholder="0 untuk Unlimited">
                                         </div>
                                     </div>
 
                                     <!-- Thumbnail -->
-                                    <div class="mb-4">
-                                        <label class="form-label">Ganti Thumbnail</label>
-                                        <input type="file" name="gambar" class="form-control" id="thumbnail" accept="image/*">
-                                        <div class="mt-2">
-                                            <small class="text-muted d-block mb-1">Thumbnail saat ini:</small>
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Ganti Thumbnail</label>
+                                        <input type="file" name="gambar" class="form-input-modern" id="thumbnail" accept="image/*">
+                                        <div class="mt-3">
+                                            <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Thumbnail saat ini:</span>
                                             @if($course->gambar)
-                                                <img src="{{ asset('storage/' . $course->gambar) }}" class="current-thumb" alt="Thumbnail">
+                                                <img src="{{ asset('storage/' . $course->gambar) }}" class="max-w-[200px] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm" alt="Thumbnail">
                                             @else
-                                                <span class="text-muted fst-italic">Tidak ada gambar</span>
+                                                <span class="text-xs text-slate-400 dark:text-slate-500 italic">Tidak ada gambar</span>
                                             @endif
                                         </div>
                                     </div>
 
                                     <!-- ACTION -->
-                                    <div class="d-flex justify-content-end gap-2 mt-4">
-                                        <a href="{{ route('superadmin.course.list') }}" class="btn btn-light px-4">Batal</a>
-                                        <button type="submit" class="btn btn-purple px-4">
-                                            <i class="fas fa-save me-1"></i> Simpan Perubahan
+                                    <div class="flex justify-end gap-3 pt-6 border-t border-slate-100 dark:border-slate-900 md:flex-col">
+                                        <a href="{{ route('superadmin.course.list') }}" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-center">Batal</a>
+                                        <button type="submit" class="btn-brand justify-center">
+                                            <i class="fas fa-save"></i> Simpan Perubahan
                                         </button>
                                     </div>
 
                                 </form>
-
                             </div>
                         </div>
                     </div>
                 </div>
 
-            </div>
+            </main>
             @include('layouts.superadmin.partials.footer')
         </div>
     </div>
@@ -200,7 +180,6 @@
     <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 
     <script>
-    
     // Quill.js
     const quill = new Quill('#editor-container', {
         theme: 'snow',
@@ -226,9 +205,7 @@
     if (hargaDisplay && hargaHidden) {
         hargaDisplay.addEventListener('input', function() {
             let val = this.value.replace(/[^0-9]/g, '');
-
             hargaHidden.value = val || '0';
-            
             this.value = val ? 'Rp ' + new Intl.NumberFormat('id-ID').format(val) : '';
         });
 
@@ -237,7 +214,6 @@
             hargaDisplay.value = 'Rp ' + new Intl.NumberFormat('id-ID').format(initialVal);
         }
     }
-
 
     // Validasi Input
     document.getElementById('courseForm').addEventListener('submit', function(e) {

@@ -1,6 +1,5 @@
 // DataTables Component with Bootstrap 5 styling
 import DataTable from 'datatables.net-bs5';
-import { logger } from '../utils/logger.js';
 import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css';
 
 // Default DataTables configuration
@@ -71,7 +70,7 @@ export function initAllDataTables() {
       try {
         customConfig.order = JSON.parse(table.dataset.order);
       } catch (e) {
-        logger.error('Invalid order configuration:', e);
+        console.error('Invalid order configuration:', e);
       }
     }
 

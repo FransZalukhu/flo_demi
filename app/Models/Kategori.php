@@ -15,14 +15,26 @@ class Kategori extends Model
 
     protected static function booted()
     {
-        static::saved(function () {
+        static::saved(function ($kategori) {
             Cache::forget('semua_kategori');
             Cache::forget('katalog_kursus_publish');
+
+            if ($kategori->kursus) {
+                foreach ($kategori->kursus as $kursus) {
+                    Cache::forget("kursus_detail_{$kursus->id}");
+                }
+            }
         });
 
-        static::deleted(function () {
+        static::deleted(function ($kategori) {
             Cache::forget('semua_kategori');
             Cache::forget('katalog_kursus_publish');
+
+            if ($kategori->kursus) {
+                foreach ($kategori->kursus as $kursus) {
+                    Cache::forget("kursus_detail_{$kursus->id}");
+                }
+            }
         });
     }
 

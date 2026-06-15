@@ -10,7 +10,6 @@ export default defineConfig({
                 "resources/js/app.js",
 
                 // Superadmin
-                "resources/scss/main.scss",
                 "resources/js/superadmin/app.js",
                 "resources/js/superadmin/pages/dashboard.js",
 

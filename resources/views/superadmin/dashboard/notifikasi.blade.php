@@ -3,511 +3,48 @@
 
 <head>
     @include('layouts.superadmin.partials.head', ['pageTitle' => 'Admin Dashboard - Notifikasi'])
-
-    <style>
-        /* ══════════ PAGE HERO ══════════ */
-        .page-hero {
-            padding: 32px 32px 0;
-        }
-
-        .page-hero-greeting {
-            font-size: 26px;
-            font-weight: 800;
-            color: var(--text-primary);
-            letter-spacing: -0.5px;
-            margin-bottom: 4px;
-        }
-
-        .page-hero-greeting span {
-            background: linear-gradient(135deg, var(--brand-purple), #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .page-hero-sub {
-            font-size: 14px;
-            color: var(--text-secondary);
-            font-weight: 500;
-            margin-bottom: 20px;
-        }
-
-        .breadcrumb-modern {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .breadcrumb-modern a {
-            color: var(--brand-purple);
-            text-decoration: none;
-        }
-
-        .breadcrumb-modern a:hover { text-decoration: underline; }
-
-        .breadcrumb-modern .separator { color: var(--text-muted); }
-
-        .breadcrumb-modern .current { color: var(--text-muted); }
-
-        /* ══════════ CONTENT CARD ══════════ */
-        .content-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-        }
-
-        .content-card-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .content-card-title {
-            font-size: 16px;
-            font-weight: 800;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .content-card-title i { color: var(--brand-purple); }
-
-        .content-card-body {
-            padding: 24px;
-        }
-
-        /* ══════════ NOTIFICATION ITEM ══════════ */
-        .notif-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            padding: 20px;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            background: var(--card-bg);
-            margin-bottom: 16px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .notif-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .notif-item:hover {
-            border-color: rgba(159, 102, 175, 0.35);
-            box-shadow: 0 4px 20px rgba(159, 102, 175, 0.10);
-            transform: translateY(-2px);
-        }
-
-        .notif-item.unread {
-            border-color: rgba(159, 102, 175, 0.4);
-            background: var(--card-bg);
-        }
-
-        .notif-item.unread::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--brand-purple);
-        }
-
-        /* Avatar */
-        .notif-avatar {
-            flex-shrink: 0;
-        }
-
-        .notif-avatar img {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            object-fit: cover;
-            border: 2px solid var(--brand-purple-light);
-        }
-
-        /* Content */
-        .notif-content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .notif-meta {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 6px;
-        }
-
-        .notif-actor {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--brand-purple);
-        }
-
-        .notif-time {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            flex-shrink: 0;
-        }
-
-        .notif-time i { font-size: 12px; }
-
-        .notif-title {
-            font-size: 15px;
-            font-weight: 800;
-            color: var(--text-primary);
-            margin-bottom: 6px;
-            line-height: 1.3;
-        }
-
-        .notif-message {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 0;
-        }
-
-        /* Payment action box */
-        .notif-action-box {
-            margin-top: 14px;
-            padding: 16px;
-            border-radius: 12px;
-            background: var(--table-header-bg);
-            border: 1px solid var(--border-color);
-        }
-
-        .notif-action-box-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .badge-payment {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 4px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 700;
-            background: var(--brand-purple-light);
-            color: var(--brand-purple);
-        }
-
-        .btn-bukti {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--brand-purple);
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-
-        .btn-bukti:hover {
-            color: var(--brand-purple-dark);
-            text-decoration: underline;
-        }
-
-        .notif-action-btns {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .btn-approve {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 8px 18px;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: var(--success);
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(16,185,129,0.25);
-            text-decoration: none;
-        }
-
-        .btn-approve:hover {
-            background: #059669;
-            color: #fff;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(16,185,129,0.35);
-        }
-
-        .btn-reject {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 8px 18px;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: 700;
-            border: 1px solid rgba(239,68,68,0.35);
-            cursor: pointer;
-            transition: all 0.2s;
-            background: transparent;
-            color: var(--danger);
-        }
-
-        .btn-reject:hover {
-            background: var(--danger-light);
-            border-color: var(--danger);
-            transform: translateY(-1px);
-        }
-
-        /* ══════════ EMPTY STATE ══════════ */
-        .empty-state-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 20px;
-            text-align: center;
-        }
-
-        .empty-state-illustration {
-            margin-bottom: 28px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .empty-state-illustration svg {
-            width: 200px;
-            height: 200px;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-14px); }
-        }
-
-        .empty-state-title {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--text-primary);
-            margin-bottom: 10px;
-        }
-
-        .empty-state-message {
-            font-size: 14px;
-            color: var(--text-secondary);
-            max-width: 380px;
-            line-height: 1.6;
-        }
-
-        /* Bell icon animation */
-        .bell-icon-anim {
-            animation: bell-ring 2.5s ease-in-out infinite;
-            transform-origin: top center;
-        }
-
-        @keyframes bell-ring {
-            0%, 60%, 100% { transform: rotate(0deg); }
-            10%, 30% { transform: rotate(-12deg); }
-            20%, 40% { transform: rotate(12deg); }
-        }
-
-        /* ══════════ MODAL ══════════ */
-        .modal-modern .modal-content {
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.15);
-            background: var(--card-bg);
-        }
-
-        [data-theme="dark"] .modal-modern .modal-content {
-            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
-        }
-
-        .modal-modern .modal-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border-color);
-            background: var(--modal-header-bg, var(--card-bg));
-        }
-
-        .modal-modern .modal-title {
-            font-weight: 800;
-            font-size: 16px;
-            color: var(--text-primary);
-        }
-
-        .modal-modern .modal-body {
-            padding: 24px;
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        .modal-modern .modal-body textarea {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-primary);
-            background: var(--input-bg, var(--card-bg));
-            resize: vertical;
-            min-height: 100px;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .modal-modern .modal-body textarea:focus {
-            border-color: var(--brand-purple);
-            box-shadow: 0 0 0 3px rgba(159,102,175,0.10);
-        }
-
-        .modal-modern .modal-body textarea::placeholder {
-            color: var(--text-muted);
-        }
-
-        .modal-modern .modal-footer {
-            padding: 16px 24px;
-            border-top: 1px solid var(--border-color);
-        }
-        .modal-modern .modal-body label {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--text-muted);
-        }
-    </style>
-            margin-bottom: 8px;
-        }
-
-        .modal-modern .modal-body p.modal-desc {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-            line-height: 1.6;
-        }
-
-        [data-theme="dark"] .modal-modern .btn-close {
-            filter: invert(1) grayscale(100%) brightness(200%);
-        }
-
-        .btn-brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 9px 18px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-
-        .btn-brand-muted {
-            background: var(--border-color);
-            color: var(--text-secondary);
-        }
-
-        .btn-brand-muted:hover {
-            background: var(--text-muted);
-            color: #fff;
-        }
-
-        .btn-brand-danger {
-            background: var(--danger);
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(239,68,68,0.25);
-        }
-
-        .btn-brand-danger:hover {
-            background: #dc2626;
-            color: #fff;
-        }
-
-        /* ══════════ ANIMATIONS ══════════ */
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-slide-up { animation: slideUp 0.5s ease-out forwards; }
-        .delay-1 { animation-delay: 0.1s; opacity: 0; }
-        .delay-2 { animation-delay: 0.2s; opacity: 0; }
-
-        /* ══════════ RESPONSIVE ══════════ */
-        @media (max-width: 767.98px) {
-            .page-hero { padding: 20px 16px 0; }
-            .page-hero-greeting { font-size: 20px; }
-            .notif-meta { flex-direction: column; gap: 4px; }
-            .notif-action-box-top { flex-direction: column; align-items: flex-start; }
-        }
-    </style>
 </head>
 
 <body>
     <div class="main-wrapper">
         @include('layouts.superadmin.partials.sidebar', ['activeMenu' => 'dashboard', 'activePage' => 'dashboard-notification'])
 
-        <div style="flex:1;display:flex;flex-direction:column;">
+        <div class="flex-1 flex flex-col min-w-0">
             @include('layouts.superadmin.partials.header')
 
-            <main style="flex:1;padding:0;">
+            <main class="flex-1 p-0">
 
                 {{-- ══════════ PAGE HEADER ══════════ --}}
-                <div class="page-hero animate-slide-up">
-                    <div class="page-hero-greeting">
-                        <span>Notifikasi</span> 
+                <div class="pt-8 px-8 pb-0 md:pt-6 md:px-4 transition-all duration-300">
+                    <div class="text-2xl md:text-xl font-extrabold text-slate-800 dark:text-white tracking-tight mb-1">
+                        <span class="bg-gradient-to-r from-brand-purple to-purple-400 bg-clip-text text-transparent">Notifikasi</span> 
                     </div>
-                    <p class="page-hero-sub">
+                    <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 font-medium mb-5">
                         Pantau semua aktivitas terbaru dan permintaan yang membutuhkan tindakan Anda.
                     </p>
-                    <div class="breadcrumb-modern">
-                        <a href="{{ route('superadmin.dashboard.index') }}">Dashboard</a>
-                        <span class="separator"><i class="ri-arrow-right-s-line"></i></span>
-                        <span class="current">Notifikasi</span>
+                    <div class="flex items-center gap-2 text-[11px] font-semibold">
+                        <a href="{{ route('superadmin.dashboard.index') }}" class="text-brand-purple hover:underline">Dashboard</a>
+                        <span class="text-slate-400 dark:text-slate-600"><i class="ri-arrow-right-s-line"></i></span>
+                        <span class="text-slate-400 dark:text-slate-600">Notifikasi</span>
                     </div>
                 </div>
 
                 {{-- ══════════ NOTIFICATION CARD ══════════ --}}
-                <div style="padding:24px 32px 32px;">
-                    <div class="content-card animate-slide-up delay-1">
-                        <div class="content-card-header">
-                            <div class="content-card-title">
-                                <i class="ri-notification-3-line"></i>
+                <div class="p-6 md:p-4">
+                    <div class="content-card">
+                        <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-900 flex items-center justify-between flex-wrap gap-3">
+                            <div class="text-base font-extrabold text-slate-800 dark:text-white flex items-center gap-2">
+                                <i class="ri-notification-3-line text-brand-purple"></i>
                                 Daftar Notifikasi
                                 @if($notifications->count() > 0)
-                                <span style="background:var(--brand-purple);color:#fff;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:700;">
+                                <span class="bg-brand-purple text-white text-[11px] px-2 py-0.5 rounded-full font-bold">
                                     {{ $notifications->count() }}
                                 </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="content-card-body">
+                        <div class="p-6 md:p-4 space-y-4">
                             @forelse ($notifications as $notif)
                                 @php
                                     $actor = $notif->pendaftaran ? $notif->pendaftaran->pengguna : null;
@@ -519,20 +56,24 @@
                                     }
                                 @endphp
 
-                                <div class="notif-item {{ !$notif->sudah_dibaca ? 'unread' : '' }}">
+                                <div class="flex items-start gap-4 p-5 rounded-2xl border bg-white dark:bg-[#13111c] transition-all duration-300 relative hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-purple/5 hover:border-brand-purple/20 {{ !$notif->sudah_dibaca ? 'border-brand-purple/40 ring-1 ring-brand-purple/10' : 'border-slate-100 dark:border-slate-900' }}">
+                                    @if(!$notif->sudah_dibaca)
+                                        <span class="absolute top-5 right-5 w-2.5 h-2.5 rounded-full bg-brand-purple"></span>
+                                    @endif
+
                                     {{-- Avatar --}}
-                                    <div class="notif-avatar">
-                                        <img src="{{ $avatar }}" alt="{{ $actorName }}">
+                                    <div class="flex-shrink-0">
+                                        <img src="{{ $avatar }}" alt="{{ $actorName }}" class="w-12 h-12 rounded-xl object-cover border-2 border-brand-purple-light dark:border-brand-purple-dark/20">
                                     </div>
 
                                     {{-- Content --}}
-                                    <div class="notif-content">
-                                        <div class="notif-meta">
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex justify-between items-start gap-3 mb-1.5 md:flex-col md:gap-1">
                                             <div>
-                                                <div class="notif-actor">{{ $actorName }}</div>
-                                                <div class="notif-title">{{ $notif->judul }}</div>
+                                                <div class="text-xs font-bold text-brand-purple">{{ $actorName }}</div>
+                                                <div class="text-sm font-extrabold text-slate-800 dark:text-white leading-tight mt-0.5">{{ $notif->judul }}</div>
                                             </div>
-                                            <div class="notif-time">
+                                            <div class="text-[10px] font-semibold text-slate-400 dark:text-slate-500 flex items-center gap-1 flex-shrink-0">
                                                 <i class="ri-time-line"></i>
                                                 @if($notif->created_at->isToday())
                                                     {{ $notif->created_at->translatedFormat('H.i \W\I\B') }}
@@ -544,31 +85,31 @@
                                             </div>
                                         </div>
 
-                                        <p class="notif-message">{{ $notif->pesan }}</p>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{{ $notif->pesan }}</p>
 
                                         {{-- Payment action box --}}
                                         @if($notif->pendaftaran_id && $notif->pendaftaran->status === 'menunggu_verifikasi')
                                             @php $pembayaran = $notif->pendaftaran->pembayaran; @endphp
-                                            <div class="notif-action-box">
-                                                <div class="notif-action-box-top">
-                                                    <span class="badge-payment">
-                                                        <i class="ri-bank-card-line" style="font-size:11px;"></i>
+                                            <div class="mt-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-900">
+                                                <div class="flex items-center justify-between mb-3 flex-wrap gap-2 md:flex-col md:items-start">
+                                                    <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-[10px] font-bold bg-brand-purple-light dark:bg-brand-purple-dark/20 text-brand-purple">
+                                                        <i class="ri-bank-card-line text-[11px]"></i>
                                                         Menunggu Verifikasi
                                                     </span>
                                                     @if($pembayaran && $pembayaran->bukti)
-                                                        <a href="{{ asset('storage/' . $pembayaran->bukti) }}" target="_blank" class="btn-bukti">
+                                                        <a href="{{ asset('storage/' . $pembayaran->bukti) }}" target="_blank" class="inline-flex items-center gap-1 text-xs font-bold text-brand-purple hover:text-brand-purple-dark hover:underline transition-colors">
                                                             <i class="ri-image-line"></i> Lihat Bukti Transfer
                                                         </a>
                                                     @endif
                                                 </div>
-                                                <div class="notif-action-btns">
-                                                    <form action="{{ route('superadmin.course.approve', $notif->pendaftaran_id) }}" method="POST" style="display:inline;">
+                                                <div class="flex gap-2 flex-wrap">
+                                                    <form action="{{ route('superadmin.course.approve', $notif->pendaftaran_id) }}" method="POST" class="inline">
                                                         @csrf
-                                                        <button type="submit" class="btn-approve">
+                                                        <button type="submit" class="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md shadow-emerald-500/15 hover:shadow-lg hover:shadow-emerald-500/25 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer">
                                                             <i class="ri-check-line"></i> Setujui
                                                         </button>
                                                     </form>
-                                                    <button type="button" class="btn-reject" onclick="showRejectModal({{ $notif->pendaftaran_id }})">
+                                                    <button type="button" class="inline-flex items-center gap-1.5 px-4 py-2 bg-transparent text-red-500 border border-red-500/30 text-xs font-bold rounded-lg hover:bg-red-500/10 hover:border-red-500 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer" onclick="showRejectModal({{ $notif->pendaftaran_id }})">
                                                         <i class="ri-close-line"></i> Tolak
                                                     </button>
                                                 </div>
@@ -579,9 +120,9 @@
 
                             @empty
                                 {{-- Empty State --}}
-                                <div class="empty-state-container">
-                                    <div class="empty-state-illustration">
-                                        <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+                                <div class="flex flex-col items-center justify-center py-16 px-5 text-center">
+                                    <div class="mb-7 animate-pulse">
+                                        <svg class="w-48 h-48" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
                                             <defs>
                                                 <linearGradient id="bellGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                                                     <stop offset="0%" style="stop-color:#9F66AF;stop-opacity:1" />
@@ -593,7 +134,7 @@
                                                 </linearGradient>
                                             </defs>
                                             <circle cx="140" cy="140" r="125" fill="url(#bgGradient)" opacity="0.35"/>
-                                            <g class="bell-icon-anim">
+                                            <g>
                                                 <path d="M140 60 C100 60, 80 90, 80 130 L80 170 L60 190 L60 200 L220 200 L220 190 L200 170 L200 130 C200 90, 180 60, 140 60 Z"
                                                       fill="url(#bellGradient)" stroke="#8B56A0" stroke-width="2"/>
                                                 <ellipse cx="140" cy="60" rx="15" ry="8" fill="url(#bellGradient)" stroke="#8B56A0" stroke-width="2"/>
@@ -611,8 +152,8 @@
                                             </g>
                                         </svg>
                                     </div>
-                                    <h3 class="empty-state-title">Tidak ada notifikasi</h3>
-                                    <p class="empty-state-message">
+                                    <h3 class="text-lg font-extrabold text-slate-800 dark:text-white mb-2">Tidak ada notifikasi</h3>
+                                    <p class="text-sm text-slate-500 dark:text-slate-400 max-w-sm leading-relaxed">
                                         Semua aktivitas sudah terkini. Notifikasi baru akan muncul di sini saat ada perubahan atau permintaan dari mentee.
                                     </p>
                                 </div>
@@ -628,44 +169,69 @@
     </div>
 
     {{-- ══════════ REJECT MODAL ══════════ --}}
-    <div class="modal fade modal-modern" id="rejectModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <i class="ri-close-circle-line" style="color:var(--danger);margin-right:6px;"></i>
-                        Tolak Pembayaran
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <form id="rejectForm" method="POST">
-                    @csrf
-                    <div class="modal-body">
-                        <p class="modal-desc">
-                            Berikan alasan penolakan agar mentee dapat memperbaiki bukti pembayarannya.
-                        </p>
-                        <label>Alasan Penolakan</label>
-                        <textarea name="catatan" placeholder="Contoh: Bukti transfer tidak terbaca atau nominal kurang." required></textarea>
-                    </div>
-                    <div class="modal-footer" style="display:flex;gap:10px;justify-content:flex-end;">
-                        <button type="button" class="btn-brand btn-brand-muted" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn-brand btn-brand-danger">
-                            <i class="ri-close-circle-line"></i> Konfirmasi Tolak
-                        </button>
-                    </div>
-                </form>
+    <div id="rejectModal" class="fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-slate-900/50 backdrop-blur-sm transition-opacity" style="display: none;">
+        <div class="bg-white dark:bg-[#13111c] border border-slate-100 dark:border-slate-900 rounded-2xl overflow-hidden shadow-2xl w-[90%] max-w-md transform transition-all scale-95 opacity-0 m-auto mt-20" id="rejectModalContent">
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-900 flex items-center justify-between">
+                <h5 class="font-extrabold text-base text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="ri-close-circle-line text-red-500 text-lg"></i>
+                    Tolak Pembayaran
+                </h5>
+                <button type="button" class="text-slate-400 hover:text-slate-500" onclick="hideRejectModal()">
+                    <i class="ri-close-line text-xl"></i>
+                </button>
             </div>
+            <form id="rejectForm" method="POST">
+                @csrf
+                <div class="p-6 text-sm text-slate-500 dark:text-slate-400 space-y-4">
+                    <p class="text-xs leading-relaxed">
+                        Berikan alasan penolakan agar mentee dapat memperbaiki bukti pembayarannya.
+                    </p>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Alasan Penolakan</label>
+                        <textarea name="catatan" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-800 dark:text-slate-200 text-sm focus:outline-none focus:bg-white dark:focus:bg-[#13111c] focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/10 transition-all min-h-[100px]" placeholder="Contoh: Bukti transfer tidak terbaca atau nominal kurang." required></textarea>
+                    </div>
+                </div>
+                <div class="px-6 py-4 border-t border-slate-100 dark:border-slate-900 flex justify-end gap-2.5">
+                    <button type="button" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer" onclick="hideRejectModal()">Batal</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl text-xs font-bold bg-red-500 text-white shadow-md shadow-red-500/15 hover:bg-red-600 hover:shadow-lg transition-all flex items-center gap-1 cursor-pointer">
+                        <i class="ri-close-circle-line"></i> Konfirmasi Tolak
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
     @include('layouts.superadmin.partials.scripts')
 
     <script>
+        const rejectModal = document.getElementById('rejectModal');
+        const rejectModalContent = document.getElementById('rejectModalContent');
+
         function showRejectModal(id) {
             const form = document.getElementById('rejectForm');
             form.action = `/superadmin/course/reject/${id}`;
-            const modal = new bootstrap.Modal(document.getElementById('rejectModal'));
-            modal.show();
+            
+            rejectModal.style.display = 'flex';
+            rejectModal.classList.remove('hidden');
+            setTimeout(() => {
+                rejectModalContent.classList.remove('scale-95', 'opacity-0');
+                rejectModalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function hideRejectModal() {
+            rejectModalContent.classList.remove('scale-100', 'opacity-100');
+            rejectModalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                rejectModal.classList.add('hidden');
+                rejectModal.style.display = 'none';
+            }, 200);
+        }
+
+        if (rejectModal) {
+            rejectModal.addEventListener('click', function(e) {
+                if (e.target === rejectModal) hideRejectModal();
+            });
         }
     </script>
 </body>

@@ -3,493 +3,167 @@
 
 <head>
     @include('layouts.superadmin.partials.head', ['pageTitle' => 'Admin Dashboard - List Mentee'])
-    
-    <!-- Remix Icon -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-
-    <style>
-        /* ─────────────────────────────────────────────────────
-           1. CSS VARIABLES & GLOBAL RESET
-           ───────────────────────────────────────────────────── */
-        :root {
-            --brand-purple: #9F66AF;
-            --brand-purple-dark: #8b55a0;
-            --brand-purple-light: rgba(159, 102, 175, 0.15);
-            
-            --text-primary: #2d3436;
-            --text-secondary: #636e72;
-            --text-muted: #b2bec3;
-            
-            --bg-body: #f5f6fa;
-            --card-bg: #ffffff;
-            --input-bg: #f8f9fa;
-            --input-focus-bg: #ffffff;
-            --border-color: #e0e0e0;
-            
-            --danger: #d63031;
-            --danger-light: rgba(214, 48, 49, 0.1);
-            --success: #00b894;
-            --success-light: rgba(0, 184, 148, 0.1);
-        }
-
-        [data-theme="dark"] {
-            --bg-body: #0f0d17;
-            --text-primary: #e5e7eb;
-            --text-secondary: #9ca3af;
-            --text-muted: #6b7280;
-            --card-bg: #13111c;
-            --input-bg: #1a1825;
-            --input-focus-bg: #221f30;
-            --border-color: rgba(255,255,255,0.08);
-            --brand-purple-light: rgba(159, 102, 175, 0.25);
-        }
-
-        /* ─────────────────────────────────────────────────────
-           2. MODERN LAYOUT (REFERENCE)
-           ───────────────────────────────────────────────────── */
-        .main-wrapper { display: flex; min-height: 100vh; background: var(--bg-body); }
-        
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-slide-up { animation: slideUp 0.6s ease-out forwards; opacity: 0; }
-        .delay-1 { animation-delay: 0.1s; }
-
-        /* Page Hero */
-        .page-hero {
-            padding: 32px 32px 10px;
-        }
-        .page-hero-greeting {
-            font-size: 26px; font-weight: 800; color: var(--text-primary);
-            letter-spacing: -0.5px; margin-bottom: 6px;
-        }
-        .page-hero-greeting span {
-            background: linear-gradient(135deg, var(--brand-purple), #c084fc);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .page-hero-sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 20px; }
-        
-        .breadcrumb-modern {
-            display: flex; align-items: center; gap: 8px;
-            font-size: 12px; font-weight: 600; color: var(--text-secondary);
-        }
-        .breadcrumb-modern a { color: var(--brand-purple); text-decoration: none; }
-        .breadcrumb-modern a:hover { text-decoration: underline; }
-        .breadcrumb-modern .separator { color: var(--text-muted); }
-        .breadcrumb-modern .current { color: var(--text-muted); }
-
-        /* Content Card */
-        .content-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-            overflow: hidden;
-        }
-        .content-card-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex; align-items: center; justify-content: space-between;
-        }
-        .content-card-title {
-            font-size: 16px; font-weight: 800; color: var(--text-primary);
-            display: flex; align-items: center; gap: 10px;
-        }
-        .content-card-title i { color: var(--brand-purple); font-size: 20px; }
-        .content-card-body { padding: 24px; }
-
-        /* Form Elements */
-        .form-modern .form-control, .form-modern .form-select {
-            padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border-color);
-            background: var(--input-bg); color: var(--text-primary);
-            font-size: 13px; outline: none; transition: all 0.2s;
-        }
-        .form-modern .form-control:focus, .form-modern .form-select:focus {
-            border-color: var(--brand-purple); background: var(--input-focus-bg);
-            box-shadow: 0 0 0 3px var(--brand-purple-light);
-        }
-        .form-modern .form-control::placeholder { color: var(--text-muted); opacity: 0.7; }
-
-        /* Buttons */
-        .btn-brand {
-            display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px;
-            border-radius: 8px; font-size: 13px; font-weight: 600;
-            border: none; cursor: pointer; transition: 0.2s; text-decoration: none;
-        }
-        .btn-brand-primary { background: var(--brand-purple); color: #fff; box-shadow: 0 4px 14px rgba(159,102,175,0.25); }
-        .btn-brand-primary:hover { background: var(--brand-purple-dark); color: #fff; transform: translateY(-1px); }
-        .btn-brand-muted { background: transparent; color: var(--text-secondary); font-size: 12px; }
-        .btn-brand-muted:hover { color: var(--danger); text-decoration: underline; }
-
-        /* ─────────────────────────────────────────────────────
-           3. MODERN TABLE STYLES
-           ───────────────────────────────────────────────────── */
-        .table-responsive { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border-color); }
-        
-        .modern-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            font-size: 14px;
-        }
-
-        .modern-table thead th {
-            background: var(--input-bg);
-            color: var(--text-secondary);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-size: 11px;
-            padding: 16px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-            transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease;
-        }
-        
-        .modern-table thead th:first-child { border-radius: 12px 0 0 0; }
-        .modern-table thead th:last-child { border-radius: 0 12px 0 0; }
-
-        .modern-table tbody tr {
-            background: var(--card-bg);
-            transition: background 0.2s ease;
-        }
-
-        .modern-table tbody tr:hover {
-            background: var(--input-bg);
-        }
-
-        .modern-table td {
-            padding: 16px;
-            color: var(--text-primary);
-            vertical-align: middle;
-            border-bottom: 1px solid var(--border-color);
-            transition: color 0.35s ease, border-color 0.35s ease, background 0.2s ease;
-        }
-        
-        .modern-table tr:last-child td { border-bottom: none; }
-        
-        .badge-category {
-            display: inline-flex; align-items: center; gap: 4px;
-            padding: 4px 10px; border-radius: 6px;
-            font-size: 11px; font-weight: 700;
-            background: rgba(59,130,246,0.1); color: #3b82f6;
-            transition: background 0.35s ease, color 0.35s ease;
-        }
-
-        .text-empty-state {
-            text-align: center; padding: 40px; color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        .mentee-name {
-            font-weight: 700; color: var(--text-primary);
-            transition: color 0.35s ease;
-        }
-
-        .course-name {
-            font-weight: 500; color: var(--text-secondary);
-            transition: color 0.35s ease;
-        }
-
-        /* ─────────────────────────────────────────────────────
-           4. EXPLICIT DARK MODE OVERRIDES (MATCH REFERENCE)
-           ───────────────────────────────────────────────────── */
-
-        /* ── Content Card ── */
-        [data-theme="dark"] .content-card {
-            background: #13111c !important;
-            border-color: rgba(255,255,255,0.08) !important;
-        }
-
-        [data-theme="dark"] .content-card-header {
-            border-bottom-color: rgba(255,255,255,0.08) !important;
-        }
-
-        [data-theme="dark"] .content-card-title {
-            color: #f3f4f6 !important;
-        }
-
-        /* ── Page Hero ── */
-        [data-theme="dark"] .page-hero-greeting {
-            color: #e5e7eb !important;
-        }
-
-        [data-theme="dark"] .page-hero-sub {
-            color: #9ca3af !important;
-        }
-
-        [data-theme="dark"] .breadcrumb-modern .current {
-            color: #6b7280 !important;
-        }
-
-        /* ── Form Controls ── */
-        [data-theme="dark"] .form-modern .form-control,
-        [data-theme="dark"] .form-modern .form-select {
-            background: #1a1825 !important;
-            border-color: rgba(255,255,255,0.08) !important;
-            color: #e5e7eb !important;
-        }
-
-        [data-theme="dark"] .form-modern .form-control:focus,
-        [data-theme="dark"] .form-modern .form-select:focus {
-            background: #221f30 !important;
-            border-color: var(--brand-purple) !important;
-            box-shadow: 0 0 0 3px var(--brand-purple-light) !important;
-        }
-
-        [data-theme="dark"] .form-modern .form-control::placeholder {
-            color: #6b7280 !important;
-        }
-
-        [data-theme="dark"] .form-modern .form-select option {
-            background: #1a1825 !important;
-            color: #e5e7eb !important;
-        }
-
-        /* ── Table Responsive ── */
-        [data-theme="dark"] .table-responsive {
-            background: #13111c !important;
-            border-color: rgba(255,255,255,0.08) !important;
-        }
-
-        /* ── Table THEAD ── */
-        [data-theme="dark"] .modern-table thead th {
-            background: #1a1825 !important;
-            color: #9ca3af !important;
-            border-bottom-color: rgba(255,255,255,0.08) !important;
-        }
-
-        /* ── Table TBODY ROW ── */
-        [data-theme="dark"] .modern-table tbody tr {
-            background: #13111c !important;
-        }
-
-        /* ── Table TBODY ROW HOVER ── */
-        [data-theme="dark"] .modern-table tbody tr:hover {
-            background: rgba(159, 102, 175, 0.08) !important;
-        }
-
-        /* ── Table TBODY CELL ── */
-        [data-theme="dark"] .modern-table td {
-            color: #e5e7eb !important;
-            border-bottom-color: rgba(255,255,255,0.06) !important;
-            background: inherit !important;
-        }
-
-        /* ── Mentee Name ── */
-        [data-theme="dark"] .mentee-name {
-            color: #f3f4f6 !important;
-        }
-
-        /* ── Course Name ── */
-        [data-theme="dark"] .course-name {
-            color: #9ca3af !important;
-        }
-
-        /* ── Badge Category ── */
-        [data-theme="dark"] .badge-category {
-            background: rgba(59,130,246,0.15) !important;
-            color: #60a5fa !important;
-        }
-
-        /* ── Muted text in table ── */
-        [data-theme="dark"] .modern-table .text-muted {
-            color: #6b7280 !important;
-        }
-
-        /* ── Buttons ── */
-        [data-theme="dark"] .btn-brand-muted {
-            color: #9ca3af !important;
-        }
-
-        [data-theme="dark"] .btn-brand-muted:hover {
-            color: #f87171 !important;
-        }
-
-        /* ── Search icon ── */
-        [data-theme="dark"] .search-icon {
-            color: #6b7280 !important;
-        }
-
-        /* ── Empty state ── */
-        [data-theme="dark"] .text-empty-state {
-            color: #6b7280 !important;
-        }
-
-        [data-theme="dark"] .text-empty-state i {
-            color: #6b7280 !important;
-        }
-    </style>
 </head>
 
-<body>
+<body class="bg-slate-50 dark:bg-[#0f0e17] font-manrope transition-colors duration-300">
     <div class="main-wrapper">
         {{-- Sidebar --}}
         @include('layouts.superadmin.partials.sidebar', ['activeMenu' => 'manajemen-mentee', 'activePage' => 'manajemen-mentee-list'])
 
-        <div style="flex:1;display:flex;flex-direction:column;min-height:100vh;">
+        <div class="flex-1 flex flex-col min-w-0">
             {{-- Header --}}
             @include('layouts.superadmin.partials.header')
 
-            <main style="flex:1;padding:0;">
+            <main class="flex-1 p-0">
                 
-                {{-- 1. PAGE HERO --}}
-                <div class="page-hero animate-slide-up">
-                    <div class="page-hero-greeting">
-                        <span>Daftar Mentee</span> 
+                {{-- ══════════ PAGE HEADER ══════════ --}}
+                <div class="pt-8 px-8 pb-0 md:pt-6 md:px-4 transition-all duration-300">
+                    <div class="text-2xl md:text-xl font-extrabold text-slate-800 dark:text-white tracking-tight mb-1">
+                        <span class="bg-gradient-to-r from-brand-purple to-purple-400 bg-clip-text text-transparent">Daftar Mentee</span> 
                     </div>
-                    <p class="page-hero-sub">
+                    <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 font-medium mb-5">
                         Kelola dan pantau data mentee yang terdaftar beserta kursus yang diikuti.
                     </p>
-                    <div class="breadcrumb-modern">
-                        <a href="{{ route('superadmin.dashboard.index') }}">Dashboard</a>
-                        <span class="separator"><i class="ri-arrow-right-s-line"></i></span>
-                        <span class="current">Manajemen Mentee</span>
-                        <span class="separator"><i class="ri-arrow-right-s-line"></i></span>
-                        <span class="current">Daftar Mentee</span>
+                    <div class="flex items-center gap-2 text-[11px] font-semibold">
+                        <a href="{{ route('superadmin.dashboard.index') }}" class="text-brand-purple hover:underline">Dashboard</a>
+                        <span class="text-slate-400 dark:text-slate-600"><i class="ri-arrow-right-s-line"></i></span>
+                        <span class="text-slate-400 dark:text-slate-600">Manajemen Mentee</span>
+                        <span class="text-slate-400 dark:text-slate-600"><i class="ri-arrow-right-s-line"></i></span>
+                        <span class="text-slate-400 dark:text-slate-600">Daftar Mentee</span>
                     </div>
                 </div>
 
-                {{-- 2. CONTENT CARD --}}
-                <div style="padding: 24px 32px 32px;">
-                    <div class="row justify-content-center">
-                        <div class="col-xl-12 col-lg-12 col-md-12">
+                {{-- ══════════ CONTENT CARD ══════════ --}}
+                <div class="p-6 md:p-4">
+                    <div class="content-card">
+                        <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-900 flex items-center justify-between flex-wrap gap-3">
+                            <div class="text-base font-extrabold text-slate-800 dark:text-white flex items-center gap-2">
+                                <i class="ri-team-line text-brand-purple"></i>
+                                Data Mentee
+                            </div>
+                        </div>
+
+                        <div class="p-6">
                             
-                            <div class="content-card animate-slide-up delay-1">
-                                <div class="content-card-header">
-                                    <div class="content-card-title">
-                                        <i class="ri-list-check"></i>
-                                        Data Mentee
+                            {{-- FILTER & SEARCH BAR --}}
+                            <form method="GET" action="{{ route('superadmin.mentee.list') }}" class="mb-6">
+                                <div class="flex items-center justify-between flex-wrap gap-4">
+                                    
+                                    {{-- Search Input --}}
+                                    <div class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 focus-within:border-brand-purple focus-within:ring-4 focus-within:ring-brand-purple/10 focus-within:bg-white dark:focus-within:bg-[#13111c] transition-all flex-1 min-w-[280px]">
+                                        <i class="ri-search-line text-slate-400 text-sm"></i>
+                                        <input
+                                            type="text"
+                                            name="search"
+                                            class="border-none bg-transparent outline-none text-xs font-semibold text-slate-800 dark:text-slate-200 w-full placeholder-slate-400" 
+                                            placeholder="Cari nama mentee..." 
+                                            value="{{ request('search') }}"
+                                        >
+                                    </div>
+
+                                    {{-- Filter Kategori & Actions --}}
+                                    <div class="flex items-center gap-3 flex-wrap md:w-full">
+                                        <select name="kategori_id" class="px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-xs font-bold text-slate-700 dark:text-slate-300 cursor-pointer focus:outline-none focus:border-brand-purple transition-all md:w-full min-w-[200px]" onchange="this.form.submit()">
+                                            <option value="">Semua Kategori</option>
+                                            @foreach ($kategoris as $kategori)
+                                                <option value="{{ $kategori->id }}" {{ request('kategori_id') == $kategori->id ? 'selected' : '' }}>
+                                                    {{ $kategori->nama }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+
+                                        {{-- Reset Button --}}
+                                        @if (request('search') || request('kategori_id'))
+                                            <a href="{{ route('superadmin.mentee.list') }}" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-705 text-slate-650 dark:text-slate-300 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 md:w-full md:justify-center">
+                                                <i class="ri-refresh-line"></i> Reset Filter
+                                            </a>
+                                        @endif
                                     </div>
                                 </div>
+                            </form>
 
-                                <div class="content-card-body">
-                                    
-                                    {{-- FILTER & SEARCH BAR --}}
-                                    <form method="GET" action="{{ route('superadmin.mentee.list') }}" class="form-modern mb-4">
-                                        <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between;">
-                                            
-                                            {{-- Search Input --}}
-                                            <div style="position:relative; flex:1; min-width:250px; max-width:400px;">
-                                                <i class="ri-search-line search-icon" style="position:absolute; left:12px; top:10px; color:var(--text-muted);"></i>
-                                                <input
-                                                    type="text"
-                                                    name="search"
-                                                    class="form-control" 
-                                                    placeholder="Cari nama mentee..." 
-                                                    value="{{ request('search') }}"
-                                                    style="padding-left:36px;"
-                                                >
-                                            </div>
+                            {{-- MODERN TABLE --}}
+                            <div class="overflow-x-auto">
+                                <table class="table-modern">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-16 text-center">No</th>
+                                            <th>Nama Mentee</th>
+                                            <th class="w-52">Kategori</th>
+                                            <th>Course</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($mentees as $index => $mentee)
+                                            @php
+                                                // Filter kursus sesuai kategori yang dipilih
+                                                $kursusFiltered = request('kategori_id')
+                                                    ? $mentee->kursus->where('kategori_id', request('kategori_id'))->values()
+                                                    : $mentee->kursus->values();
+                                            @endphp
 
-                                            {{-- Filter Kategori & Actions --}}
-                                            <div style="display:flex; gap:12px; align-items:center;">
-                                                <select name="kategori_id" class="form-select" style="min-width:200px;" onchange="this.form.submit()">
-                                                    <option value="">Semua Kategori</option>
-                                                    @foreach ($kategoris as $kategori)
-                                                        <option value="{{ $kategori->id }}" {{ request('kategori_id') == $kategori->id ? 'selected' : '' }}>
-                                                            {{ $kategori->nama }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-
-                                                {{-- Reset Button --}}
-                                                @if (request('search') || request('kategori_id'))
-                                                    <a href="{{ route('superadmin.mentee.list') }}" class="btn-brand btn-brand-muted">
-                                                        <i class="ri-refresh-line"></i> Reset Filter
-                                                    </a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                    {{-- MODERN TABLE --}}
-                                    <div class="table-responsive">
-                                        <table class="modern-table">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 50px; text-align: center;">No</th>
-                                                    <th>Nama Mentee</th>
-                                                    <th>Kategori</th>
-                                                    <th>Course</th>
+                                            @if ($kursusFiltered->isEmpty())
+                                                <tr class="hover:bg-slate-50/50 dark:hover:bg-brand-purple/5 transition-colors">
+                                                    <td class="text-center font-bold text-slate-500 dark:text-slate-400">{{ $index + 1 }}</td>
+                                                    <td>
+                                                        <span class="font-bold text-slate-800 dark:text-slate-100">{{ $mentee->username }}</span>
+                                                    </td>
+                                                    <td colspan="2">
+                                                        <span class="text-slate-400 dark:text-slate-500 italic text-xs flex items-center gap-1">
+                                                            <i class="ri-information-line"></i> Belum mengikuti kursus
+                                                        </span>
+                                                    </td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                                @forelse ($mentees as $index => $mentee)
-                                                    @php
-                                                        // Filter kursus sesuai kategori yang dipilih
-                                                        $kursusFiltered = request('kategori_id')
-                                                            ? $mentee->kursus->where('kategori_id', request('kategori_id'))->values()
-                                                            : $mentee->kursus->values();
-                                                    @endphp
-
-                                                    @if ($kursusFiltered->isEmpty())
-                                                        <tr>
-                                                            <td style="text-align: center;">{{ $index + 1 }}</td>
-                                                            <td>
-                                                                <span class="mentee-name">{{ $mentee->username }}</span>
+                                            @else
+                                                @foreach ($kursusFiltered as $kursusIndex => $kursus)
+                                                    <tr class="hover:bg-slate-50/50 dark:hover:bg-brand-purple/5 transition-colors">
+                                                        {{-- Rowspan Logic --}}
+                                                        @if ($kursusIndex === 0)
+                                                            <td rowspan="{{ $kursusFiltered->count() }}" class="text-center font-bold text-slate-500 dark:text-slate-400 align-middle">
+                                                                {{ $index + 1 }}
                                                             </td>
-                                                            <td colspan="2">
-                                                                <span class="text-muted fst-italic" style="font-size:13px;">
-                                                                    <i class="ri-information-line"></i> Belum mengikuti kursus
+                                                            <td rowspan="{{ $kursusFiltered->count() }}" class="align-middle border-b border-slate-50 dark:border-slate-900">
+                                                                <span class="font-bold text-slate-800 dark:text-slate-100">{{ $mentee->username }}</span>
+                                                            </td>
+                                                        @endif
+                                                        
+                                                        <td>
+                                                            @if($kursus->kategori)
+                                                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400">
+                                                                    <i class="ri-folder-line text-[10px]"></i>
+                                                                    {{ $kursus->kategori->nama }}
                                                                 </span>
-                                                            </td>
-                                                        </tr>
-                                                    @else
-                                                        @foreach ($kursusFiltered as $kursusIndex => $kursus)
-                                                            <tr>
-                                                                {{-- Rowspan Logic --}}
-                                                                @if ($kursusIndex === 0)
-                                                                    <td rowspan="{{ $kursusFiltered->count() }}" style="text-align: center; vertical-align: middle;">
-                                                                        {{ $index + 1 }}
-                                                                    </td>
-                                                                    <td rowspan="{{ $kursusFiltered->count() }}" style="vertical-align: middle;">
-                                                                        <div style="display:flex; align-items:center; gap:10px;">
-                                                                            <span class="mentee-name">{{ $mentee->username }}</span>
-                                                                        </div>
-                                                                    </td>
-                                                                @endif
-                                                                
-                                                                <td>
-                                                                    @if($kursus->kategori)
-                                                                        <span class="badge-category">
-                                                                            <i class="ri-folder-line" style="font-size:10px;"></i>
-                                                                            {{ $kursus->kategori->nama }}
-                                                                        </span>
-                                                                    @else
-                                                                        <span class="text-muted">-</span>
-                                                                    @endif
-                                                                </td>
-                                                                
-                                                                <td>
-                                                                    <span class="course-name">{{ $kursus->judul }}</span>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    @endif
-                                                @empty
-                                                    <tr>
-                                                        <td colspan="4">
-                                                            <div class="text-empty-state">
-                                                                <i class="ri-inbox-line" style="font-size:32px; display:block; margin-bottom:10px; opacity:0.3;"></i>
-                                                                Tidak ada data mentee ditemukan.
-                                                            </div>
+                                                            @else
+                                                                <span class="text-slate-450 dark:text-slate-500">-</span>
+                                                            @endif
+                                                        </td>
+                                                        
+                                                        <td>
+                                                            <span class="font-semibold text-slate-700 dark:text-slate-300">{{ $kursus->judul }}</span>
                                                         </td>
                                                     </tr>
-                                                @endforelse
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    {{-- Pagination --}}
-                                    <div class="pagination-modern">
-                                        {{ $mentees->withQueryString()->links('pagination::bootstrap-5') }}
-                                    </div>
-
-                                </div>
+                                                @endforeach
+                                            @endif
+                                        @empty
+                                            <tr>
+                                                <td colspan="4">
+                                                    <div class="flex flex-col items-center justify-center py-12 text-slate-400 dark:text-slate-500">
+                                                        <i class="ri-inbox-line text-4xl opacity-30 mb-2"></i>
+                                                        <p class="text-xs font-semibold">Tidak ada data mentee ditemukan.</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
                             </div>
+
+                            {{-- Pagination --}}
+                            @if(isset($mentees) && method_exists($mentees, 'links'))
+                            <div class="mt-6 flex justify-center">
+                                {{ $mentees->withQueryString()->links('pagination::tailwind') }}
+                            </div>
+                            @endif
 
                         </div>
                     </div>

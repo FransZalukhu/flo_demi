@@ -2,1041 +2,222 @@
 <html lang="en">
 
 <head>
-    @include('layouts.superadmin.partials.head', ['pageTitle' => 'Admin Dashboard'])
-
-    <style>
-        /* ══════════ PAGE HEADER ══════════ */
-        .page-hero {
-            padding: 32px 32px 0;
-        }
-
-        .page-hero-greeting {
-            font-size: 26px;
-            font-weight: 800;
-            color: #1f2937;
-            letter-spacing: -0.5px;
-            margin-bottom: 4px;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .page-hero-greeting {
-            color: #f3f4f6 !important;
-        }
-
-        .page-hero-greeting span {
-            background: linear-gradient(135deg, #9F66AF, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .page-hero-sub {
-            font-size: 14px;
-            color: #6b7280;
-            font-weight: 500;
-            margin-bottom: 20px;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .page-hero-sub {
-            color: #9ca3af !important;
-        }
-
-        .breadcrumb-modern {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .breadcrumb-modern a {
-            color: #9F66AF;
-            text-decoration: none;
-        }
-
-        .breadcrumb-modern a:hover { text-decoration: underline; }
-
-        .breadcrumb-modern .separator { color: #9ca3af; }
-
-        .breadcrumb-modern .current { color: #6b7280; }
-
-        [data-theme="dark"] .breadcrumb-modern .separator,
-        [data-theme="dark"] .breadcrumb-modern .current {
-            color: #9ca3af !important;
-        }
-
-        /* ══════════ METRIC CARDS ══════════ */
-        .metric-card {
-            background: #ffffff;
-            border-radius: 20px;
-            border: 1px solid #e5e7eb;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        [data-theme="dark"] .metric-card {
-            background: #13111c !important;
-            border-color: rgba(255,255,255,0.08) !important;
-        }
-
-        .metric-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(159,102,175,0.10);
-            border-color: rgba(159,102,175,0.2);
-        }
-
-        [data-theme="dark"] .metric-card:hover {
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
-            border-color: rgba(159,102,175,0.4) !important;
-        }
-
-        .metric-card-inner {
-            padding: 24px 24px 16px;
-        }
-
-        .metric-card-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            margin-bottom: 16px;
-        }
-
-        .metric-card-icon.icon-admin {
-            background: linear-gradient(135deg, rgba(159,102,175,0.15), rgba(192,132,252,0.15));
-            color: #9F66AF;
-        }
-
-        .metric-card-icon.icon-course {
-            background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(96,165,250,0.15));
-            color: #3b82f6;
-        }
-
-        .metric-card-icon.icon-mentee {
-            background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(52,211,153,0.15));
-            color: #10b981;
-        }
-
-        .metric-card-label {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            color: #6b7280;
-            margin-bottom: 6px;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .metric-card-label {
-            color: #9ca3af !important;
-        }
-
-        .metric-card-value {
-            font-size: 32px;
-            font-weight: 800;
-            color: #1f2937;
-            letter-spacing: -1px;
-            line-height: 1.1;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .metric-card-value {
-            color: #f3f4f6 !important;
-        }
-
-        .metric-card-growth {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 3px 10px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 700;
-            margin-top: 8px;
-        }
-
-        .metric-card-growth.positive {
-            background: rgba(16,185,129,0.1);
-            color: #10b981;
-        }
-
-        [data-theme="dark"] .metric-card-growth.positive {
-            background: rgba(16,185,129,0.15) !important;
-            color: #34d399 !important;
-        }
-
-        .metric-card-growth.negative {
-            background: rgba(239,68,68,0.1);
-            color: #ef4444;
-        }
-
-        [data-theme="dark"] .metric-card-growth.negative {
-            background: rgba(239,68,68,0.15) !important;
-            color: #f87171 !important;
-        }
-
-        .metric-card-sparkline {
-            padding: 0 16px 16px;
-            height: 70px;
-        }
-
-        .metric-card-sparkline canvas {
-            width: 100% !important;
-            height: 100% !important;
-        }
-
-        .metric-card-footer {
-            border-top: 1px solid #e5e7eb;
-            padding: 12px 24px;
-            text-align: center;
-            transition: border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .metric-card-footer {
-            border-top-color: rgba(255,255,255,0.08) !important;
-        }
-
-        .metric-card-footer a {
-            font-size: 12px;
-            font-weight: 700;
-            color: #9F66AF;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            transition: gap 0.2s, color 0.35s ease;
-        }
-
-        .metric-card-footer a:hover {
-            gap: 8px;
-            color: #8b56a0;
-        }
-
-        [data-theme="dark"] .metric-card-footer a {
-            color: #c084fc !important;
-        }
-
-        [data-theme="dark"] .metric-card-footer a:hover {
-            color: #d09dfa !important;
-        }
-
-        /* ══════════ CONTENT CARD ══════════ */
-        .content-card {
-            background: #ffffff;
-            border-radius: 20px;
-            border: 1px solid #e5e7eb;
-            overflow: hidden;
-            transition: background 0.35s ease, border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .content-card {
-            background: #13111c !important;
-            border-color: rgba(255,255,255,0.08) !important;
-        }
-
-        .content-card-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #e5e7eb;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
-            transition: border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .content-card-header {
-            border-bottom-color: rgba(255,255,255,0.08) !important;
-        }
-
-        .content-card-title {
-            font-size: 16px;
-            font-weight: 800;
-            color: #1f2937;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .content-card-title {
-            color: #f3f4f6 !important;
-        }
-
-        .content-card-title i { color: #9F66AF; }
-
-        .content-card-toolbar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .search-input-modern {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 14px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            background: #f9fafb;
-            transition: all 0.2s;
-        }
-
-        .search-input-modern:focus-within {
-            border-color: #9F66AF;
-            box-shadow: 0 0 0 3px rgba(159,102,175,0.10);
-            background: #ffffff;
-        }
-
-        [data-theme="dark"] .search-input-modern {
-            background: #1a1825 !important;
-            border-color: rgba(255,255,255,0.08) !important;
-        }
-
-        [data-theme="dark"] .search-input-modern:focus-within {
-            background: #1a1825 !important;
-            border-color: #9F66AF !important;
-        }
-
-        .search-input-modern i {
-            color: #6b7280;
-            font-size: 15px;
-        }
-
-        [data-theme="dark"] .search-input-modern i {
-            color: #9ca3af !important;
-        }
-
-        .search-input-modern input {
-            border: none;
-            background: transparent;
-            outline: none;
-            font-size: 13px;
-            font-weight: 500;
-            color: #1f2937;
-            width: 180px;
-        }
-
-        [data-theme="dark"] .search-input-modern input {
-            color: #f3f4f6 !important;
-        }
-
-        .search-input-modern input::placeholder { color: #9ca3af; }
-
-        .filter-select-modern {
-            padding: 8px 14px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            font-size: 13px;
-            font-weight: 600;
-            color: #1f2937;
-            background: #f9fafb;
-            cursor: pointer;
-            outline: none;
-            transition: border-color 0.2s, background 0.35s, color 0.35s;
-        }
-
-        .filter-select-modern:focus {
-            border-color: #9F66AF;
-            box-shadow: 0 0 0 3px rgba(159,102,175,0.10);
-        }
-
-        [data-theme="dark"] .filter-select-modern {
-            background: #1a1825 !important;
-            color: #f3f4f6 !important;
-            border-color: rgba(255,255,255,0.08) !important;
-        }
-
-        [data-theme="dark"] .filter-select-modern option {
-            background: #1a1826;
-            color: #f0eef5;
-        }
-
-        .btn-brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 9px 18px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-
-        .btn-brand-primary {
-            background: #9F66AF;
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(159,102,175,0.25);
-        }
-
-        .btn-brand-primary:hover {
-            background: #8b56a0;
-            color: #fff;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(159,102,175,0.35);
-        }
-
-        /* ══════════════════════════════════════
-           TABLE — ROBUST DARK/LIGHT MODE
-        ══════════════════════════════════════ */
-        .table-modern {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-        }
-
-        /* ── THEAD (Light mode default) ── */
-        .table-modern thead th {
-            padding: 12px 20px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #6b7280;
-            background: #f9fafb;
-            border-bottom: 1px solid #e5e7eb;
-            text-align: left;
-            white-space: nowrap;
-            transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease;
-        }
-
-        /* ── TBODY ROW (Light mode default) ── */
-        .table-modern tbody tr {
-            transition: background 0.2s ease;
-            background: #ffffff;
-        }
-
-        .table-modern tbody tr:hover {
-            background: #f3f0f7;
-        }
-
-        /* ── TBODY CELL (Light mode default) ── */
-        .table-modern tbody td {
-            padding: 14px 20px;
-            font-size: 13px;
-            font-weight: 500;
-            color: #1f2937;
-            border-bottom: 1px solid #f3f4f6;
-            vertical-align: middle;
-            background: inherit;
-            transition: color 0.35s ease, border-color 0.35s ease, background 0.2s ease;
-        }
-
-        /* ══════════════════════════════════
-           DARK MODE — EXPLICIT OVERRIDES
-        ══════════════════════════════════ */
-        
-        [data-theme="dark"] .table-responsive {
-            background: #13111c !important;
-        }
-
-        /* ── THEAD — Dark mode ── */
-        [data-theme="dark"] .table-modern thead th {
-            background: #1a1825 !important;
-            color: #9ca3af !important;
-            border-bottom-color: rgba(255,255,255,0.08) !important;
-        }
-
-        /* ── TBODY ROW — Dark mode ── */
-        [data-theme="dark"] .table-modern tbody tr {
-            background: #13111c !important;
-        }
-
-        /* ── TBODY ROW HOVER — Dark mode (ungu samar) ── */
-        [data-theme="dark"] .table-modern tbody tr:hover {
-            background: rgba(159, 102, 175, 0.08) !important;
-        }
-
-        /* ── TBODY CELL — Dark mode ── */
-        [data-theme="dark"] .table-modern tbody td {
-            color: #e5e7eb !important;
-            border-bottom-color: rgba(255,255,255,0.06) !important;
-            background: inherit !important;
-        }
-
-        /* ══════════ TABLE CELLS ══════════ */
-        .table-modern .admin-cell {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .table-modern .admin-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            object-fit: cover;
-            border: 2px solid rgba(159,102,175,0.2);
-            transition: border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .table-modern .admin-avatar {
-            border-color: rgba(192,132,252,0.3) !important;
-        }
-
-        .table-modern .admin-name {
-            font-weight: 700;
-            color: #1f2937;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .table-modern .admin-name:hover { color: #9F66AF; }
-
-        [data-theme="dark"] .table-modern .admin-name {
-            color: #f3f4f6 !important;
-        }
-
-        [data-theme="dark"] .table-modern .admin-name:hover {
-            color: #c084fc !important;
-        }
-
-        .table-modern .email-cell {
-            color: #6b7280;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .table-modern .email-cell {
-            color: #9ca3af !important;
-        }
-
-        /* ══════════ BADGE STATUS ══════════ */
-        .badge-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 4px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 700;
-            transition: background 0.35s ease, color 0.35s ease;
-        }
-
-        .badge-status.aktif {
-            background: rgba(16,185,129,0.1);
-            color: #10b981;
-        }
-
-        [data-theme="dark"] .badge-status.aktif {
-            background: rgba(16,185,129,0.15) !important;
-            color: #34d399 !important;
-        }
-
-        .badge-status.nonaktif {
-            background: rgba(239,68,68,0.1);
-            color: #ef4444;
-        }
-
-        [data-theme="dark"] .badge-status.nonaktif {
-            background: rgba(239,68,68,0.15) !important;
-            color: #f87171 !important;
-        }
-
-        .badge-role {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 700;
-            background: rgba(159,102,175,0.1);
-            color: #9F66AF;
-            transition: background 0.35s ease, color 0.35s ease;
-        }
-
-        [data-theme="dark"] .badge-role {
-            background: rgba(159,102,175,0.15) !important;
-            color: #c084fc !important;
-        }
-
-        /* ══════════ ACTION BTNS ══════════ */
-        .action-btns {
-            display: flex;
-            gap: 6px;
-            flex-wrap: nowrap;
-        }
-
-        .action-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 700;
-            border: 1px solid;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            background: transparent;
-            white-space: nowrap;
-        }
-
-        .action-btn.edit {
-            border-color: rgba(16,185,129,0.3);
-            color: #10b981;
-        }
-
-        .action-btn.edit:hover {
-            background: rgba(16,185,129,0.1);
-            border-color: #10b981;
-        }
-
-        [data-theme="dark"] .action-btn.edit {
-            border-color: rgba(52,211,153,0.25) !important;
-            color: #34d399 !important;
-        }
-
-        [data-theme="dark"] .action-btn.edit:hover {
-            background: rgba(16,185,129,0.15) !important;
-        }
-
-        .action-btn.toggle-active {
-            border-color: rgba(239,68,68,0.3);
-            color: #ef4444;
-        }
-
-        .action-btn.toggle-active:hover {
-            background: rgba(239,68,68,0.1);
-            border-color: #ef4444;
-        }
-
-        [data-theme="dark"] .action-btn.toggle-active {
-            border-color: rgba(248,113,113,0.25) !important;
-            color: #f87171 !important;
-        }
-
-        [data-theme="dark"] .action-btn.toggle-active:hover {
-            background: rgba(239,68,68,0.15) !important;
-        }
-
-        .action-btn.toggle-inactive {
-            border-color: rgba(107,114,128,0.3);
-            color: #6b7280;
-        }
-
-        .action-btn.toggle-inactive:hover {
-            background: rgba(159,102,175,0.1);
-            border-color: #6b7280;
-        }
-
-        [data-theme="dark"] .action-btn.toggle-inactive {
-            border-color: rgba(156,163,175,0.25) !important;
-            color: #9ca3af !important;
-        }
-
-        .action-btn.reset {
-            border-color: rgba(245,158,11,0.3);
-            color: #f59e0b;
-        }
-
-        .action-btn.reset:hover {
-            background: rgba(245,158,11,0.1);
-            border-color: #f59e0b;
-        }
-
-        [data-theme="dark"] .action-btn.reset {
-            border-color: rgba(251,191,36,0.25) !important;
-            color: #fbbf24 !important;
-        }
-
-        [data-theme="dark"] .action-btn.reset:hover {
-            background: rgba(245,158,11,0.15) !important;
-        }
-
-        /* ══════════ EMPTY STATE ══════════ */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-        }
-
-        .empty-state i {
-            font-size: 48px;
-            color: #9ca3af;
-            opacity: 0.3;
-        }
-
-        .empty-state p {
-            font-size: 14px;
-            color: #9ca3af;
-            margin-top: 12px;
-        }
-
-        /* ══════════ MODAL ══════════ */
-        .modal-modern .modal-content {
-            border: 1px solid rgba(0,0,0,0.1);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.15);
-            background: #ffffff;
-            transition: background 0.35s ease, border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .modal-content {
-            background: #1a1825 !important;
-            border-color: rgba(255,255,255,0.08) !important;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
-        }
-
-        .modal-modern .modal-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #e5e7eb;
-            background: #ffffff;
-            transition: background 0.35s ease, border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .modal-header {
-            background: #1a1825 !important;
-            border-bottom-color: rgba(255,255,255,0.08) !important;
-        }
-
-        .modal-modern .modal-title {
-            font-weight: 800;
-            font-size: 16px;
-            color: #1f2937;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .modal-title {
-            color: #f3f4f6 !important;
-        }
-
-        .modal-modern .modal-body {
-            padding: 24px;
-            font-size: 14px;
-            color: #6b7280;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .modal-body {
-            color: #9ca3af !important;
-        }
-
-        .modal-modern .modal-footer {
-            padding: 16px 24px;
-            border-top: 1px solid #e5e7eb;
-            transition: border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .modal-footer {
-            border-top-color: rgba(255,255,255,0.08) !important;
-        }
-
-        .modal-modern .btn-close { filter: none; }
-
-        [data-theme="dark"] .modal-modern .btn-close {
-            filter: invert(1) grayscale(100%) brightness(200%);
-        }
-
-        /* ══════════ PAGINATION ══════════ */
-        .pagination-modern {
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .pagination-modern .page-link {
-            border-radius: 10px !important;
-            margin: 0 3px;
-            font-size: 12px;
-            font-weight: 700;
-            color: #6b7280;
-            border: 1px solid #e5e7eb;
-            padding: 8px 14px;
-            transition: all 0.2s;
-            background: #ffffff;
-        }
-
-        .pagination-modern .page-link:hover {
-            background: rgba(159,102,175,0.1);
-            border-color: #9F66AF;
-            color: #9F66AF;
-        }
-
-        [data-theme="dark"] .pagination-modern .page-link {
-            background: #1a1825 !important;
-            color: #9ca3af !important;
-            border-color: rgba(255,255,255,0.08) !important;
-        }
-
-        [data-theme="dark"] .pagination-modern .page-link:hover {
-            background: rgba(159,102,175,0.15) !important;
-            border-color: #c084fc !important;
-            color: #c084fc !important;
-        }
-
-        .pagination-modern .page-item.active .page-link {
-            background: #9F66AF !important;
-            border-color: #9F66AF !important;
-            color: #fff !important;
-        }
-
-        .pagination-modern .page-item.disabled .page-link {
-            background: #f9fafb;
-            color: #9ca3af;
-            border-color: #e5e7eb;
-        }
-
-        [data-theme="dark"] .pagination-modern .page-item.disabled .page-link {
-            background: #13111c !important;
-            color: #4b5563 !important;
-            border-color: rgba(255,255,255,0.05) !important;
-        }
-
-        /* ══════════ ANIMATIONS ══════════ */
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-slide-up { animation: slideUp 0.5s ease-out forwards; }
-
-        .delay-1 { animation-delay: 0.1s; opacity: 0; }
-        .delay-2 { animation-delay: 0.2s; opacity: 0; }
-        .delay-3 { animation-delay: 0.3s; opacity: 0; }
-        .delay-4 { animation-delay: 0.4s; opacity: 0; }
-
-        /* ══════════ RESPONSIVE ══════════ */
-        @media (max-width: 767.98px) {
-            .page-hero { padding: 20px 16px 0; }
-            .page-hero-greeting { font-size: 20px; }
-            .metric-card-value { font-size: 24px; }
-            .content-card-header { padding: 16px; }
-            .table-modern thead th,
-            .table-modern tbody td { padding: 10px 12px; }
-            .search-input-modern input { width: 120px; }
-        }
-    </style>
+    @include('layouts.superadmin.partials.head', ['pageTitle' => 'Admin Dashboard — Flodemi'])
 </head>
 
-<body>
-    <div class="main-wrapper">
+<body class="bg-slate-50 dark:bg-[#0f0e17] font-manrope transition-colors duration-300">
+    <div class="flex">
+        {{-- Sidebar --}}
         @include('layouts.superadmin.partials.sidebar', ['activeMenu' => 'dashboard', 'activePage' => 'dashboard-home'])
 
-        <div style="flex:1;display:flex;flex-direction:column;">
+        {{-- Main Content --}}
+        <div class="main-wrapper w-full flex flex-col min-h-screen" id="mainWrapper">
             @include('layouts.superadmin.partials.header')
 
-            <main style="flex:1;padding:0;">
-                {{-- ══════════ PAGE HEADER ══════════ --}}
-                <div class="page-hero animate-slide-up">
-                    <div class="page-hero-greeting">
-                        Hallo, <span>Superadmin</span>! 
-                    </div>
-                    <p class="page-hero-sub">
-                        Dashboard terpusat untuk memantau performa sistem, mengelola data inti, serta menganalisis laporan.
-                    </p>
-                    <div class="breadcrumb-modern">
-                        <a href="{{ route('superadmin.dashboard.index') }}">Dashboard</a>
-                        <span class="separator"><i class="ri-arrow-right-s-line"></i></span>
-                        <span class="current">Superadmin Dashboard</span>
-                    </div>
+            <main class="flex-1 p-6 md:p-8">
+                {{-- Page Header --}}
+                <div class="mb-8">
+                    <h2 class="text-xl md:text-2xl font-extrabold text-slate-800 dark:text-white tracking-tight">
+                        Hallo, <span class="text-brand-purple">Superadmin</span>!
+                    </h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Dashboard terpusat untuk memantau performa sistem, mengelola data inti, serta menganalisis laporan.</p>
+                    
+                    {{-- Breadcrumbs --}}
+                    <nav class="flex items-center gap-2 text-[10px] font-bold text-slate-400 mt-3 uppercase tracking-wider">
+                        <a href="{{ route('superadmin.dashboard.index') }}" class="hover:text-brand-purple transition-colors">Dashboard</a>
+                        <span class="text-slate-300">/</span>
+                        <span class="text-slate-500 dark:text-slate-300">Superadmin Dashboard</span>
+                    </nav>
                 </div>
 
-                {{-- ══════════ METRIC CARDS ══════════ --}}
-                <div style="padding:24px 32px 0;">
-                    <div class="row g-4">
-                        {{-- Total Admin --}}
-                        <div class="col-xl-4 col-lg-6 col-md-6">
-                            <div class="metric-card animate-slide-up delay-1">
-                                <div class="metric-card-inner">
-                                    <div class="metric-card-icon icon-admin">
-                                        <i class="ri-shield-star-line"></i>
-                                    </div>
-                                    <div class="metric-card-label">Total Admin</div>
-                                    <div class="d-flex align-items-end justify-content-between">
-                                        <div class="metric-card-value">{{ $totalAdmin }}</div>
-                                        <div class="metric-card-growth {{ $adminGrowth >= 0 ? 'positive' : 'negative' }}">
-                                            <i class="ri-arrow-{{ $adminGrowth >= 0 ? 'up' : 'down' }}-line"></i>
-                                            {{ abs($adminGrowth) }}%
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="metric-card-sparkline">
-                                    <canvas id="sparkline-income"></canvas>
-                                </div>
-                                <div class="metric-card-footer">
-                                    <a href="{{ route('superadmin.admin.list') }}">Lihat Detail <i class="ri-arrow-right-line"></i></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- Total Course --}}
-                        <div class="col-xl-4 col-lg-6 col-md-6">
-                            <div class="metric-card animate-slide-up delay-2">
-                                <div class="metric-card-inner">
-                                    <div class="metric-card-icon icon-course">
-                                        <i class="ri-book-open-line"></i>
-                                    </div>
-                                    <div class="metric-card-label">Total Course</div>
-                                    <div class="d-flex align-items-end justify-content-between">
-                                        <div class="metric-card-value">{{ $totalCourse }}</div>
-                                        <div class="metric-card-growth {{ $courseGrowth >= 0 ? 'positive' : 'negative' }}">
-                                            <i class="ri-arrow-{{ $courseGrowth >= 0 ? 'up' : 'down' }}-line"></i>
-                                            {{ abs($courseGrowth) }}%
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="metric-card-sparkline">
-                                    <canvas id="sparkline-cash"></canvas>
-                                </div>
-                                <div class="metric-card-footer">
-                                    <a href="{{ route('superadmin.course.list') }}">Lihat Detail <i class="ri-arrow-right-line"></i></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- Total Mentee --}}
-                        <div class="col-xl-4 col-lg-6 col-md-6">
-                            <div class="metric-card animate-slide-up delay-3">
-                                <div class="metric-card-inner">
-                                    <div class="metric-card-icon icon-mentee">
-                                        <i class="ri-team-line"></i>
-                                    </div>
-                                    <div class="metric-card-label">Total Mentee</div>
-                                    <div class="d-flex align-items-end justify-content-between">
-                                        <div class="metric-card-value">{{ $totalMentee }}</div>
-                                        <div class="metric-card-growth {{ $menteeGrowth >= 0 ? 'positive' : 'negative' }}">
-                                            <i class="ri-arrow-{{ $menteeGrowth >= 0 ? 'up' : 'down' }}-line"></i>
-                                            {{ abs($menteeGrowth) }}%
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="metric-card-sparkline">
-                                    <canvas id="sparkline-profit"></canvas>
-                                </div>
-                                <div class="metric-card-footer">
-                                    <a href="{{ route('superadmin.mentee.list') }}">Lihat Detail <i class="ri-arrow-right-line"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- ══════════ ADMIN TABLE ══════════ --}}
-                <div style="padding:24px 32px 32px;">
-                    <div class="content-card animate-slide-up delay-4">
-                        <div class="content-card-header">
-                            <div class="content-card-title">
+                {{-- Metric Cards --}}
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    {{-- Total Admin --}}
+                    <div class="metric-card flex flex-col justify-between">
+                        <div class="p-6">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-lg bg-purple-50 text-brand-purple dark:bg-brand-purple/10 dark:text-brand-purple mb-4">
                                 <i class="ri-shield-star-line"></i>
-                                Daftar Admin
                             </div>
-                            <div class="content-card-toolbar">
-                                <div class="search-input-modern">
-                                    <i class="ri-search-line"></i>
-                                    <input type="text" id="searchAdmin" placeholder="Cari admin...">
-                                </div>
-                                <select id="filterStatus" class="filter-select-modern">
-                                    <option value="all">Semua Status</option>
-                                    <option value="aktif">Aktif</option>
-                                    <option value="nonaktif">Nonaktif</option>
-                                </select>
-                                @if(auth()->user()->role === 'superadmin')
-                                <a href="{{ route('superadmin.admin.add') }}" class="btn-brand btn-brand-primary">
+                            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Total Admin</span>
+                            <div class="flex items-end justify-between">
+                                <span class="text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">{{ $totalAdmin }}</span>
+                                <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md text-[10px] font-bold {{ $adminGrowth >= 0 ? 'bg-green-50 text-green-700 dark:bg-green-500/10 dark:text-green-400' : 'bg-red-50 text-red-700 dark:bg-red-500/10 dark:text-red-400' }}">
+                                    <i class="ri-arrow-{{ $adminGrowth >= 0 ? 'up' : 'down' }}-line"></i>
+                                    {{ abs($adminGrowth) }}%
+                                </span>
+                            </div>
+                        </div>
+                        <div class="px-6 py-2.5 h-16 bg-slate-50/30 dark:bg-slate-900/10">
+                            <canvas id="sparkline-income" class="w-full h-full"></canvas>
+                        </div>
+                        <div class="p-4 border-t border-slate-100 dark:border-slate-900 text-center">
+                            <a href="{{ route('superadmin.admin.list') }}" class="text-[10px] font-bold text-brand-purple hover:underline inline-flex items-center gap-1">
+                                Lihat Detail <i class="ri-arrow-right-line"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    {{-- Total Course --}}
+                    <div class="metric-card flex flex-col justify-between">
+                        <div class="p-6">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-lg bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400 mb-4">
+                                <i class="ri-book-open-line"></i>
+                            </div>
+                            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Total Course</span>
+                            <div class="flex items-end justify-between">
+                                <span class="text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">{{ $totalCourse }}</span>
+                                <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md text-[10px] font-bold {{ $courseGrowth >= 0 ? 'bg-green-50 text-green-700 dark:bg-green-500/10 dark:text-green-400' : 'bg-red-50 text-red-700 dark:bg-red-500/10 dark:text-red-400' }}">
+                                    <i class="ri-arrow-{{ $courseGrowth >= 0 ? 'up' : 'down' }}-line"></i>
+                                    {{ abs($courseGrowth) }}%
+                                </span>
+                            </div>
+                        </div>
+                        <div class="px-6 py-2.5 h-16 bg-slate-50/30 dark:bg-slate-900/10">
+                            <canvas id="sparkline-cash" class="w-full h-full"></canvas>
+                        </div>
+                        <div class="p-4 border-t border-slate-100 dark:border-slate-900 text-center">
+                            <a href="{{ route('superadmin.course.list') }}" class="text-[10px] font-bold text-brand-purple hover:underline inline-flex items-center gap-1">
+                                Lihat Detail <i class="ri-arrow-right-line"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    {{-- Total Mentee --}}
+                    <div class="metric-card flex flex-col justify-between">
+                        <div class="p-6">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-lg bg-green-50 text-green-600 dark:bg-green-500/10 dark:text-green-400 mb-4">
+                                <i class="ri-team-line"></i>
+                            </div>
+                            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Total Mentee</span>
+                            <div class="flex items-end justify-between">
+                                <span class="text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">{{ $totalMentee }}</span>
+                                <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md text-[10px] font-bold {{ $menteeGrowth >= 0 ? 'bg-green-50 text-green-700 dark:bg-green-500/10 dark:text-green-400' : 'bg-red-50 text-red-700 dark:bg-red-500/10 dark:text-red-400' }}">
+                                    <i class="ri-arrow-{{ $menteeGrowth >= 0 ? 'up' : 'down' }}-line"></i>
+                                    {{ abs($menteeGrowth) }}%
+                                </span>
+                            </div>
+                        </div>
+                        <div class="px-6 py-2.5 h-16 bg-slate-50/30 dark:bg-slate-900/10">
+                            <canvas id="sparkline-profit" class="w-full h-full"></canvas>
+                        </div>
+                        <div class="p-4 border-t border-slate-100 dark:border-slate-900 text-center">
+                            <a href="{{ route('superadmin.mentee.list') }}" class="text-[10px] font-bold text-brand-purple hover:underline inline-flex items-center gap-1">
+                                Lihat Detail <i class="ri-arrow-right-line"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Admin Table Card --}}
+                <div class="bg-white dark:bg-[#13111c] border border-slate-100 dark:border-slate-800 rounded-3xl shadow-xl overflow-hidden">
+                    {{-- Toolbar --}}
+                    <div class="p-6 border-b border-slate-100 dark:border-slate-900 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div class="flex items-center gap-2">
+                            <i class="ri-shield-star-line text-lg text-brand-purple"></i>
+                            <h3 class="text-sm font-extrabold text-slate-800 dark:text-white">Daftar Admin</h3>
+                        </div>
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                            <div class="relative">
+                                <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                                <input type="text" id="searchAdmin" placeholder="Cari admin..." 
+                                    class="w-full sm:w-64 pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-xs placeholder-slate-400 focus:outline-none focus:bg-white focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/10 dark:bg-slate-900/50 dark:border-slate-800 dark:text-slate-200 dark:focus:bg-[#13111c] transition-all">
+                            </div>
+                            <select id="filterStatus" class="form-input-modern !py-2 !w-full sm:!w-auto text-xs">
+                                <option value="all">Semua Status</option>
+                                <option value="aktif">Aktif</option>
+                                <option value="nonaktif">Nonaktif</option>
+                            </select>
+                            @if(auth()->user()->role === 'superadmin')
+                                <a href="{{ route('superadmin.admin.add') }}" class="btn-brand justify-center">
                                     <i class="ri-add-line"></i> Tambah Admin
                                 </a>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="table-responsive">
-                            <table class="table-modern">
-                                <thead>
-                                    <tr>
-                                        <th>Nama</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
-                                        <th>Status</th>
-                                        @if(auth()->user()->role === 'superadmin')
-                                        <th>Aksi</th>
-                                        @endif
-                                    </tr>
-                                </thead>
-                                <tbody id="adminTable">
-                                    @forelse($admins as $admin)
-                                    <tr data-id="{{ $admin->id }}" data-status="{{ $admin->status ?? 'aktif' }}">
-                                        <td>
-                                            <div class="admin-cell">
-                                                @if($admin->photo)
-                                                <img src="{{ asset('storage/' . $admin->photo) }}" class="admin-avatar" alt="{{ $admin->username }}">
-                                                @else
-                                                <img src="https://ui-avatars.com/api/?name={{ urlencode($admin->username) }}&background=9F66AF&color=fff&size=128&font-size=0.4" class="admin-avatar" alt="{{ $admin->username }}">
-                                                @endif
-                                                <a href="{{ route('superadmin.admin.show', $admin->id) }}" class="admin-name">{{ $admin->username }}</a>
-                                            </div>
-                                        </td>
-                                        <td class="email-cell">{{ $admin->email }}</td>
-                                        <td>
-                                            <span class="badge-role">
-                                                <i class="ri-shield-star-line" style="font-size:10px;"></i>
-                                                {{ ucfirst($admin->role) }}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            @if(($admin->status ?? 'aktif') === 'aktif')
-                                            <span class="badge-status aktif">
-                                                <i class="ri-checkbox-blank-circle-fill" style="font-size:6px;"></i>
-                                                Aktif
-                                            </span>
-                                            @else
-                                            <span class="badge-status nonaktif">
-                                                <i class="ri-checkbox-blank-circle-fill" style="font-size:6px;"></i>
-                                                Nonaktif
-                                            </span>
-                                            @endif
-                                        </td>
-                                        @if(auth()->user()->role === 'superadmin')
-                                        <td>
-                                            <div class="action-btns">
-                                                <a href="{{ route('superadmin.admin.edit', $admin->id) }}" class="action-btn edit" title="Edit Admin">
-                                                    <i class="ri-edit-line"></i> Edit
-                                                </a>
-
-                                                <button class="action-btn {{ ($admin->status ?? 'aktif') === 'aktif' ? 'toggle-active' : 'toggle-inactive' }} toggle-status"
-                                                    data-bs-toggle="modal" data-bs-target="#statusModal"
-                                                    data-id="{{ $admin->id }}"
-                                                    data-name="{{ $admin->username }}"
-                                                    data-action="{{ ($admin->status ?? 'aktif') === 'aktif' ? 'nonaktif' : 'aktif' }}"
-                                                    title="{{ ($admin->status ?? 'aktif') === 'aktif' ? 'Nonaktifkan' : 'Aktifkan' }}">
-                                                    <i class="ri-{{ ($admin->status ?? 'aktif') === 'aktif' ? 'user-unfollow' : 'user-follow' }}-line"></i>
-                                                    {{ ($admin->status ?? 'aktif') === 'aktif' ? 'Nonaktifkan' : 'Aktifkan' }}
-                                                </button>
-
-                                                <a href="{{ route('superadmin.dashboard.admin.resetPasswordPage', $admin->id) }}" class="action-btn reset" title="Reset Password">
-                                                    <i class="ri-key-line"></i> Reset
-                                                </a>
-                                            </div>
-                                        </td>
-                                        @endif
-                                    </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="{{ auth()->user()->role === 'superadmin' ? 5 : 4 }}">
-                                            <div class="empty-state">
-                                                <i class="ri-inbox-line"></i>
-                                                <p>Belum ada data admin</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-
-                        {{-- Pagination --}}
-                        <div class="pagination-modern">
-                            {{ $admins->links('pagination::bootstrap-5') }}
+                            @endif
                         </div>
                     </div>
+
+                    {{-- Table --}}
+                    <div class="overflow-x-auto">
+                        <table class="table-modern w-full">
+                            <thead>
+                                <tr>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    @if(auth()->user()->role === 'superadmin')
+                                        <th class="text-right">Aksi</th>
+                                    @endif
+                                </tr>
+                            </thead>
+                            <tbody id="adminTable">
+                                @forelse($admins as $admin)
+                                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-900/10 transition-colors" data-id="{{ $admin->id }}" data-status="{{ $admin->status ?? 'aktif' }}">
+                                        <td>
+                                            <div class="flex items-center gap-3 px-6 py-4">
+                                                @if($admin->photo)
+                                                    <img src="{{ asset('storage/' . $admin->photo) }}" class="w-8 h-8 rounded-lg object-cover" alt="{{ $admin->username }}">
+                                                @else
+                                                    <img src="https://ui-avatars.com/api/?name={{ urlencode($admin->username) }}&background=9F66AF&color=fff&size=128&font-size=0.4" class="w-8 h-8 rounded-lg object-cover" alt="{{ $admin->username }}">
+                                                @endif
+                                                <a href="{{ route('superadmin.admin.show', $admin->id) }}" class="admin-name text-xs font-bold text-slate-800 dark:text-white hover:text-brand-purple transition-colors">{{ $admin->username }}</a>
+                                            </div>
+                                        </td>
+                                        <td class="email-cell px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400">{{ $admin->email }}</td>
+                                        <td class="px-6 py-4">
+                                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[9px] font-extrabold uppercase tracking-wide bg-brand-purple-light dark:bg-brand-purple/10 text-brand-purple">
+                                                <i class="ri-shield-star-line text-[9px]"></i> {{ ucfirst($admin->role) }}
+                                            </span>
+                                        </td>
+                                        <td class="status-cell px-6 py-4">
+                                            <span class="badge-status {{ ($admin->status ?? 'aktif') === 'aktif' ? 'aktif' : 'ditolak' }}">
+                                                <i class="ri-checkbox-blank-circle-fill text-[6px] mr-1"></i>
+                                                {{ ($admin->status ?? 'aktif') === 'aktif' ? 'Aktif' : 'Nonaktif' }}
+                                            </span>
+                                        </td>
+                                        @if(auth()->user()->role === 'superadmin')
+                                            <td class="px-6 py-4 text-right">
+                                                <div class="flex items-center justify-end gap-2">
+                                                    <a href="{{ route('superadmin.admin.edit', $admin->id) }}" class="px-3 py-1.5 bg-slate-100 hover:bg-brand-purple-light hover:text-brand-purple dark:bg-slate-850 dark:hover:bg-brand-purple/10 text-slate-600 dark:text-slate-400 text-[10px] font-bold rounded-lg transition-colors flex items-center gap-1" title="Edit Admin">
+                                                        <i class="ri-edit-line"></i> Edit
+                                                    </a>
+
+                                                    <button class="px-3 py-1.5 bg-slate-100 hover:bg-red-50 dark:bg-slate-850 dark:hover:bg-red-500/10 hover:text-red-500 text-slate-600 dark:text-slate-400 text-[10px] font-bold rounded-lg transition-colors flex items-center gap-1 toggle-status"
+                                                        data-bs-toggle="modal" data-bs-target="#statusModal"
+                                                        data-id="{{ $admin->id }}"
+                                                        data-name="{{ $admin->username }}"
+                                                        data-action="{{ ($admin->status ?? 'aktif') === 'aktif' ? 'nonaktif' : 'aktif' }}"
+                                                        title="{{ ($admin->status ?? 'aktif') === 'aktif' ? 'Nonaktifkan' : 'Aktifkan' }}">
+                                                        <i class="ri-{{ ($admin->status ?? 'aktif') === 'aktif' ? 'user-unfollow' : 'user-follow' }}-line"></i>
+                                                        <span>{{ ($admin->status ?? 'aktif') === 'aktif' ? 'Nonaktifkan' : 'Aktifkan' }}</span>
+                                                    </button>
+
+                                                    <a href="{{ route('superadmin.dashboard.admin.resetPasswordPage', $admin->id) }}" class="px-3 py-1.5 bg-slate-100 hover:bg-brand-purple-light hover:text-brand-purple dark:bg-slate-850 dark:hover:bg-brand-purple/10 text-slate-600 dark:text-slate-400 text-[10px] font-bold rounded-lg transition-colors flex items-center gap-1" title="Reset Password">
+                                                        <i class="ri-key-line"></i> Reset
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        @endif
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="{{ auth()->user()->role === 'superadmin' ? 5 : 4 }}" class="py-10 text-center text-slate-400 dark:text-slate-600">
+                                            <div class="flex flex-col items-center justify-center gap-2">
+                                                <i class="ri-inbox-line text-3xl"></i>
+                                                <p class="text-xs font-semibold">Belum ada data admin</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {{-- Pagination --}}
+                    @if($admins->hasPages())
+                        <div class="p-6 border-t border-slate-100 dark:border-slate-900 flex justify-between items-center text-xs">
+                            {{ $admins->links() }}
+                        </div>
+                    @endif
                 </div>
             </main>
 
@@ -1044,21 +225,24 @@
         </div>
     </div>
 
-    {{-- ══════════ STATUS MODAL ══════════ --}}
-    <div class="modal fade modal-modern" id="statusModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="modalMessage" style="color: #6b7280; transition: color 0.35s ease;"></p>
-                </div>
-                <div class="modal-footer" style="display:flex;gap:10px;justify-content:flex-end;">
-                    <button class="btn-brand" style="background:#e5e7eb;color:#374151;transition:all 0.2s;" data-bs-dismiss="modal">Batal</button>
-                    <button class="btn-brand btn-brand-primary" id="confirmAction">Ya, Lanjutkan</button>
-                </div>
+    {{-- Status Toggle Modal (Tailwind Native) --}}
+    <div id="statusModal" class="fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-slate-900/50 backdrop-blur-sm transition-opacity" style="display: none;">
+        <div class="bg-white dark:bg-[#13111c] border border-slate-100 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden p-6 w-[90%] max-w-md transform transition-all scale-95 opacity-0 m-auto mt-20" id="statusModalContent">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-900">
+                <h5 class="text-sm font-extrabold text-slate-800 dark:text-white flex items-center gap-2" id="modalTitle">
+                    <i class="ri-user-settings-line text-brand-purple text-lg"></i>
+                    Ubah Status Admin
+                </h5>
+                <button type="button" class="text-slate-400 hover:text-slate-500" id="closeModalBtn">
+                    <i class="ri-close-line text-xl"></i>
+                </button>
+            </div>
+            <div class="py-5">
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" id="modalMessage"></p>
+            </div>
+            <div class="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-900">
+                <button type="button" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold rounded-xl transition-colors" id="cancelModalBtn">Batal</button>
+                <button type="button" class="px-5 py-2.5 text-white text-xs font-bold rounded-xl shadow-lg transition-colors" id="confirmAction">Ya, Lanjutkan</button>
             </div>
         </div>
     </div>
@@ -1087,7 +271,6 @@
 
     @vite(['resources/js/superadmin/pages/dashboard.js'])
 
-    {{-- Table search & filter logic --}}
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('searchAdmin');
@@ -1113,38 +296,77 @@
         if (searchInput) searchInput.addEventListener('input', filterTable);
         if (filterStatus) filterStatus.addEventListener('change', filterTable);
 
-        // Status modal logic
+        // Status modal native implementation
         const statusModal = document.getElementById('statusModal');
+        const statusModalContent = document.getElementById('statusModalContent');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const cancelModalBtn = document.getElementById('cancelModalBtn');
+
+        function openStatusModal(id, name, action) {
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMessage = document.getElementById('modalMessage');
+            const confirmBtn = document.getElementById('confirmAction');
+
+            if (action === 'nonaktif') {
+                modalTitle.innerHTML = '<i class="ri-user-unfollow-line text-red-500 text-lg"></i> Nonaktifkan Admin';
+                modalMessage.innerHTML = `Apakah Anda yakin ingin menonaktifkan admin <strong>"${name}"</strong>?`;
+                confirmBtn.className = 'px-5 py-2.5 bg-red-500 hover:bg-red-650 text-white text-xs font-bold rounded-xl shadow-lg shadow-red-500/20 transition-colors';
+                confirmBtn.innerHTML = '<i class="ri-user-unfollow-line mr-1 text-base"></i> Ya, Nonaktifkan';
+            } else {
+                modalTitle.innerHTML = '<i class="ri-user-follow-line text-emerald-500 text-lg"></i> Aktifkan Admin';
+                modalMessage.innerHTML = `Apakah Anda yakin ingin mengaktifkan kembali admin <strong>"${name}"</strong>?`;
+                confirmBtn.className = 'px-5 py-2.5 bg-emerald-500 hover:bg-emerald-650 text-white text-xs font-bold rounded-xl shadow-lg shadow-emerald-500/20 transition-colors';
+                confirmBtn.innerHTML = '<i class="ri-user-follow-line mr-1 text-base"></i> Ya, Aktifkan';
+            }
+
+            confirmBtn.onclick = function() {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `{{ url('/superadmin/admin') }}/${id}/status`;
+                form.innerHTML = `
+                    <input type="hidden" name="_token" value="${document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')}">
+                    <input type="hidden" name="status" value="${action}">
+                    <input type="hidden" name="_method" value="PATCH">
+                `;
+                document.body.appendChild(form);
+                form.submit();
+            };
+
+            statusModal.style.display = 'flex';
+            statusModal.classList.remove('hidden');
+            setTimeout(() => {
+                statusModalContent.classList.remove('scale-95', 'opacity-0');
+                statusModalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeStatusModalFunc() {
+            statusModalContent.classList.remove('scale-100', 'opacity-100');
+            statusModalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                statusModal.classList.add('hidden');
+                statusModal.style.display = 'none';
+            }, 200);
+        }
+
+        if (closeModalBtn) closeModalBtn.addEventListener('click', closeStatusModalFunc);
+        if (cancelModalBtn) cancelModalBtn.addEventListener('click', closeStatusModalFunc);
         if (statusModal) {
-            statusModal.addEventListener('show.bs.modal', function(event) {
-                const button = event.relatedTarget;
-                if (!button) return;
-                const id = button.getAttribute('data-id');
-                const name = button.getAttribute('data-name');
-                const action = button.getAttribute('data-action');
-
-                document.getElementById('modalTitle').textContent =
-                    action === 'nonaktif' ? 'Nonaktifkan Admin' : 'Aktifkan Admin';
-                document.getElementById('modalMessage').textContent =
-                    action === 'nonaktif'
-                        ? `Apakah Anda yakin ingin menonaktifkan admin "${name}"?`
-                        : `Apakah Anda yakin ingin mengaktifkan kembali admin "${name}"?`;
-
-                const confirmBtn = document.getElementById('confirmAction');
-                confirmBtn.onclick = function() {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = `{{ url('/superadmin/admin') }}/${id}/status`;
-                    form.innerHTML = `
-                        <input type="hidden" name="_token" value="${document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')}">
-                        <input type="hidden" name="status" value="${action}">
-                        <input type="hidden" name="_method" value="PATCH">
-                    `;
-                    document.body.appendChild(form);
-                    form.submit();
-                };
+            statusModal.addEventListener('click', function(e) {
+                if (e.target === statusModal) closeStatusModalFunc();
             });
         }
+
+        document.querySelectorAll('[data-bs-target="#statusModal"]').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                openStatusModal(
+                    this.getAttribute('data-id'),
+                    this.getAttribute('data-name'),
+                    this.getAttribute('data-action')
+                );
+            });
+        });
     });
     </script>
 </body>

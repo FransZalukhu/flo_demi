@@ -1,512 +1,148 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-full">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Login Superadmin - Flodemi</title>
+    <title>Login Superadmin — Flodemi</title>
     <meta name="description" content="Login Superadmin Flodemi">
     <link rel="icon" type="image/png" href="{{ asset('images/f.png') }}">
 
-    @vite(['resources/scss/main.scss'])
+    {{-- Google Fonts & Icons --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
-    <style>
-        body {
-            background: linear-gradient(135deg, #9F66AF 0%, #7B4A8A 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            padding: 20px 0;
-        }
-
-        .login-container {
-            width: 100%;
-            max-width: 450px;
-            padding: 20px;
-        }
-
-        .login-card {
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-            animation: slideUp 0.5s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .login-header {
-            background: linear-gradient(135deg, #9F66AF 0%, #7B4A8A 100%);
-            padding: 40px 30px;
-            text-align: center;
-            color: #fff;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .login-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-        }
-
-        .login-header::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -30%;
-            width: 150px;
-            height: 150px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 50%;
-        }
-
-        .login-logo {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 40px;
-            backdrop-filter: blur(10px);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            position: relative;
-            z-index: 1;
-        }
-
-        .login-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin: 0 0 10px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .login-subtitle {
-            font-size: 14px;
-            opacity: 0.9;
-            margin: 0;
-            position: relative;
-            z-index: 1;
-        }
-
-        .login-body {
-            padding: 40px 30px;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #3d405c;
-            margin-bottom: 10px;
-        }
-
-        .form-label-icon {
-            color: #9F66AF;
-            font-size: 16px;
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #9F66AF;
-            font-size: 18px;
-            pointer-events: none;
-            transition: all 0.3s ease;
-            z-index: 2;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 14px 15px 14px 50px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 15px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-sizing: border-box;
-            background-color: #fafafa;
-            position: relative;
-        }
-
-        .form-control:hover {
-            border-color: #c9a5d5;
-            background-color: #fff;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: #9F66AF;
-            background-color: #fff;
-            box-shadow: 0 0 0 4px rgba(159, 102, 175, 0.15);
-        }
-
-        .form-control:focus + .input-icon,
-        .form-control:not(:placeholder-shown) + .input-icon {
-            color: #9F66AF;
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .form-control::placeholder {
-            color: #b0b0b0;
-            font-size: 14px;
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #b0b0b0;
-            cursor: pointer;
-            font-size: 18px;
-            padding: 5px;
-            transition: all 0.3s ease;
-            z-index: 2;
-            border-radius: 5px;
-        }
-
-        .password-toggle:hover {
-            color: #9F66AF;
-            background-color: rgba(159, 102, 175, 0.1);
-        }
-
-        .password-toggle:active {
-            transform: translateY(-50%) scale(0.9);
-        }
-
-        .btn-login {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #9F66AF 0%, #7B4A8A 100%);
-            border: none;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-top: 30px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(159, 102, 175, 0.3);
-        }
-
-        .btn-login::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn-login:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(159, 102, 175, 0.5);
-        }
-
-        .btn-login:hover::before {
-            left: 100%;
-        }
-
-        .btn-login:active {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(159, 102, 175, 0.4);
-        }
-
-        .alert {
-            padding: 14px 16px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .alert i {
-            font-size: 18px;
-            margin-top: 1px;
-        }
-
-        .alert-danger {
-            background: linear-gradient(135deg, #fdecea 0%, #f8d7da 100%);
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-        }
-
-        .alert-success {
-            background: linear-gradient(135deg, #e8f7ee 0%, #d4edda 100%);
-            border: 1px solid #c3e6cb;
-            color: #155724;
-        }
-
-        .alert ul {
-            margin: 0;
-            padding-left: 20px;
-        }
-
-        .alert ul li {
-            margin-bottom: 4px;
-        }
-
-        .back-to-home {
-            text-align: center;
-            margin-top: 25px;
-        }
-
-        .back-to-home a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            opacity: 0.9;
-            transition: all 0.3s ease;
-            padding: 10px 20px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-        }
-
-        .back-to-home a:hover {
-            opacity: 1;
-            transform: translateX(-5px);
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .back-to-home a i {
-            transition: transform 0.3s ease;
-        }
-
-        .back-to-home a:hover i {
-            transform: translateX(-5px);
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #b0b0b0;
-            cursor: pointer;
-            font-size: 18px;
-            padding: 5px;
-            transition: all 0.3s ease;
-            z-index: 2;
-        }
-
-        .password-toggle:hover {
-            color: #9F66AF;
-        }
-
-        .divider {
-            text-align: center;
-            margin: 30px 0;
-            position: relative;
-        }
-
-        .divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(to right, transparent, #e0e0e0, transparent);
-        }
-
-        .divider span {
-            background: #fff;
-            padding: 0 20px;
-            color: #9F66AF;
-            font-size: 13px;
-            font-weight: 600;
-            position: relative;
-            z-index: 1;
-            letter-spacing: 1px;
-        }
-
-        .info-text {
-            text-align: center;
-            color: #6c757d;
-            font-size: 13px;
-            line-height: 1.8;
-        }
-
-        .info-text p {
-            margin: 5px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .info-text i {
-            color: #9F66AF;
-            font-size: 14px;
-        }
-    </style>
+    @vite(['resources/css/app.css'])
 </head>
 
-<body>
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-header">
-                <div class="login-logo">
-                    <i class="fas fa-shield-alt"></i>
+<body class="h-full bg-gradient-to-br from-brand-purple-dark via-brand-purple to-purple-400 flex flex-col items-center justify-center p-4 font-manrope">
+
+    <div class="w-full max-w-md my-auto">
+        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-white/20 transition-all duration-300">
+            {{-- Header --}}
+            <div class="bg-gradient-to-br from-brand-purple-dark to-brand-purple px-8 py-10 text-center text-white relative overflow-hidden">
+                <div class="absolute -top-12 -right-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+                <div class="absolute -bottom-10 -left-10 w-24 h-24 bg-white/8 rounded-full blur-xl"></div>
+                
+                <div class="w-16 h-16 bg-white/15 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-white/20 backdrop-blur-md">
+                    <i class="ri-shield-keyhole-line text-3xl"></i>
                 </div>
-                <h1 class="login-title">Admin Login</h1>
-                <p class="login-subtitle">Masuk ke Dashboard Admin Flodemi</p>
+                <h1 class="text-2xl font-extrabold tracking-tight">Admin Portal</h1>
+                <p class="text-xs text-purple-100/80 mt-1">Masuk ke Dashboard Admin Flodemi</p>
             </div>
 
-            <div class="login-body">
+            {{-- Form Body --}}
+            <div class="p-8">
                 @if(session('error'))
-                <div class="alert alert-danger">
-                    <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
-                </div>
+                    <div class="mb-6 p-4 rounded-xl bg-red-50 border border-red-100 text-red-700 text-xs flex items-start gap-2.5">
+                        <i class="ri-error-warning-line text-base mt-0.5"></i>
+                        <span>{{ session('error') }}</span>
+                    </div>
                 @endif
 
                 @if(session('success'))
-                <div class="alert alert-success">
-                    <i class="fas fa-check-circle"></i> {{ session('success') }}
-                </div>
+                    <div class="mb-6 p-4 rounded-xl bg-green-50 border border-green-100 text-green-700 text-xs flex items-start gap-2.5">
+                        <i class="ri-checkbox-circle-line text-base mt-0.5"></i>
+                        <span>{{ session('success') }}</span>
+                    </div>
                 @endif
 
                 @if($errors->any())
-                @php
-                    $isDeactivated = false;
-                    foreach($errors->all() as $error) {
-                        if (str_contains($error, 'dinonaktifkan')) {
-                            $isDeactivated = true;
-                            break;
+                    @php
+                        $isDeactivated = false;
+                        foreach($errors->all() as $error) {
+                            if (str_contains($error, 'dinonaktifkan')) {
+                                $isDeactivated = true;
+                                break;
+                            }
                         }
-                    }
-                @endphp
-                
-                @if($isDeactivated)
-                {{-- Custom Alert for Deactivated Account --}}
-                <div class="alert" style="background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%); border-left: 4px solid #ffc107; color: #856404; padding: 16px; border-radius: 12px; margin-bottom: 20px;">
-                    <div style="display: flex; align-items: flex-start; gap: 12px;">
-                        <i class="fas fa-exclamation-triangle" style="font-size: 24px; color: #ffc107; margin-top: 2px;"></i>
-                        <div>
-                            <strong style="display: block; margin-bottom: 8px; font-size: 15px;">⚠️ Akun Tidak Aktif</strong>
-                            @foreach($errors->all() as $error)
-                                <p style="margin: 4px 0; font-size: 14px; line-height: 1.5;">{{ $error }}</p>
-                            @endforeach
-                            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(133, 100, 4, 0.2);">
-                                <small style="display: block; line-height: 1.4;">
-                                    <i class="fas fa-info-circle"></i> <strong>Hubungi Superadmin</strong> untuk mengaktifkan kembali akun Anda.
-                                </small>
+                    @endphp
+                    
+                    @if($isDeactivated)
+                        <div class="mb-6 p-4 rounded-xl bg-amber-50 border-l-4 border-amber-500 text-amber-900 text-xs">
+                            <div class="flex items-start gap-2.5">
+                                <i class="ri-alert-line text-lg text-amber-500 mt-0.5"></i>
+                                <div>
+                                    <strong class="block font-bold mb-1 text-sm">Akun Tidak Aktif</strong>
+                                    @foreach($errors->all() as $error)
+                                        <p class="leading-relaxed">{{ $error }}</p>
+                                    @endforeach
+                                    <div class="mt-3 pt-3 border-t border-amber-900/10">
+                                        <span class="block text-[10px] opacity-80">
+                                            <i class="ri-information-line"></i> Hubungi Superadmin untuk aktivasi akun.
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                @else
-                {{-- Default Error Alert --}}
-                <div class="alert alert-danger">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <ul class="mb-0 mt-2">
-                        @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
+                    @else
+                        <div class="mb-6 p-4 rounded-xl bg-red-50 border border-red-100 text-red-700 text-xs">
+                            <div class="flex items-start gap-2.5">
+                                <i class="ri-error-warning-line text-base mt-0.5"></i>
+                                <ul class="list-disc list-inside space-y-1">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    @endif
                 @endif
 
-                <form action="{{ route('superadmin.login.post') }}" method="POST">
+                <form action="{{ route('superadmin.login.post') }}" method="POST" class="space-y-5">
                     @csrf
 
-                    <div class="form-group">
-                        <label class="form-label" for="email">
-                            Email
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" for="email">
+                            Email Address
                         </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-envelope input-icon"></i>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="Masukkan email address" required autofocus value="{{ old('email') }}">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                                <i class="ri-mail-line text-lg"></i>
+                            </div>
+                            <input type="email" name="email" id="email" 
+                                class="block w-full pl-11 pr-4 py-3 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:bg-white focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/10 transition-all" 
+                                placeholder="name@email.com" required autofocus value="{{ old('email') }}">
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label" for="password">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" for="password">
                             Password
                         </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-lock input-icon"></i>
-                            <input type="password" name="password" id="password" class="form-control" placeholder="Masukkan password" required>
-                            <button type="button" class="password-toggle" onclick="togglePassword()" title="Show/Hide Password">
-                                <i class="fas fa-eye" id="toggleIcon"></i>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                                <i class="ri-lock-2-line text-lg"></i>
+                            </div>
+                            <input type="password" name="password" id="password" 
+                                class="block w-full pl-11 pr-12 py-3 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:bg-white focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/10 transition-all" 
+                                placeholder="••••••••" required>
+                            <button type="button" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-brand-purple transition-colors" onclick="togglePassword()">
+                                <i class="ri-eye-line text-lg" id="toggleIcon"></i>
                             </button>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-login">
-                        <i class="fas fa-sign-in-alt"></i> Masuk ke Dashboard
+                    <button type="submit" 
+                        class="w-full py-3.5 bg-gradient-to-r from-brand-purple-dark to-brand-purple text-white text-sm font-bold rounded-xl shadow-lg shadow-brand-purple/20 hover:shadow-xl hover:shadow-brand-purple/30 hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center justify-center gap-2">
+                        <i class="ri-login-box-line"></i> Masuk ke Dashboard
                     </button>
                 </form>
 
-                <div class="info-text">
-                    <p><i class="fas fa-shield-alt"></i> Hanya untuk Admin yang terdaftar</p>
+                <div class="mt-8 text-center border-t border-slate-100 pt-6">
+                    <span class="inline-flex items-center gap-1.5 text-xs text-slate-400">
+                        <i class="ri-shield-check-line"></i> Hanya untuk personel terdaftar
+                    </span>
                 </div>
             </div>
         </div>
 
-        <div class="back-to-home">
-            <a href="{{ route('login') }}">
-                <i class="fas fa-arrow-left"></i>
-                Kembali ke Halaman Login Utama
+        <div class="mt-6 text-center">
+            <a href="{{ route('login') }}" 
+                class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white text-xs font-bold rounded-xl transition-all hover:-translate-x-1">
+                <i class="ri-arrow-left-line"></i> Kembali ke Login Utama
             </a>
         </div>
     </div>
@@ -518,12 +154,10 @@
 
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
+                toggleIcon.classList.replace('ri-eye-line', 'ri-eye-off-line');
             } else {
                 passwordInput.type = 'password';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
+                toggleIcon.classList.replace('ri-eye-off-line', 'ri-eye-line');
             }
         }
     </script>

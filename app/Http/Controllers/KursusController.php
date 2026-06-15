@@ -51,7 +51,13 @@ class KursusController extends Controller
         $kursus = Cache::remember("kursus_detail_{$id}", $cacheTTL, function() use ($id) {
             return Kursus::with(['kategori', 'mentor', 'modul'])
                 ->withCount(['pendaftaran as terdaftar_count' => function($query) {
-                    $query->whereIn('status', ['menunggu_pembayaran', 'menunggu_verifikasi', 'aktif', 'selesai']);
+                    $query->whereIn('status', ['menunggu_pembayaran', 'menunggu_verifikasi', 'aktif', 'selesai'])
+                        ->where(function($q) {
+                            $q->whereHas('pembayaran', function($qp) {
+                                $qp->where('expired_at', '>', now())
+                                   ->orWhere('status', 'success');
+                            })->orWhereNull('pembayaran_id');
+                        });
                 }])
                 ->findOrFail($id);
         });

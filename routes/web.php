@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenteeController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\KursusController;
+use App\Http\Controllers\VerifikasiSertifikatController;
 use App\Http\Controllers\Superadmin\AdminController;
 use App\Http\Controllers\Superadmin\DashboardController;
 use App\Http\Controllers\Superadmin\CourseController;
@@ -139,10 +139,10 @@ Route::middleware('guest')->group(function () {
         ->name('register.post');
 });
 
-
 // Public Routes
 Route::get('/kursus/{id}', [KursusController::class, 'show'])->name('kursus.show');
 Route::get('/katalog',     [KursusController::class, 'indexKatalog'])->name('katalog');
+Route::get('/verify', [VerifikasiSertifikatController::class, 'verify'])->name('sertifikat.verify')->middleware('throttle:60,1');
 
 
 // Mentee Panel (Auth Required)
@@ -173,7 +173,9 @@ Route::middleware('mentee')->group(function () {
 
     // Checkout
     Route::get('/checkout/{id}',             [CheckoutController::class, 'show'])->name('checkout.show');
-    Route::post('/checkout/{id}/gratis',     [CheckoutController::class, 'joinGratis'])->name('checkout.gratis');
+    Route::post('/checkout/{id}/gratis',     [CheckoutController::class, 'joinGratis'])
+        ->middleware('throttle:payment-limit')
+        ->name('checkout.gratis');
     Route::post('/checkout/{id}/berbayar',   [CheckoutController::class, 'joinBerbayar'])
         ->middleware('throttle:payment-limit')
         ->name('checkout.berbayar');
@@ -182,7 +184,9 @@ Route::middleware('mentee')->group(function () {
     Route::prefix('pembayaran')->name('mentee.pembayaran.')->group(function () {
         Route::get('/invoice/{id}', [\App\Http\Controllers\Mentee\PaymentController::class, 'invoice'])->name('invoice');
         Route::get('/detail/{id}', [\App\Http\Controllers\Mentee\PaymentController::class, 'detail'])->name('detail');
-        Route::post('/upload-bukti/{id}', [\App\Http\Controllers\Mentee\PaymentController::class, 'uploadBukti'])->name('uploadBukti');
+        Route::post('/upload-bukti/{id}', [\App\Http\Controllers\Mentee\PaymentController::class, 'uploadBukti'])
+            ->middleware('throttle:payment-limit')
+            ->name('uploadBukti');
         Route::get('/riwayat', [\App\Http\Controllers\Mentee\PaymentController::class, 'history'])->name('riwayat');
     });
 
@@ -196,7 +200,7 @@ Route::middleware('mentee')->group(function () {
     // Sertifikat
     Route::prefix('mentee/sertifikat')->name('mentee.sertifikat.')->group(function () {
         Route::get('/', [\App\Http\Controllers\Mentee\SertifikatController::class, 'index'])->name('index');
-        Route::get('/{id}/download', [\App\Http\Controllers\Mentee\SertifikatController::class, 'download'])->name('download');
+        Route::get('/{id}/download', [\App\Http\Controllers\Mentee\SertifikatController::class, 'download'])->name('download')->middleware('throttle:10,1');
     });
 
     // Notifikasi

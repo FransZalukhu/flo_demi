@@ -1,6 +1,5 @@
 // Chart.js Component - Unified chart library for all chart types
 import Chart from 'chart.js/auto';
-import { logger } from '../utils/logger.js';
 
 // Chart color palette
 const colors = {
@@ -86,13 +85,13 @@ export function createSparkline(selector, data, options = {}) {
   const canvas = typeof selector === 'string' ? document.querySelector(selector) : selector;
 
   if (!canvas) {
-    logger.error('Canvas element not found:', selector);
+    console.error('Canvas element not found:', selector);
     return null;
   }
 
   // Handle empty or invalid data
   if (!Array.isArray(data) || data.length === 0) {
-    logger.warn('Empty data provided, using default zeros');
+    console.warn('Empty data provided, using default zeros');
     data = new Array(9).fill(0);
   }
 
@@ -168,10 +167,10 @@ export function createSparkline(selector, data, options = {}) {
 
   try {
     const chart = new Chart(canvas, sparklineOptions);
-    logger.info('Sparkline chart created successfully');
+    console.info('Sparkline chart created successfully');
     return chart;
   } catch (error) {
-    logger.error('Error creating sparkline chart:', error);
+    console.error('Error creating sparkline chart:', error);
     return null;
   }
 }
@@ -187,7 +186,7 @@ export function createLineChart(selector, data, options = {}) {
   const canvas = typeof selector === 'string' ? document.querySelector(selector) : selector;
 
   if (!canvas) {
-    logger.error('Canvas element not found:', selector);
+    console.error('Canvas element not found:', selector);
     return null;
   }
 
@@ -219,7 +218,7 @@ export function createBarChart(selector, data, options = {}) {
   const canvas = typeof selector === 'string' ? document.querySelector(selector) : selector;
 
   if (!canvas) {
-    logger.error('Canvas element not found:', selector);
+    console.error('Canvas element not found:', selector);
     return null;
   }
 
@@ -252,7 +251,7 @@ export function createDoughnutChart(selector, data, options = {}) {
   const canvas = typeof selector === 'string' ? document.querySelector(selector) : selector;
 
   if (!canvas) {
-    logger.error('Canvas element not found:', selector);
+    console.error('Canvas element not found:', selector);
     return null;
   }
 
@@ -290,7 +289,7 @@ export function createPieChart(selector, data, options = {}) {
   const canvas = typeof selector === 'string' ? document.querySelector(selector) : selector;
 
   if (!canvas) {
-    logger.error('Canvas element not found:', selector);
+    console.error('Canvas element not found:', selector);
     return null;
   }
 
@@ -327,7 +326,7 @@ export function createAreaChart(selector, data, options = {}) {
   const canvas = typeof selector === 'string' ? document.querySelector(selector) : selector;
 
   if (!canvas) {
-    logger.error('Canvas element not found:', selector);
+    console.error('Canvas element not found:', selector);
     return null;
   }
 
@@ -365,7 +364,7 @@ export function createMixedChart(selector, data, options = {}) {
   const canvas = typeof selector === 'string' ? document.querySelector(selector) : selector;
 
   if (!canvas) {
-    logger.error('Canvas element not found:', selector);
+    console.error('Canvas element not found:', selector);
     return null;
   }
 
@@ -442,14 +441,14 @@ export function initAllCharts() {
             instance = createMixedChart(canvas, data);
             break;
           default:
-            logger.warn('Unknown chart type:', chartType);
+            console.warn('Unknown chart type:', chartType);
         }
 
         if (instance) {
           instances.push({ element: canvas, instance });
         }
       } catch (e) {
-        logger.error('Error parsing chart data:', e);
+        console.error('Error parsing chart data:', e);
       }
     }
   });

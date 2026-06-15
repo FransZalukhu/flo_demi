@@ -13,22 +13,34 @@ class CertificateService
 {
     public function issue(User $user, Kursus $course): Sertifikat
     {
-        $certNo = 'FL/' . now()->format('Y') . '/' . str_pad($user->id, 4, '0', STR_PAD_LEFT) . '/' . str_pad($course->id, 3, '0', STR_PAD_LEFT);
+        $existing = Sertifikat::where('user_id', $user->id)
+            ->where('kursus_id', $course->id)
+            ->first();
 
-        return Sertifikat::updateOrCreate(
-            ['user_id' => $user->id, 'kursus_id' => $course->id],
-            [
-                'nomor_sertifikat' => $certNo,
-                'tanggal_terbit'   => now()
-            ]
-        );
+        if ($existing) {
+            return $existing;
+        }
+
+        $prefix = 'FL/' . now()->format('Y') . '/' . str_pad($user->id, 4, '0', STR_PAD_LEFT) . '/' . str_pad($course->id, 3, '0', STR_PAD_LEFT) . '/';
+
+        do {
+            $certNo = $prefix . strtoupper(Str::random(12));
+        } while (Sertifikat::where('nomor_sertifikat', $certNo)->exists());
+
+        return Sertifikat::create([
+            'user_id'          => $user->id,
+            'kursus_id'        => $course->id,
+            'nomor_sertifikat' => $certNo,
+            'tanggal_terbit'   => now()
+        ]);
     }
 
     public function generatePdf(Sertifikat $cert): string
     {
         $user = $cert->pengguna;
         $course = $cert->kursus;
-        $path = 'sertifikat/cert_' . $user->id . '_' . $course->id . '.pdf';
+        $fileHash = hash('sha256', $cert->nomor_sertifikat . $user->id . $course->id);
+        $path = 'sertifikat/' . $fileHash . '.pdf';
 
         $data = [
             'name'    => strtoupper($user->name ?? $user->username),
@@ -39,7 +51,7 @@ class CertificateService
 
         $pdf = Pdf::loadView('certificates.template', $data)->setPaper('a4', 'landscape');
 
-        Storage::disk('public')->put($path, $pdf->output());
+        Storage::disk('local')->put($path, $pdf->output());
 
         $cert->update(['file_sertifikat' => $path]);
 

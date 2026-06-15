@@ -6,495 +6,46 @@
 
     <!-- Cropper.js CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
-
-    <style>
-        /* ══════════ PAGE HERO ══════════ */
-        .page-hero {
-            padding: 32px 32px 0;
-        }
-
-        .page-hero-greeting {
-            font-size: 26px;
-            font-weight: 800;
-            color: var(--text-primary);
-            letter-spacing: -0.5px;
-            margin-bottom: 4px;
-        }
-
-        .page-hero-greeting span {
-            background: linear-gradient(135deg, var(--brand-purple), #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .page-hero-sub {
-            font-size: 14px;
-            color: var(--text-secondary);
-            font-weight: 500;
-            margin-bottom: 20px;
-        }
-
-        .breadcrumb-modern {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .breadcrumb-modern a {
-            color: var(--brand-purple);
-            text-decoration: none;
-        }
-
-        .breadcrumb-modern a:hover { text-decoration: underline; }
-
-        .breadcrumb-modern .separator { color: var(--text-muted); }
-
-        .breadcrumb-modern .current { color: var(--text-muted); }
-
-        /* ══════════ ALERTS ══════════ */
-        .alert-modern {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 14px 18px;
-            border-radius: 14px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            animation: slideUp 0.4s ease-out forwards;
-        }
-
-        .alert-modern i {
-            font-size: 18px;
-            flex-shrink: 0;
-            margin-top: 1px;
-        }
-
-        .alert-modern.success {
-            background: var(--success-light);
-            color: var(--success);
-            border: 1px solid rgba(16,185,129,0.25);
-        }
-
-        .alert-modern.danger {
-            background: var(--danger-light);
-            color: var(--danger);
-            border: 1px solid rgba(239,68,68,0.25);
-        }
-
-        .alert-modern ul {
-            margin: 4px 0 0 0;
-            padding-left: 16px;
-        }
-
-        .alert-modern ul li {
-            margin-bottom: 3px;
-        }
-
-        /* ══════════ CONTENT CARD ══════════ */
-        .content-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            max-width: 720px;
-            margin: 0 auto;
-        }
-
-        .content-card-header {
-            padding: 20px 28px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .content-card-title {
-            font-size: 16px;
-            font-weight: 800;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .content-card-title i { color: var(--brand-purple); }
-
-        .content-card-body {
-            padding: 28px;
-        }
-
-        /* ══════════ PHOTO SECTION ══════════ */
-        .photo-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 32px;
-            padding-bottom: 28px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .photo-wrapper {
-            position: relative;
-            display: inline-block;
-            cursor: pointer;
-        }
-
-        .profile-photo {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--brand-purple);
-            transition: all 0.3s ease;
-            display: block;
-        }
-
-        .photo-overlay {
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.50);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .photo-wrapper:hover .photo-overlay {
-            opacity: 1;
-        }
-
-        .photo-overlay i {
-            font-size: 26px;
-            color: #fff;
-        }
-
-        .photo-hint {
-            margin-top: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
-
-        /* ══════════ FORM ══════════ */
-        .form-group-modern {
-            margin-bottom: 20px;
-        }
-
-        .form-label-modern {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        .form-label-modern i {
-            color: var(--brand-purple);
-            font-size: 14px;
-        }
-
-        .form-control-modern {
-            width: 100%;
-            padding: 11px 16px;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-primary);
-            background: var(--input-bg, var(--card-bg));
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s, background 0.35s;
-            box-sizing: border-box;
-        }
-
-        .form-control-modern:hover {
-            border-color: rgba(159,102,175,0.4);
-        }
-
-        .form-control-modern:focus {
-            border-color: var(--brand-purple);
-            box-shadow: 0 0 0 3px rgba(159,102,175,0.12);
-            background: var(--input-focus-bg, var(--card-bg));
-        }
-
-        .form-control-modern::placeholder {
-            color: var(--text-muted);
-            font-weight: 400;
-        }
-
-        [data-theme="dark"] .form-control-modern {
-            background: var(--input-bg);
-            color: var(--text-primary);
-            border-color: var(--border-color);
-        }
-
-        .form-hint {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-muted);
-            margin-top: 6px;
-        }
-
-        /* ══════════ ACTION BUTTONS ══════════ */
-        .action-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            margin-top: 28px;
-            padding-top: 24px;
-            border-top: 1px solid var(--border-color);
-            flex-wrap: wrap;
-        }
-
-        .btn-brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 10px 22px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-
-        .btn-brand-muted {
-            background: var(--border-color);
-            color: var(--text-secondary);
-        }
-
-        .btn-brand-muted:hover {
-            background: var(--text-muted);
-            color: #fff;
-        }
-
-        .btn-brand-primary {
-            background: var(--brand-purple);
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(159,102,175,0.25);
-        }
-
-        .btn-brand-primary:hover {
-            background: var(--brand-purple-dark);
-            color: #fff;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(159,102,175,0.35);
-        }
-
-        .btn-brand-primary:active {
-            transform: translateY(0);
-        }
-
-        /* ══════════ CROP MODAL ══════════ */
-        .crop-modal-overlay {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.75);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .crop-modal-overlay.show {
-            display: flex;
-        }
-
-        .crop-modal-box {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 28px;
-            max-width: 860px;
-            width: 92%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            animation: slideUp 0.3s ease-out;
-        }
-
-        .crop-modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .crop-modal-header h3 {
-            font-size: 16px;
-            font-weight: 800;
-            color: var(--text-primary);
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .crop-modal-header h3 i { color: var(--brand-purple); }
-
-        .crop-close-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--text-muted);
-            cursor: pointer;
-            line-height: 1;
-            padding: 4px;
-            border-radius: 8px;
-            transition: all 0.2s;
-        }
-
-        .crop-close-btn:hover {
-            background: var(--border-color);
-            color: var(--text-primary);
-        }
-
-        .crop-container {
-            max-height: 420px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            background: var(--table-header-bg);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-        }
-
-        .crop-container img {
-            max-width: 100%;
-            display: block;
-        }
-
-        .crop-preview-section {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .crop-preview-label {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-        }
-
-        .crop-preview {
-            width: 130px;
-            height: 130px;
-            overflow: hidden;
-            margin: 0 auto;
-            border-radius: 50%;
-            border: 3px solid var(--brand-purple);
-        }
-
-        .crop-controls {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .crop-ctrl-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 8px 14px;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: 700;
-            border: 1px solid var(--border-color);
-            background: var(--card-bg);
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .crop-ctrl-btn:hover {
-            border-color: var(--brand-purple);
-            color: var(--brand-purple);
-            background: var(--brand-purple-light);
-        }
-
-        .crop-actions {
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
-            padding-top: 16px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        /* ══════════ ANIMATIONS ══════════ */
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-slide-up { animation: slideUp 0.5s ease-out forwards; }
-        .delay-1 { animation-delay: 0.1s; opacity: 0; }
-        .delay-2 { animation-delay: 0.2s; opacity: 0; }
-
-        /* ══════════ RESPONSIVE ══════════ */
-        @media (max-width: 767.98px) {
-            .page-hero { padding: 20px 16px 0; }
-            .page-hero-greeting { font-size: 20px; }
-            .content-card-body { padding: 20px; }
-            .action-buttons { flex-direction: column; }
-            .btn-brand { justify-content: center; }
-            .crop-actions { flex-direction: column; }
-        }
-    </style>
 </head>
 
 <body>
     <div class="main-wrapper">
         @include('layouts.superadmin.partials.sidebar', ['activeMenu' => 'profil', 'activePage' => 'profil-saya'])
 
-        <div style="flex:1;display:flex;flex-direction:column;">
+        <div class="flex-1 flex flex-col min-w-0">
             @include('layouts.superadmin.partials.header')
 
-            <main style="flex:1;padding:0;">
+            <main class="flex-1 p-0">
 
                 {{-- ══════════ PAGE HEADER ══════════ --}}
-                <div class="page-hero animate-slide-up">
-                    <div class="page-hero-greeting">
-                        <span>Profil Saya</span> 
+                <div class="pt-8 px-8 pb-0 md:pt-6 md:px-4 transition-all duration-300">
+                    <div class="text-2xl md:text-xl font-extrabold text-slate-800 dark:text-white tracking-tight mb-1">
+                        <span class="bg-gradient-to-r from-brand-purple to-purple-400 bg-clip-text text-transparent">Profil Saya</span> 
                     </div>
-                    <p class="page-hero-sub">
+                    <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 font-medium mb-5">
                         Kelola informasi akun dan foto profil Anda di sini.
                     </p>
-                    <div class="breadcrumb-modern">
-                        <a href="{{ route('superadmin.dashboard.index') }}">Dashboard</a>
-                        <span class="separator"><i class="ri-arrow-right-s-line"></i></span>
-                        <span class="current">Profil Saya</span>
+                    <div class="flex items-center gap-2 text-[11px] font-semibold">
+                        <a href="{{ route('superadmin.dashboard.index') }}" class="text-brand-purple hover:underline">Dashboard</a>
+                        <span class="text-slate-400 dark:text-slate-600"><i class="ri-arrow-right-s-line"></i></span>
+                        <span class="text-slate-400 dark:text-slate-600">Profil Saya</span>
                     </div>
                 </div>
 
                 {{-- ══════════ ALERTS ══════════ --}}
-                <div style="padding:20px 32px 0;">
+                <div class="pt-6 px-8 md:px-4">
                     @if(session('success'))
-                    <div class="alert-modern success">
-                        <i class="ri-checkbox-circle-line"></i>
+                    <div class="flex items-start gap-3 p-4 rounded-xl text-sm font-semibold mb-5 bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 border border-emerald-500/25">
+                        <i class="ri-checkbox-circle-line text-lg"></i>
                         <span>{{ session('success') }}</span>
                     </div>
                     @endif
 
                     @if($errors->any())
-                    <div class="alert-modern danger">
-                        <i class="ri-error-warning-line"></i>
+                    <div class="flex items-start gap-3 p-4 rounded-xl text-sm font-semibold mb-5 bg-red-50 text-red-700 dark:bg-red-500/10 dark:text-red-400 border border-red-500/25">
+                        <i class="ri-error-warning-line text-lg"></i>
                         <div>
-                            <ul>
+                            <ul class="list-disc pl-4 space-y-1">
                                 @foreach($errors->all() as $error)
                                 <li>{{ $error }}</li>
                                 @endforeach
@@ -505,113 +56,114 @@
                 </div>
 
                 {{-- ══════════ PROFILE CARD ══════════ --}}
-                <div style="padding:20px 32px 32px;">
-                    <div class="content-card animate-slide-up delay-1">
-                        <div class="content-card-header">
-                            <div class="content-card-title">
-                                <i class="ri-user-settings-line"></i>
+                <div class="p-6 md:p-4">
+                    <div class="content-card max-w-2xl mx-auto">
+                        <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-900 flex items-center justify-between">
+                            <div class="text-base font-extrabold text-slate-800 dark:text-white flex items-center gap-2">
+                                <i class="ri-user-settings-line text-brand-purple"></i>
                                 Informasi Akun
                             </div>
                         </div>
 
-                        <div class="content-card-body">
+                        <div class="p-8 md:p-5">
 
                             {{-- Photo Section --}}
-                            <div class="photo-section">
+                            <div class="flex flex-col items-center mb-8 pb-7 border-b border-slate-100 dark:border-slate-900">
                                 @php
                                     $photoUrl = $user->photo
                                         ? asset('storage/' . $user->photo) . '?t=' . time()
                                         : 'https://ui-avatars.com/api/?name=' . urlencode($user->username) . '&background=9F66AF&color=fff&size=240';
                                 @endphp
-                                <div class="photo-wrapper" onclick="document.getElementById('photo-upload').click();">
+                                <div class="relative inline-block cursor-pointer group" onclick="document.getElementById('photo-upload').click();">
                                     <img src="{{ $photoUrl }}"
                                          alt="Profile Photo"
-                                         class="profile-photo"
+                                         class="w-28 h-28 rounded-full object-cover border-3 border-brand-purple transition-all duration-300 block"
                                          id="profile-preview">
-                                    <div class="photo-overlay">
-                                        <i class="ri-camera-line"></i>
+                                    <div class="absolute inset-0 rounded-full bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <i class="ri-camera-line text-3xl text-white"></i>
                                     </div>
                                 </div>
-                                <p class="photo-hint">Klik foto untuk mengubah</p>
+                                <p class="mt-3 text-xs font-bold text-slate-400 dark:text-slate-500">Klik foto untuk mengubah</p>
                             </div>
 
                             {{-- Form --}}
                             <form action="{{ route('superadmin.profile.update') }}"
                                   method="POST"
                                   enctype="multipart/form-data"
-                                  id="profile-form">
+                                  id="profile-form"
+                                  class="space-y-5">
                                 @csrf
 
                                 <input type="file"
                                        id="photo-upload"
                                        name="photo"
                                        accept="image/*"
-                                       style="display:none;"
+                                       class="hidden"
                                        onchange="previewPhoto(this)">
 
-                                <div class="form-group-modern">
-                                    <label class="form-label-modern">
-                                        <i class="ri-user-line"></i> Nama
+                                <div>
+                                    <label class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
+                                        <i class="ri-user-line text-brand-purple text-xs"></i> Nama
                                     </label>
                                     <input type="text"
                                            name="username"
-                                           class="form-control-modern"
+                                           class="form-input-modern"
                                            placeholder="Masukkan nama..."
                                            value="{{ old('username', $user->username) }}"
                                            required>
                                 </div>
 
-                                <div class="form-group-modern">
-                                    <label class="form-label-modern">
-                                        <i class="ri-mail-line"></i> Email
+                                <div>
+                                    <label class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
+                                        <i class="ri-mail-line text-brand-purple text-xs"></i> Email
                                     </label>
                                     <input type="email"
                                            name="email"
-                                           class="form-control-modern"
+                                           class="form-input-modern"
                                            placeholder="Masukkan email..."
                                            value="{{ old('email', $user->email) }}"
                                            required>
                                 </div>
 
-                                <div class="form-group-modern">
-                                    <label class="form-label-modern">
-                                        <i class="ri-smartphone-line"></i> Nomor Handphone
+                                <div>
+                                    <label class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
+                                        <i class="ri-smartphone-line text-brand-purple text-xs"></i> Nomor Handphone
                                     </label>
                                     <input type="tel"
                                            name="nomor_hp"
-                                           class="form-control-modern"
+                                           class="form-input-modern"
                                            placeholder="Masukkan nomor handphone..."
                                            value="{{ old('nomor_hp', $user->nomor_hp) }}"
                                            inputmode="numeric" pattern="[0-9]*" maxlength="13"
                                            oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                 </div>
 
-                                <div class="form-group-modern">
-                                    <label class="form-label-modern">
-                                        <i class="ri-lock-line"></i> Password Baru
+                                <div>
+                                    <label class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
+                                        <i class="ri-lock-line text-brand-purple text-xs"></i> Password Baru
                                     </label>
                                     <input type="password"
                                            name="new_password"
-                                           class="form-control-modern"
+                                           class="form-input-modern"
                                            placeholder="Masukkan password baru...">
-                                    <p class="form-hint">Minimal 8 karakter. Kosongkan jika tidak ingin mengubah password.</p>
+                                    <p class="text-[10px] font-semibold text-slate-400 dark:text-slate-500 mt-1.5">Minimal 8 karakter. Kosongkan jika tidak ingin mengubah password.</p>
                                 </div>
 
-                                <div class="form-group-modern">
-                                    <label class="form-label-modern">
-                                        <i class="ri-shield-check-line"></i> Konfirmasi Password Baru
+                                <div>
+                                    <label class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
+                                        <i class="ri-shield-check-line text-brand-purple text-xs"></i> Konfirmasi Password Baru
                                     </label>
                                     <input type="password"
                                            name="new_password_confirmation"
-                                           class="form-control-modern"
+                                           class="form-input-modern"
                                            placeholder="Ulangi password baru...">
                                 </div>
 
-                                <div class="action-buttons">
-                                    <a href="{{ route('superadmin.dashboard.index') }}" class="btn-brand btn-brand-muted">
+                                <div class="flex justify-end gap-3 pt-6 border-t border-slate-100 dark:border-slate-900 flex-wrap md:flex-col">
+                                    <a href="{{ route('superadmin.dashboard.index') }}" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-center">
                                         <i class="ri-arrow-left-line"></i> Batal
                                     </a>
-                                    <button type="submit" class="btn-brand btn-brand-primary">
+                                    <button type="submit" class="btn-brand justify-center">
                                         <i class="ri-save-line"></i> Simpan Perubahan
                                     </button>
                                 </div>
@@ -628,50 +180,52 @@
     </div>
 
     {{-- ══════════ CROP MODAL ══════════ --}}
-    <div class="crop-modal-overlay" id="cropModal">
-        <div class="crop-modal-box">
-            <div class="crop-modal-header">
-                <h3><i class="ri-crop-line"></i> Edit Foto Profil</h3>
-                <button class="crop-close-btn" id="cropModalClose">&times;</button>
+    <div class="fixed inset-0 z-50 bg-black/75 hidden items-center justify-center p-4 transition-all duration-300" id="cropModal">
+        <div class="bg-white dark:bg-[#13111c] border border-slate-100 dark:border-slate-900 rounded-2xl p-7 max-w-3xl w-full max-h-[90vh] overflow-y-auto relative">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="text-base font-extrabold text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="ri-crop-line text-brand-purple"></i> Edit Foto Profil
+                </h3>
+                <button class="bg-none border-none text-2xl text-slate-400 hover:text-slate-600 cursor-pointer p-1" id="cropModalClose">&times;</button>
             </div>
 
-            <div class="crop-container">
-                <img id="cropImage" src="" alt="Image to crop">
+            <div class="max-h-[420px] overflow-hidden mb-5 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-800">
+                <img id="cropImage" src="" alt="Image to crop" class="max-w-full block">
             </div>
 
-            <div class="crop-preview-section">
-                <p class="crop-preview-label">Preview</p>
-                <div class="crop-preview" id="cropPreview"></div>
+            <div class="mb-5 text-center">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Preview</p>
+                <div class="w-[130px] h-[130px] overflow-hidden mx-auto rounded-full border-3 border-brand-purple" id="cropPreview"></div>
             </div>
 
-            <div class="crop-controls">
-                <button class="crop-ctrl-btn" id="rotateLeft">
+            <div class="flex gap-2 justify-center flex-wrap mb-5">
+                <button class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:border-brand-purple hover:text-brand-purple transition-all cursor-pointer" id="rotateLeft">
                     <i class="ri-anticlockwise-line"></i> Putar Kiri
                 </button>
-                <button class="crop-ctrl-btn" id="rotateRight">
+                <button class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:border-brand-purple hover:text-brand-purple transition-all cursor-pointer" id="rotateRight">
                     <i class="ri-clockwise-line"></i> Putar Kanan
                 </button>
-                <button class="crop-ctrl-btn" id="flipHorizontal">
+                <button class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:border-brand-purple hover:text-brand-purple transition-all cursor-pointer" id="flipHorizontal">
                     <i class="ri-flip-horizontal-line"></i> Flip H
                 </button>
-                <button class="crop-ctrl-btn" id="flipVertical">
+                <button class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:border-brand-purple hover:text-brand-purple transition-all cursor-pointer" id="flipVertical">
                     <i class="ri-flip-vertical-line"></i> Flip V
                 </button>
-                <button class="crop-ctrl-btn" id="resetCrop">
+                <button class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:border-brand-purple hover:text-brand-purple transition-all cursor-pointer" id="resetCrop">
                     <i class="ri-refresh-line"></i> Reset
                 </button>
             </div>
 
-            <div class="crop-actions">
-                <button class="btn-brand btn-brand-muted" id="cancelCrop">Batal</button>
-                <button class="btn-brand btn-brand-primary" id="applyCrop">
+            <div class="flex gap-3 justify-end pt-4 border-t border-slate-100 dark:border-slate-900 md:flex-col">
+                <button class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer" id="cancelCrop">Batal</button>
+                <button class="btn-brand justify-center cursor-pointer" id="applyCrop">
                     <i class="ri-check-line"></i> Gunakan Foto
                 </button>
             </div>
         </div>
     </div>
 
-    <canvas id="croppedCanvas" style="display:none;"></canvas>
+    <canvas id="croppedCanvas" class="hidden"></canvas>
 
     @include('layouts.superadmin.partials.scripts')
 
@@ -711,7 +265,9 @@
                             p.style.borderRadius = '50%';
                         }
                     });
-                    document.getElementById('cropModal').classList.add('show');
+                    const m = document.getElementById('cropModal');
+                    m.classList.remove('hidden');
+                    m.classList.add('flex');
                 };
                 reader.readAsDataURL(input.files[0]);
             }
@@ -766,7 +322,9 @@
         });
 
         function closeCropModal() {
-            document.getElementById('cropModal').classList.remove('show');
+            const m = document.getElementById('cropModal');
+            m.classList.add('hidden');
+            m.classList.remove('flex');
             if (cropper) { cropper.destroy(); cropper = null; }
         }
 
@@ -775,7 +333,7 @@
         });
 
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && document.getElementById('cropModal').classList.contains('show')) {
+            if (e.key === 'Escape' && !document.getElementById('cropModal').classList.contains('hidden')) {
                 closeCropModal();
             }
         });

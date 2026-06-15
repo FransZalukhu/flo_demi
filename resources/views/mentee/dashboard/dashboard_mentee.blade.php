@@ -131,6 +131,11 @@
                                class="w-full block text-center py-2.5 bg-amber-500 text-white text-[10px] font-black rounded-xl transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-amber-200 dark:shadow-black/20">
                                 {{ $status === 'ditolak' ? 'Upload Ulang' : 'Bayar Sekarang' }}
                             </a>
+                        @elseif($status === 'menunggu_verifikasi')
+                            <a href="{{ route('mentee.pembayaran.invoice', $kursus->pivot->pembayaran_id) }}" 
+                               class="w-full block text-center py-2.5 bg-blue-500 text-white text-[10px] font-black rounded-xl transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-blue-200 dark:shadow-black/20">
+                                <i class="ri-time-line mr-1"></i> Cek Verifikasi
+                            </a>
                         @else
                             <div class="w-full py-2.5 bg-slate-100 dark:bg-gray-800 text-slate-400 dark:text-gray-600 text-[10px] font-bold rounded-xl text-center border border-slate-200 dark:border-gray-700">
                                 <i class="ri-time-line mr-1"></i> Verifikasi

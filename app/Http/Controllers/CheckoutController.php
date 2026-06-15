@@ -114,13 +114,27 @@ class CheckoutController extends Controller
             ->first();
 
         if ($existing) {
-            if (in_array($existing->status, ['aktif', 'selesai', 'menunggu_verifikasi'])) {
+            if (in_array($existing->status, ['aktif', 'selesai'])) {
                 return redirect()->route('mentee.course.saya')->with('info', 'Kamu sudah terdaftar.');
+            }
+
+            if ($existing->status === 'menunggu_verifikasi') {
+                return redirect()->route('mentee.pembayaran.invoice', $existing->pembayaran_id)
+                    ->with('info', 'Pendaftaran sedang diverifikasi oleh admin.');
             }
             
             if (in_array($existing->status, ['menunggu_pembayaran', 'ditolak'])) {
-                return redirect()->route('mentee.pembayaran.invoice', $existing->pembayaran_id)
-                    ->with('info', 'Selesaikan pembayaran untuk pendaftaran sebelumnya.');
+                $payment = $existing->pembayaran;
+                if ($payment && $payment->expired_at && now()->gt($payment->expired_at)) {
+                    DB::transaction(function () use ($existing, $payment) {
+                        $existing->delete();
+                        $payment->delete();
+                    });
+                    $existing = null;
+                } else {
+                    return redirect()->route('mentee.pembayaran.invoice', $existing->pembayaran_id)
+                        ->with('info', 'Selesaikan pembayaran untuk pendaftaran sebelumnya.');
+                }
             }
         }
 

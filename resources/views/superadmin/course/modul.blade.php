@@ -3,790 +3,65 @@
 
 <head>
     @include('layouts.superadmin.partials.head', ['pageTitle' => 'Admin Dashboard - Modul Course'])
-
-    <style>
-        /* ══════════ PAGE HERO ══════════ */
-        .page-hero {
-            padding: 32px 32px 0;
-        }
-
-        .page-hero-greeting {
-            font-size: 26px;
-            font-weight: 800;
-            color: #1f2937;
-            letter-spacing: -0.5px;
-            margin-bottom: 4px;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .page-hero-greeting {
-            color: #f3f4f6 !important;
-        }
-
-        .page-hero-greeting span {
-            background: linear-gradient(135deg, #9F66AF, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .page-hero-sub {
-            font-size: 14px;
-            color: #6b7280;
-            font-weight: 500;
-            margin-bottom: 20px;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .page-hero-sub {
-            color: #9ca3af !important;
-        }
-
-        .breadcrumb-modern {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .breadcrumb-modern a {
-            color: #9F66AF;
-            text-decoration: none;
-        }
-
-        .breadcrumb-modern a:hover { text-decoration: underline; }
-
-        .breadcrumb-modern .separator { color: #9ca3af; }
-
-        .breadcrumb-modern .current { color: #6b7280; }
-
-        [data-theme="dark"] .breadcrumb-modern .separator,
-        [data-theme="dark"] .breadcrumb-modern .current {
-            color: #9ca3af !important;
-        }
-
-        /* ══════════ CONTENT CARD ══════════ */
-        .content-card {
-            background: #ffffff;
-            border-radius: 20px;
-            border: 1px solid #e5e7eb;
-            overflow: hidden;
-            transition: background 0.35s ease, border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .content-card {
-            background: #13111c !important;
-            border-color: rgba(255,255,255,0.08) !important;
-        }
-
-        .content-card-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #e5e7eb;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
-            transition: border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .content-card-header {
-            border-bottom-color: rgba(255,255,255,0.08) !important;
-        }
-
-        .content-card-title {
-            font-size: 16px;
-            font-weight: 800;
-            color: #1f2937;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .content-card-title {
-            color: #f3f4f6 !important;
-        }
-
-        .content-card-title i { color: #9F66AF; }
-
-        .content-card-toolbar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        /* ══════════ SEARCH & FILTER ══════════ */
-        .search-input-modern {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 14px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            background: #f9fafb;
-            transition: all 0.2s;
-        }
-
-        .search-input-modern:focus-within {
-            border-color: #9F66AF;
-            box-shadow: 0 0 0 3px rgba(159,102,175,0.10);
-            background: #ffffff;
-        }
-
-        [data-theme="dark"] .search-input-modern {
-            background: #1a1825 !important;
-            border-color: rgba(255,255,255,0.08) !important;
-        }
-
-        [data-theme="dark"] .search-input-modern:focus-within {
-            background: #1a1825 !important;
-            border-color: #9F66AF !important;
-        }
-
-        .search-input-modern i {
-            color: #6b7280;
-            font-size: 15px;
-        }
-
-        [data-theme="dark"] .search-input-modern i {
-            color: #9ca3af !important;
-        }
-
-        .search-input-modern input {
-            border: none;
-            background: transparent;
-            outline: none;
-            font-size: 13px;
-            font-weight: 500;
-            color: #1f2937;
-            width: 180px;
-        }
-
-        [data-theme="dark"] .search-input-modern input {
-            color: #f3f4f6 !important;
-        }
-
-        .search-input-modern input::placeholder { color: #9ca3af; }
-
-        .filter-select-modern {
-            padding: 8px 14px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            font-size: 13px;
-            font-weight: 600;
-            color: #1f2937;
-            background: #f9fafb;
-            cursor: pointer;
-            outline: none;
-            transition: border-color 0.2s, background 0.35s, color 0.35s;
-        }
-
-        .filter-select-modern:focus {
-            border-color: #9F66AF;
-            box-shadow: 0 0 0 3px rgba(159,102,175,0.10);
-        }
-
-        [data-theme="dark"] .filter-select-modern {
-            background: #1a1825 !important;
-            color: #f3f4f6 !important;
-            border-color: rgba(255,255,255,0.08) !important;
-        }
-
-        [data-theme="dark"] .filter-select-modern option {
-            background: #1a1826;
-            color: #f0eef5;
-        }
-
-        /* ══════════ BUTTONS ══════════ */
-        .btn-brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 9px 18px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-
-        .btn-brand-primary {
-            background: #9F66AF;
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(159,102,175,0.25);
-        }
-
-        .btn-brand-primary:hover {
-            background: #8b56a0;
-            color: #fff;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(159,102,175,0.35);
-        }
-
-        .btn-brand-muted {
-            background: #e5e7eb;
-            color: #374151;
-        }
-
-        [data-theme="dark"] .btn-brand-muted {
-            background: rgba(255,255,255,0.08) !important;
-            color: #9ca3af !important;
-        }
-
-        .btn-brand-muted:hover {
-            background: #9ca3af;
-            color: #fff;
-        }
-
-        .btn-brand-danger {
-            background: #ef4444;
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(239,68,68,0.25);
-        }
-
-        .btn-brand-danger:hover {
-            background: #dc2626;
-            color: #fff;
-        }
-
-        /* ══════════════════════════════════════
-           TABLE — ROBUST DARK/LIGHT MODE
-        ══════════════════════════════════════ */
-        .table-modern {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-        }
-
-        .table-modern thead th {
-            padding: 12px 20px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #6b7280;
-            background: #f9fafb;
-            border-bottom: 1px solid #e5e7eb;
-            text-align: left;
-            white-space: nowrap;
-            transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease;
-        }
-
-        .table-modern tbody tr {
-            transition: background 0.2s ease;
-            background: #ffffff;
-        }
-
-        .table-modern tbody tr:hover {
-            background: #f3f0f7;
-        }
-
-        .table-modern tbody td {
-            padding: 14px 20px;
-            font-size: 13px;
-            font-weight: 500;
-            color: #1f2937;
-            border-bottom: 1px solid #f3f4f6;
-            vertical-align: middle;
-            background: inherit;
-            transition: color 0.35s ease, border-color 0.35s ease, background 0.2s ease;
-        }
-
-        [data-theme="dark"] .table-responsive {
-            background: #13111c !important;
-        }
-
-        [data-theme="dark"] .table-modern thead th {
-            background: #1a1825 !important;
-            color: #9ca3af !important;
-            border-bottom-color: rgba(255,255,255,0.08) !important;
-        }
-
-        [data-theme="dark"] .table-modern tbody tr {
-            background: #13111c !important;
-        }
-
-        [data-theme="dark"] .table-modern tbody tr:hover {
-            background: rgba(159, 102, 175, 0.08) !important;
-        }
-
-        [data-theme="dark"] .table-modern tbody td {
-            color: #e5e7eb !important;
-            border-bottom-color: rgba(255,255,255,0.06) !important;
-            background: inherit !important;
-        }
-
-        /* ══════════ TABLE CELLS ══════════ */
-        .badge-role {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 700;
-            background: rgba(59,130,246,0.1);
-            color: #3b82f6;
-            transition: background 0.35s ease, color 0.35s ease;
-        }
-
-        [data-theme="dark"] .badge-role {
-            background: rgba(59,130,246,0.15) !important;
-            color: #60a5fa !important;
-        }
-
-        .table-modern .module-title {
-            font-weight: 700;
-            color: #1f2937;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .table-modern .module-title {
-            color: #f3f4f6 !important;
-        }
-
-        .table-modern .order-num {
-            font-weight: 700;
-            color: #9F66AF;
-        }
-
-        [data-theme="dark"] .table-modern .order-num {
-            color: #c084fc !important;
-        }
-
-        /* ══════════ ACTION BTNS ══════════ */
-        .action-btns {
-            display: flex;
-            gap: 6px;
-            flex-wrap: nowrap;
-        }
-
-        .action-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 700;
-            border: 1px solid;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            background: transparent;
-            white-space: nowrap;
-        }
-
-        .action-btn.edit {
-            border-color: rgba(16,185,129,0.3);
-            color: #10b981;
-        }
-
-        .action-btn.edit:hover {
-            background: rgba(16,185,129,0.1);
-            border-color: #10b981;
-        }
-
-        [data-theme="dark"] .action-btn.edit {
-            border-color: rgba(52,211,153,0.25) !important;
-            color: #34d399 !important;
-        }
-
-        [data-theme="dark"] .action-btn.edit:hover {
-            background: rgba(16,185,129,0.15) !important;
-        }
-
-        .action-btn.delete {
-            border-color: rgba(239,68,68,0.3);
-            color: #ef4444;
-        }
-
-        .action-btn.delete:hover {
-            background: rgba(239,68,68,0.1);
-            border-color: #ef4444;
-        }
-
-        [data-theme="dark"] .action-btn.delete {
-            border-color: rgba(248,113,113,0.25) !important;
-            color: #f87171 !important;
-        }
-
-        [data-theme="dark"] .action-btn.delete:hover {
-            background: rgba(239,68,68,0.15) !important;
-        }
-
-        .action-btn.view-proof {
-            border-color: rgba(159,102,175,0.3);
-            color: #9F66AF;
-        }
-
-        .action-btn.view-proof:hover {
-            background: rgba(159,102,175,0.1);
-            border-color: #9F66AF;
-        }
-
-        [data-theme="dark"] .action-btn.view-proof {
-            border-color: rgba(192,132,252,0.25) !important;
-            color: #c084fc !important;
-        }
-
-        [data-theme="dark"] .action-btn.view-proof:hover {
-            background: rgba(159,102,175,0.15) !important;
-        }
-
-        .no-file-text {
-            font-size: 12px;
-            font-weight: 500;
-            color: #9ca3af;
-            font-style: italic;
-        }
-
-        /* ══════════ EMPTY STATE ══════════ */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-        }
-
-        .empty-state i {
-            font-size: 48px;
-            color: #9ca3af;
-            opacity: 0.3;
-        }
-
-        .empty-state p {
-            font-size: 14px;
-            color: #9ca3af;
-            margin-top: 12px;
-        }
-
-        /* ══════════ ALERTS ══════════ */
-        .alert-modern {
-            padding: 14px 20px;
-            border-radius: 14px;
-            font-size: 13px;
-            font-weight: 500;
-            border: 1px solid;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 20px;
-            transition: background 0.35s ease, border-color 0.35s ease, color 0.35s ease;
-        }
-
-        .alert-modern i {
-            font-size: 18px;
-            flex-shrink: 0;
-            margin-top: 1px;
-        }
-
-        .alert-modern.alert-success {
-            background: rgba(16,185,129,0.1);
-            border-color: rgba(16,185,129,0.25);
-            color: #10b981;
-        }
-
-        [data-theme="dark"] .alert-modern.alert-success {
-            background: rgba(16,185,129,0.1) !important;
-            border-color: rgba(52,211,153,0.2) !important;
-            color: #34d399 !important;
-        }
-
-        .alert-modern.alert-danger {
-            background: rgba(239,68,68,0.1);
-            border-color: rgba(239,68,68,0.25);
-            color: #ef4444;
-        }
-
-        [data-theme="dark"] .alert-modern.alert-danger {
-            background: rgba(239,68,68,0.1) !important;
-            border-color: rgba(248,113,113,0.2) !important;
-            color: #f87171 !important;
-        }
-
-        /* ══════════ MODAL ══════════ */
-        .modal-modern .modal-content {
-            border: 1px solid rgba(0,0,0,0.1);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.15);
-            background: #ffffff;
-            transition: background 0.35s ease, border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .modal-content {
-            background: #1a1825 !important;
-            border-color: rgba(255,255,255,0.08) !important;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
-        }
-
-        .modal-modern .modal-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #e5e7eb;
-            background: #ffffff;
-            transition: background 0.35s ease, border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .modal-header {
-            background: #1a1825 !important;
-            border-bottom-color: rgba(255,255,255,0.08) !important;
-        }
-
-        .modal-modern .modal-title {
-            font-weight: 800;
-            font-size: 16px;
-            color: #1f2937;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .modal-title {
-            color: #f3f4f6 !important;
-        }
-
-        .modal-modern .modal-body {
-            padding: 24px;
-            font-size: 14px;
-            color: #6b7280;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .modal-body {
-            color: #9ca3af !important;
-        }
-
-        .modal-modern .modal-body p.modal-desc {
-            font-size: 13px;
-            color: #6b7280;
-            margin-bottom: 8px;
-            line-height: 1.6;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .modal-body p.modal-desc {
-            color: #9ca3af !important;
-        }
-
-        .modal-modern .modal-footer {
-            padding: 16px 24px;
-            border-top: 1px solid #e5e7eb;
-            transition: border-color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .modal-footer {
-            border-top-color: rgba(255,255,255,0.08) !important;
-        }
-
-        .modal-modern .btn-close { filter: none; }
-
-        [data-theme="dark"] .modal-modern .btn-close {
-            filter: invert(1) grayscale(100%) brightness(200%);
-        }
-
-        /* ══════════ FORM INSIDE MODAL ══════════ */
-        .modal-modern .form-label {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: #6b7280;
-            display: block;
-            margin-bottom: 8px;
-            transition: color 0.35s ease;
-        }
-
-        [data-theme="dark"] .modal-modern .form-label {
-            color: #9ca3af !important;
-        }
-
-        .modal-modern .form-control,
-        .modal-modern .form-select {
-            padding: 10px 14px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            font-size: 13px;
-            font-weight: 500;
-            color: #1f2937;
-            background: #f9fafb;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s, background 0.35s ease, color 0.35s ease;
-        }
-
-        .modal-modern .form-control:focus,
-        .modal-modern .form-select:focus {
-            border-color: #9F66AF;
-            box-shadow: 0 0 0 3px rgba(159,102,175,0.10);
-            background: #ffffff;
-        }
-
-        [data-theme="dark"] .modal-modern .form-control,
-        [data-theme="dark"] .modal-modern .form-select {
-            background: #13111c !important;
-            color: #f3f4f6 !important;
-            border-color: rgba(255,255,255,0.08) !important;
-        }
-
-        [data-theme="dark"] .modal-modern .form-control:focus,
-        [data-theme="dark"] .modal-modern .form-select:focus {
-            background: #13111c !important;
-            border-color: #9F66AF !important;
-            color: #f3f4f6 !important;
-        }
-
-        [data-theme="dark"] .modal-modern .form-select option {
-            background: #1a1826;
-            color: #f0eef5;
-        }
-
-        .modal-modern .form-text {
-            font-size: 12px;
-            color: #9ca3af;
-            margin-top: 6px;
-        }
-
-        .modal-modern .form-control::placeholder {
-            color: #9ca3af;
-        }
-
-        /* ══════════ PAGINATION ══════════ */
-        .pagination-modern {
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .pagination-modern .page-link {
-            border-radius: 10px !important;
-            margin: 0 3px;
-            font-size: 12px;
-            font-weight: 700;
-            color: #6b7280;
-            border: 1px solid #e5e7eb;
-            padding: 8px 14px;
-            transition: all 0.2s;
-            background: #ffffff;
-        }
-
-        .pagination-modern .page-link:hover {
-            background: rgba(159,102,175,0.1);
-            border-color: #9F66AF;
-            color: #9F66AF;
-        }
-
-        [data-theme="dark"] .pagination-modern .page-link {
-            background: #1a1825 !important;
-            color: #9ca3af !important;
-            border-color: rgba(255,255,255,0.08) !important;
-        }
-
-        [data-theme="dark"] .pagination-modern .page-link:hover {
-            background: rgba(159,102,175,0.15) !important;
-            border-color: #c084fc !important;
-            color: #c084fc !important;
-        }
-
-        .pagination-modern .page-item.active .page-link {
-            background: #9F66AF !important;
-            border-color: #9F66AF !important;
-            color: #fff !important;
-        }
-
-        .pagination-modern .page-item.disabled .page-link {
-            background: #f9fafb;
-            color: #9ca3af;
-            border-color: #e5e7eb;
-        }
-
-        [data-theme="dark"] .pagination-modern .page-item.disabled .page-link {
-            background: #13111c !important;
-            color: #4b5563 !important;
-            border-color: rgba(255,255,255,0.05) !important;
-        }
-
-        /* ══════════ ANIMATIONS ══════════ */
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-slide-up { animation: slideUp 0.5s ease-out forwards; }
-
-        .delay-1 { animation-delay: 0.1s; opacity: 0; }
-
-        /* ══════════ RESPONSIVE ══════════ */
-        @media (max-width: 767.98px) {
-            .page-hero { padding: 20px 16px 0; }
-            .page-hero-greeting { font-size: 20px; }
-            .content-card-header { padding: 16px; }
-            .table-modern thead th,
-            .table-modern tbody td { padding: 10px 12px; }
-            .search-input-modern input { width: 120px; }
-            .content-card-toolbar { width: 100%; }
-            .action-btns { flex-wrap: wrap; }
-        }
-    </style>
 </head>
 
 <body>
     <div class="main-wrapper">
         @include('layouts.superadmin.partials.sidebar', ['activeMenu' => 'manajemen-course', 'activePage' => 'manajemen-course-modul'])
 
-        <div style="flex:1;display:flex;flex-direction:column;">
+        <div class="flex-1 flex flex-col min-w-0">
             @include('layouts.superadmin.partials.header')
 
-            <main style="flex:1;padding:0;">
+            <main class="flex-1 p-0">
 
                 {{-- ══════════ PAGE HEADER ══════════ --}}
-                <div class="page-hero animate-slide-up">
-                    <div class="page-hero-greeting">
-                        <span>Manajemen Modul</span> 
+                <div class="pt-8 px-8 pb-0 md:pt-6 md:px-4 transition-all duration-300">
+                    <div class="text-2xl md:text-xl font-extrabold text-slate-800 dark:text-white tracking-tight mb-1">
+                        <span class="bg-gradient-to-r from-brand-purple to-purple-400 bg-clip-text text-transparent">Manajemen Modul</span> 
                     </div>
-                    <p class="page-hero-sub">
+                    <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 font-medium mb-5">
                         Tambah, edit, dan kelola modul pembelajaran pada setiap kursus.
                     </p>
-                    <div class="breadcrumb-modern">
-                        <a href="{{ route('superadmin.dashboard.index') }}">Dashboard</a>
-                        <span class="separator"><i class="ri-arrow-right-s-line"></i></span>
-                        <a href="{{ route('superadmin.course.list') }}">Manajemen Course</a>
-                        <span class="separator"><i class="ri-arrow-right-s-line"></i></span>
-                        <span class="current">Modul</span>
+                    <div class="flex items-center gap-2 text-[11px] font-semibold">
+                        <a href="{{ route('superadmin.dashboard.index') }}" class="text-brand-purple hover:underline">Dashboard</a>
+                        <span class="text-slate-400 dark:text-slate-600"><i class="ri-arrow-right-s-line"></i></span>
+                        <a href="{{ route('superadmin.course.list') }}" class="text-brand-purple hover:underline">Manajemen Course</a>
+                        <span class="text-slate-400 dark:text-slate-600"><i class="ri-arrow-right-s-line"></i></span>
+                        <span class="text-slate-400 dark:text-slate-600">Modul</span>
                     </div>
                 </div>
 
                 {{-- ══════════ CONTENT ══════════ --}}
-                <div style="padding:24px 32px 32px;">
+                <div class="p-6 md:p-4">
 
                     {{-- Alerts --}}
                     @if (session('success'))
-                    <div class="alert-modern alert-success animate-slide-up">
-                        <i class="ri-check-double-line"></i>
+                    <div class="alert-modern flex items-start gap-3 p-4 rounded-xl text-sm font-semibold mb-5 bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 border border-emerald-500/25">
+                        <i class="ri-check-double-line text-lg"></i>
                         <div>{{ session('success') }}</div>
                     </div>
                     @endif
 
                     @if (session('error'))
-                    <div class="alert-modern alert-danger animate-slide-up">
-                        <i class="ri-error-warning-line"></i>
+                    <div class="alert-modern flex items-start gap-3 p-4 rounded-xl text-sm font-semibold mb-5 bg-red-50 text-red-700 dark:bg-red-500/10 dark:text-red-400 border border-red-500/25">
+                        <i class="ri-error-warning-line text-lg"></i>
                         <div>{{ session('error') }}</div>
                     </div>
                     @endif
 
-                    <div class="content-card animate-slide-up delay-1">
-                        <div class="content-card-header">
-                            <div class="content-card-title">
-                                <i class="ri-folder-3-line"></i>
+                    <div class="content-card">
+                        <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-900 flex items-center justify-between flex-wrap gap-3">
+                            <div class="text-base font-extrabold text-slate-800 dark:text-white flex items-center gap-2">
+                                <i class="ri-folder-3-line text-brand-purple"></i>
                                 Daftar Modul
                             </div>
-                            <div class="content-card-toolbar">
-                                <form method="GET" action="{{ route('superadmin.course.modul') }}" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-                                    <div class="search-input-modern">
-                                        <i class="ri-search-line"></i>
-                                        <input type="text" name="search" placeholder="Cari modul..." value="{{ request('search') }}">
+                            <div class="flex items-center gap-2.5 flex-wrap md:w-full">
+                                <form method="GET" action="{{ route('superadmin.course.modul') }}" class="flex items-center gap-2.5 flex-wrap md:w-full">
+                                    <div class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 focus-within:border-brand-purple focus-within:ring-4 focus-within:ring-brand-purple/10 focus-within:bg-white dark:focus-within:bg-[#13111c] transition-all">
+                                        <i class="ri-search-line text-slate-400 text-sm"></i>
+                                        <input type="text" name="search" class="border-none bg-transparent outline-none text-xs font-semibold text-slate-800 dark:text-slate-200 w-44 md:w-full placeholder-slate-400" placeholder="Cari modul..." value="{{ request('search') }}">
                                     </div>
-                                    <select name="kursus_id" class="filter-select-modern" onchange="this.form.submit()">
+                                    <select name="kursus_id" class="px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-xs font-bold text-slate-700 dark:text-slate-300 cursor-pointer focus:outline-none focus:border-brand-purple transition-all md:w-full" onchange="this.form.submit()">
                                         <option value="">Semua Kursus</option>
                                         @foreach ($kursusAll as $k)
                                             <option value="{{ $k->id }}" {{ request('kursus_id') == $k->id ? 'selected' : '' }}>
@@ -795,18 +70,18 @@
                                         @endforeach
                                     </select>
                                     @if (request('search') || request('kursus_id'))
-                                    <a href="{{ route('superadmin.course.modul') }}" class="btn-brand btn-brand-muted" style="padding:8px 14px;">
+                                    <a href="{{ route('superadmin.course.modul') }}" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center gap-1 md:w-full md:justify-center">
                                         <i class="ri-refresh-line"></i> Reset
                                     </a>
                                     @endif
                                 </form>
-                                <button class="btn-brand btn-brand-primary" data-bs-toggle="modal" data-bs-target="#modalTambahModul">
+                                <button class="btn-brand md:w-full md:justify-center cursor-pointer" onclick="bukaModalTambah()">
                                     <i class="ri-add-line"></i> Tambah Modul
                                 </button>
                             </div>
                         </div>
 
-                        <div class="table-responsive">
+                        <div class="overflow-x-auto">
                             <table class="table-modern">
                                 <thead>
                                     <tr>
@@ -820,32 +95,32 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($moduls as $index => $modul)
-                                    <tr>
-                                        <td style="font-weight:700;color:#6b7280;">{{ $loop->iteration }}</td>
+                                    <tr class="hover:bg-slate-50/50 dark:hover:bg-brand-purple/5 transition-colors">
+                                        <td class="font-bold text-slate-400 dark:text-slate-500">{{ $loop->iteration }}</td>
                                         <td>
-                                            <span class="badge-role">
-                                                <i class="ri-book-open-line" style="font-size:10px;"></i>
+                                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400">
+                                                <i class="ri-book-open-line text-[10px]"></i>
                                                 {{ $modul->kursus->judul ?? '-' }}
                                             </span>
                                         </td>
                                         <td>
-                                            <span class="module-title">{{ $modul->judul }}</span>
+                                            <span class="font-bold text-slate-850 dark:text-slate-200">{{ $modul->judul }}</span>
                                         </td>
                                         <td>
-                                            <span class="order-num">{{ $modul->urutan }}</span>
+                                            <span class="font-bold text-brand-purple dark:text-purple-400">{{ $modul->urutan }}</span>
                                         </td>
                                         <td>
                                             @if ($modul->file)
-                                                <a href="{{ asset('storage/' . $modul->file) }}" target="_blank" class="action-btn view-proof">
+                                                <a href="{{ asset('storage/' . $modul->file) }}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold border border-brand-purple/20 text-brand-purple hover:bg-brand-purple/10 transition-colors">
                                                     <i class="ri-file-pdf-2-line"></i> Lihat PDF
                                                 </a>
                                             @else
-                                                <span class="no-file-text">Tidak ada file</span>
+                                                <span class="text-xs text-slate-400 dark:text-slate-500 italic">Tidak ada file</span>
                                             @endif
                                         </td>
                                         <td>
-                                            <div class="action-btns">
-                                                <button class="action-btn edit" onclick="bukaModalEdit(
+                                            <div class="flex items-center gap-1.5 flex-nowrap">
+                                                <button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10 transition-colors cursor-pointer" onclick="bukaModalEdit(
                                                     {{ $modul->id }},
                                                     {{ $modul->kursus_id }},
                                                     '{{ addslashes($modul->judul) }}',
@@ -853,7 +128,7 @@
                                                 )">
                                                     <i class="ri-edit-line"></i> Edit
                                                 </button>
-                                                <button class="action-btn delete" onclick="bukaModalHapus({{ $modul->id }}, '{{ addslashes($modul->judul) }}')">
+                                                <button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold border border-red-500/20 text-red-600 dark:text-red-400 hover:bg-red-500/10 transition-colors cursor-pointer" onclick="bukaModalHapus({{ $modul->id }}, '{{ addslashes($modul->judul) }}')">
                                                     <i class="ri-delete-bin-line"></i> Hapus
                                                 </button>
                                             </div>
@@ -862,9 +137,9 @@
                                     @empty
                                     <tr>
                                         <td colspan="6">
-                                            <div class="empty-state">
-                                                <i class="ri-inbox-line"></i>
-                                                <p>Tidak ada data modul ditemukan.</p>
+                                            <div class="flex flex-col items-center justify-center py-12 text-slate-400 dark:text-slate-500">
+                                                <i class="ri-inbox-line text-4xl opacity-30 mb-2"></i>
+                                                <p class="text-xs font-semibold">Tidak ada data modul ditemukan.</p>
                                             </div>
                                         </td>
                                     </tr>
@@ -875,8 +150,8 @@
 
                         {{-- Pagination --}}
                         @if(method_exists($moduls, 'links'))
-                        <div class="pagination-modern">
-                            {{ $moduls->links('pagination::bootstrap-5') }}
+                        <div class="p-6 border-t border-slate-100 dark:border-slate-900 flex justify-center">
+                            {{ $moduls->links('pagination::tailwind') }}
                         </div>
                         @endif
                     </div>
@@ -890,154 +165,188 @@
     </div>
 
     {{-- ══════════ MODAL TAMBAH MODUL ══════════ --}}
-    <div class="modal fade modal-modern" id="modalTambahModul" tabindex="-1" aria-labelledby="labelTambah" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="labelTambah">
-                        <i class="ri-add-circle-line" style="color:#9F66AF;margin-right:6px;"></i>
-                        Tambah Modul
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <form action="{{ route('superadmin.course.modul.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="form-label">Kursus <span style="color:#ef4444;">*</span></label>
-                            <select name="kursus_id" class="form-select" required>
-                                <option value="">-- Pilih Kursus --</option>
-                                @foreach ($kursusAll as $k)
-                                    <option value="{{ $k->id }}" {{ old('kursus_id') == $k->id ? 'selected' : '' }}>
-                                        {{ $k->judul }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Judul Modul <span style="color:#ef4444;">*</span></label>
-                            <input type="text" name="judul" class="form-control" placeholder="Contoh: Pengenalan UI/UX" value="{{ old('judul') }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Urutan <span style="color:#ef4444;">*</span></label>
-                            <input type="number" name="urutan" class="form-control" min="1" placeholder="1" value="{{ old('urutan') }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">File PDF <span style="color:#ef4444;">*</span></label>
-                            <input type="file" name="file" class="form-control" accept=".pdf" required>
-                            <div class="form-text">Format: PDF. Maksimal 20MB.</div>
-                        </div>
-                    </div>
-                    <div class="modal-footer" style="display:flex;gap:10px;justify-content:flex-end;">
-                        <button type="button" class="btn-brand btn-brand-muted" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn-brand btn-brand-primary">
-                            <i class="ri-save-line"></i> Simpan
-                        </button>
-                    </div>
-                </form>
+    <div id="modalTambahModul" class="fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-slate-900/50 backdrop-blur-sm transition-opacity" style="display: none;">
+        <div class="bg-white dark:bg-[#13111c] border border-slate-100 dark:border-slate-900 rounded-2xl overflow-hidden shadow-2xl w-[90%] max-w-lg transform transition-all scale-95 opacity-0 m-auto mt-10" id="modalTambahModulContent">
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-900 flex items-center justify-between">
+                <h5 class="font-extrabold text-base text-slate-800 dark:text-white flex items-center gap-2" id="labelTambah">
+                    <i class="ri-add-circle-line text-brand-purple text-lg"></i>
+                    Tambah Modul
+                </h5>
+                <button type="button" class="text-slate-400 hover:text-slate-500" onclick="tutupModal('modalTambahModul')">
+                    <i class="ri-close-line text-xl"></i>
+                </button>
             </div>
+            <form action="{{ route('superadmin.course.modul.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                @csrf
+                <div class="p-6 text-sm text-slate-500 dark:text-slate-400 space-y-4 max-h-[60vh] overflow-y-auto">
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Kursus <span class="text-red-500">*</span></label>
+                        <select name="kursus_id" class="form-input-modern cursor-pointer" required>
+                            <option value="">-- Pilih Kursus --</option>
+                            @foreach ($kursusAll as $k)
+                                <option value="{{ $k->id }}" {{ old('kursus_id') == $k->id ? 'selected' : '' }}>
+                                    {{ $k->judul }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Judul Modul <span class="text-red-500">*</span></label>
+                        <input type="text" name="judul" class="form-input-modern" placeholder="Contoh: Pengenalan UI/UX" value="{{ old('judul') }}" required>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Urutan <span class="text-red-500">*</span></label>
+                        <input type="number" name="urutan" class="form-input-modern" min="1" placeholder="1" value="{{ old('urutan') }}" required>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">File PDF <span class="text-red-500">*</span></label>
+                        <input type="file" name="file" class="form-input-modern" accept=".pdf" required>
+                        <div class="text-[10px] text-slate-400 dark:text-slate-500 mt-1.5">Format: PDF. Maksimal 20MB.</div>
+                    </div>
+                </div>
+                <div class="px-6 py-4 border-t border-slate-100 dark:border-slate-900 flex justify-end gap-2.5">
+                    <button type="button" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer" onclick="tutupModal('modalTambahModul')">Batal</button>
+                    <button type="submit" class="btn-brand justify-center cursor-pointer">
+                        <i class="ri-save-line"></i> Simpan
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
     {{-- ══════════ MODAL EDIT MODUL ══════════ --}}
-    <div class="modal fade modal-modern" id="modalEditModul" tabindex="-1" aria-labelledby="labelEdit" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="labelEdit">
-                        <i class="ri-edit-line" style="color:#10b981;margin-right:6px;"></i>
-                        Edit Modul
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <form id="formEdit" action="" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="form-label">Kursus <span style="color:#ef4444;">*</span></label>
-                            <select name="kursus_id" id="edit_kursus_id" class="form-select" required>
-                                <option value="">-- Pilih Kursus --</option>
-                                @foreach ($kursusAll as $k)
-                                    <option value="{{ $k->id }}">{{ $k->judul }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Judul Modul <span style="color:#ef4444;">*</span></label>
-                            <input type="text" name="judul" id="edit_judul" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Urutan <span style="color:#ef4444;">*</span></label>
-                            <input type="number" name="urutan" id="edit_urutan" class="form-control" min="1" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Ganti File PDF</label>
-                            <input type="file" name="file" class="form-control" accept=".pdf">
-                            <div class="form-text">Kosongkan jika tidak ingin mengganti file. Format: PDF. Maksimal 20MB.</div>
-                        </div>
-                    </div>
-                    <div class="modal-footer" style="display:flex;gap:10px;justify-content:flex-end;">
-                        <button type="button" class="btn-brand btn-brand-muted" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn-brand btn-brand-success">
-                            <i class="ri-save-line"></i> Perbarui
-                        </button>
-                    </div>
-                </form>
+    <div id="modalEditModul" class="fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-slate-900/50 backdrop-blur-sm transition-opacity" style="display: none;">
+        <div class="bg-white dark:bg-[#13111c] border border-slate-100 dark:border-slate-900 rounded-2xl overflow-hidden shadow-2xl w-[90%] max-w-lg transform transition-all scale-95 opacity-0 m-auto mt-10" id="modalEditModulContent">
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-900 flex items-center justify-between">
+                <h5 class="font-extrabold text-base text-slate-800 dark:text-white flex items-center gap-2" id="labelEdit">
+                    <i class="ri-edit-line text-emerald-550 text-lg"></i>
+                    Edit Modul
+                </h5>
+                <button type="button" class="text-slate-400 hover:text-slate-500" onclick="tutupModal('modalEditModul')">
+                    <i class="ri-close-line text-xl"></i>
+                </button>
             </div>
+            <form id="formEdit" action="" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="p-6 text-sm text-slate-500 dark:text-slate-400 space-y-4 max-h-[60vh] overflow-y-auto">
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Kursus <span class="text-red-500">*</span></label>
+                        <select name="kursus_id" id="edit_kursus_id" class="form-input-modern cursor-pointer" required>
+                            <option value="">-- Pilih Kursus --</option>
+                            @foreach ($kursusAll as $k)
+                                <option value="{{ $k->id }}">{{ $k->judul }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Judul Modul <span class="text-red-500">*</span></label>
+                        <input type="text" name="judul" id="edit_judul" class="form-input-modern" required>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Urutan <span class="text-red-500">*</span></label>
+                        <input type="number" name="urutan" id="edit_urutan" class="form-input-modern" min="1" required>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Ganti File PDF</label>
+                        <input type="file" name="file" class="form-input-modern" accept=".pdf">
+                        <div class="text-[10px] text-slate-400 dark:text-slate-500 mt-1.5">Kosongkan jika tidak ingin mengganti file. Format: PDF. Maksimal 20MB.</div>
+                    </div>
+                </div>
+                <div class="px-6 py-4 border-t border-slate-100 dark:border-slate-900 flex justify-end gap-2.5">
+                    <button type="button" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer" onclick="tutupModal('modalEditModul')">Batal</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500 text-white shadow-md shadow-emerald-500/15 hover:bg-emerald-600 hover:shadow-lg transition-all flex items-center gap-1 cursor-pointer">
+                        <i class="ri-save-line"></i> Perbarui
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
     {{-- ══════════ MODAL HAPUS MODUL ══════════ --}}
-    <div class="modal fade modal-modern" id="modalHapusModul" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <i class="ri-delete-bin-line" style="color:#ef4444;margin-right:6px;"></i>
-                        Hapus Modul
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <form id="formHapus" action="" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <div class="modal-body">
-                        <p class="modal-desc">Apakah Anda yakin ingin menghapus modul:</p>
-                        <p style="font-weight:800;font-size:15px;color:#1f2937;margin-bottom:8px;" id="namaModulHapus"></p>
-                        <p style="font-size:12px;color:#ef4444;display:flex;align-items:center;gap:4px;">
-                            <i class="ri-error-warning-line"></i> File PDF yang terkait juga akan ikut dihapus.
-                        </p>
-                    </div>
-                    <div class="modal-footer" style="display:flex;gap:10px;justify-content:flex-end;">
-                        <button type="button" class="btn-brand btn-brand-muted" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn-brand btn-brand-danger">
-                            <i class="ri-delete-bin-line"></i> Ya, Hapus
-                        </button>
-                    </div>
-                </form>
+    <div id="modalHapusModul" class="fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-slate-900/50 backdrop-blur-sm transition-opacity" style="display: none;">
+        <div class="bg-white dark:bg-[#13111c] border border-slate-100 dark:border-slate-900 rounded-2xl overflow-hidden shadow-2xl w-[90%] max-w-md transform transition-all scale-95 opacity-0 m-auto mt-20" id="modalHapusModulContent">
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-900 flex items-center justify-between">
+                <h5 class="font-extrabold text-base text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="ri-delete-bin-line text-red-500 text-lg"></i>
+                    Hapus Modul
+                </h5>
+                <button type="button" class="text-slate-400 hover:text-slate-500" onclick="tutupModal('modalHapusModul')">
+                    <i class="ri-close-line text-xl"></i>
+                </button>
             </div>
+            <form id="formHapus" action="" method="POST">
+                @csrf
+                @method('DELETE')
+                <div class="p-6 text-sm text-slate-500 dark:text-slate-400 space-y-4">
+                    <p class="text-xs leading-relaxed">Apakah Anda yakin ingin menghapus modul:</p>
+                    <p class="font-extrabold text-sm text-slate-800 dark:text-white" id="namaModulHapus"></p>
+                    <p class="text-[10px] text-red-500 flex items-center gap-1.5">
+                        <i class="ri-error-warning-line"></i> File PDF yang terkait juga akan ikut dihapus.
+                    </p>
+                </div>
+                <div class="px-6 py-4 border-t border-slate-100 dark:border-slate-900 flex justify-end gap-2.5">
+                    <button type="button" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer" onclick="tutupModal('modalHapusModul')">Batal</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl text-xs font-bold bg-red-500 text-white shadow-md shadow-red-500/15 hover:bg-red-600 hover:shadow-lg transition-all flex items-center gap-1 cursor-pointer">
+                        <i class="ri-delete-bin-line"></i> Ya, Hapus
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
     @include('layouts.superadmin.partials.scripts')
 
     <script>
+        function bukaModal(id) {
+            const modal = document.getElementById(id);
+            const content = document.getElementById(id + 'Content');
+            if(!modal) return;
+            modal.style.display = 'flex';
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function tutupModal(id) {
+            const modal = document.getElementById(id);
+            const content = document.getElementById(id + 'Content');
+            if(!modal) return;
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+            }, 200);
+        }
+
+        function bukaModalTambah() {
+            bukaModal('modalTambahModul');
+        }
+
         function bukaModalEdit(id, kursusId, judul, urutan) {
             document.getElementById('formEdit').action = '/superadmin/course/modul/' + id + '/update';
             document.getElementById('edit_kursus_id').value = kursusId;
             document.getElementById('edit_judul').value = judul;
             document.getElementById('edit_urutan').value = urutan;
-            var modal = new bootstrap.Modal(document.getElementById('modalEditModul'));
-            modal.show();
+            bukaModal('modalEditModul');
         }
 
+        // Add support for addslashes/escape for JS
         function bukaModalHapus(id, judul) {
             document.getElementById('formHapus').action = '/superadmin/course/modul/' + id + '/hapus';
             document.getElementById('namaModulHapus').textContent = '"' + judul + '"';
-            var modal = new bootstrap.Modal(document.getElementById('modalHapusModul'));
-            modal.show();
+            bukaModal('modalHapusModul');
         }
+
+        // Close on outside click
+        window.addEventListener('click', function(e) {
+            if (e.target.id === 'modalTambahModul') tutupModal('modalTambahModul');
+            if (e.target.id === 'modalEditModul') tutupModal('modalEditModul');
+            if (e.target.id === 'modalHapusModul') tutupModal('modalHapusModul');
+        });
 
         // Auto-hide alerts
         document.addEventListener('DOMContentLoaded', function() {

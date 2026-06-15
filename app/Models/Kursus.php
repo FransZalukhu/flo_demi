@@ -73,7 +73,19 @@ class Kursus extends Model
      */
     public function getTerdaftarCountAttribute()
     {
-        return $this->pendaftaran()->whereIn('status', ['menunggu_pembayaran', 'menunggu_verifikasi', 'aktif', 'selesai'])->count();
+        if (array_key_exists('terdaftar_count', $this->attributes)) {
+            return $this->attributes['terdaftar_count'];
+        }
+
+        return $this->pendaftaran()
+            ->whereIn('status', ['menunggu_pembayaran', 'menunggu_verifikasi', 'aktif', 'selesai'])
+            ->where(function ($query) {
+                $query->whereHas('pembayaran', function ($q) {
+                    $q->where('expired_at', '>', now())
+                      ->orWhere('status', 'success');
+                })->orWhereNull('pembayaran_id');
+            })
+            ->count();
     }
 
     /**

@@ -30,19 +30,28 @@ class SertifikatController extends Controller
         return view('mentee.sertifikat.index', compact('sertifikat'));
     }
 
-    /**
-     * Download certificate file.
-     */
     public function download($id)
     {
         $cert = Sertifikat::where('user_id', auth()->id())
             ->where('id', $id)
             ->firstOrFail();
 
-        if (!$cert->file_sertifikat || !Storage::disk('public')->exists($cert->file_sertifikat)) {
-            $this->certificateService->generatePdf($cert);
+        $pdfExists = $cert->file_sertifikat && Storage::disk('local')->exists($cert->file_sertifikat);
+        $needsRegen = false;
+
+        if ($pdfExists) {
+            $pdfTime = Storage::disk('local')->lastModified($cert->file_sertifikat);
+            $userTime = auth()->user()->updated_at ? auth()->user()->updated_at->timestamp : 0;
+            if ($userTime > $pdfTime) {
+                $needsRegen = true;
+            }
         }
 
-        return Storage::disk('public')->download($cert->file_sertifikat);
+        if (!$pdfExists || $needsRegen) {
+            $this->certificateService->generatePdf($cert);
+            $cert->refresh();
+        }
+
+        return Storage::disk('local')->download($cert->file_sertifikat);
     }
 }
